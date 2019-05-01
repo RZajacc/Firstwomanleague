@@ -18,13 +18,8 @@
     <dependencies>
         <dependency>
             <groupId>org.rafalzajac</groupId>
-            <artifactId>domain</artifactId>
+            <artifactId>repository</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
