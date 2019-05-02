@@ -29,5 +29,11 @@ public class Player {
         this.lastName = lastName;
     }
 
-
+    public Player(int number, String playerTag, String firstName, String lastName, Team team) {
+        this.number = number;
+        this.playerTag = playerTag;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.team = team;
+    }
 }

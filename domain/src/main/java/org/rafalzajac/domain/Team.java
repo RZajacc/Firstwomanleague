@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
 
 @Entity
 @NoArgsConstructor
@@ -21,16 +22,27 @@ public class Team {
     private String firstCoach;
     private String secondCoach;
 
+    @ManyToOne
+    private Match match;
+
     @OneToMany(mappedBy = "team")
     private List<Player> playerList;
 
-    @ManyToOne
-    private Match match;
 
     public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
         this.teamTag = teamTag;
         this.teamName = teamName;
         this.firstCoach = firstCoach;
         this.secondCoach = secondCoach;
+        playerList = new LinkedList<>();
+    }
+
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, Match match) {
+        this.teamTag = teamTag;
+        this.teamName = teamName;
+        this.firstCoach = firstCoach;
+        this.secondCoach = secondCoach;
+        this.match = match;
+        playerList = new LinkedList<>();
     }
 }

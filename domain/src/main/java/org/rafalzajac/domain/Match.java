@@ -24,11 +24,11 @@ public class Match {
     private String matchDate;
     private String matchResult;
 
-    @OneToMany(mappedBy = "match")
-    private List<Team> teams;
-
     @ManyToOne
     Round round;
+
+    @OneToMany(mappedBy = "match")
+    private List<Team> teams;
 
     public Match(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;

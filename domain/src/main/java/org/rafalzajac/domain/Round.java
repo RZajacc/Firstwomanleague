@@ -17,6 +17,9 @@ public class Round {
 
     private int roundNumber;
 
+    @ManyToOne
+    League league;
+
     @OneToMany(mappedBy = "round")
     private List<Match> matchList;
 
@@ -32,8 +35,7 @@ public class Round {
 
     }
 
-    @ManyToOne
-    League league;
+
 
 
     public void addMatch(Match match){
