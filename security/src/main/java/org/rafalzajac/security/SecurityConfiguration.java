@@ -15,6 +15,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/").access("permitAll()")
+                .antMatchers("/console/**").access("permitAll()")
+        .and()
+                .csrf().disable()
+                .headers().frameOptions().disable()
         .and()
                 .formLogin();
     }
