@@ -4,6 +4,8 @@ import org.rafalzajac.domain.League;
 import org.rafalzajac.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LeagueService {
 
@@ -15,5 +17,9 @@ public class LeagueService {
 
     public League addLeague(League league) {
         return leagueRepository.save(league);
+    }
+
+    public League getLeague(String name) {
+        return leagueRepository.findByLeagueName(name);
     }
 }
