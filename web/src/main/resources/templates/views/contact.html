@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="layouts/MainLayout :: head(title = 'Kontakt')"/>
+</head>
+<body>
+<nav>
+    <nav th:replace="layouts/MainLayout :: navbar"/>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-8" align="center">If you need any more information</h1>
+        <p class="lead" align="center">Please contact me!</p>
+    </div>
+</div>
+
+<div id="contact" >
+    <h3>Email:</h3>
+    <p>example@gmail.com</p>
+    <h3>Phone</h3>
+    <p>12345656</p>
+</div>
+
+<footer>
+    <footer th:replace="layouts/MainLayout :: footer"/>
+</footer>
+</body>
+</html>

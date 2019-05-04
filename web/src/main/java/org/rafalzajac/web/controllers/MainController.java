@@ -31,31 +31,25 @@ public class MainController {
     @GetMapping("/round")
     public String league(Model model) {
 
-        Optional<League> league = leagueService.getLeagueById(1L);
+        List<Round> rounds = roundService.findAllRounds();
         List<Match> matchList = matchService.findAllMatches();
-
+        model.addAttribute("rounds", rounds);
         model.addAttribute("matches", matchList);
-
-        if(league.isPresent()){
-            League currentLeague = league.get();
-            model.addAttribute("league",currentLeague);
-        }
 
 
         //TODO list
 
-        // Na teraz
-        // 1. Wybierz schemat boostrap do strony
-        // 2. Stwórz zakładki home, mecze, tabela, kluby, rankingi, kontakt
-        // 3. Wyśrodkuj zakładki na stronie
-        // 4. Utwórz thymelaafowe fragmenty do nava, head, footer
-        // 5. Zmien sciezkę strony meczu, samo id nic nie mowi, dodaj tam wiecej zmiennych plus id
+        // Obecny branch
+        // 1. Dopracuj kartki z zespołami i przynajmniej te dwa zrób w całości
+        // 2. Dodaj widok zespołu gdzie są zawodniczki
+        // 3. Zrób jeszcze coś z widokiem meczu
 
         //  Branch z danymi
         // 1. Dodaj do klasy mecz numer (String sciezka) i skoryguj konstrukor do tego oraz Command Line Runnera
         // 2. Zaimplementuj uplad plików i spróbuj przypisać ścieżkę do otwartego meczu
         // 3. Sprawdz czy to zadziałało
         // 4. Folder w którym będa dane scouta powinien miec podfolder z sezonem
+        // 5. Dodaj do Command line runnera generator meczów, pomyśl nad algorytmem
 
         // Branch - z ligą i informacjami o niej
         // 1. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?
@@ -68,8 +62,9 @@ public class MainController {
         //Przemyslenia
         //Być może oddziel statystyki od zawodnika (nowa klasa w domain, repo, service)
         //Do statystyk dodaj pozycję na której zaczyna na boisku
+        //Czy na pewno team musi mieć info o meczu w konstruktorze? -> Być może many do many (Rounda - mecze - zespoly?)
 
-        return "MainPage/round";
+        return "views/round";
     }
 
     @GetMapping("/round/{id}")
@@ -79,9 +74,34 @@ public class MainController {
         if(match.isPresent()) {
             Match currentMatch = match.get();
             model.addAttribute("currentMatch", currentMatch);
-            return "MainPage/match";
+            return "views/match";
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/table")
+    public String leagueTable() {
+            return "/views/table";
+    }
+
+    @GetMapping("/rank")
+    public String rankTable() {
+        return "/views/rank";
+    }
+
+    @GetMapping("/teams")
+    public  String teamData(Model model) {
+
+        List<Team> allTeams = teamService.findAllTeams();
+        model.addAttribute("teams", allTeams);
+
+        return "/views/teams";
+    }
+
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "/views/contact";
     }
 }

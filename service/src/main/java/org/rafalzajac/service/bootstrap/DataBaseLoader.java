@@ -33,15 +33,18 @@ public class DataBaseLoader implements CommandLineRunner {
         Round round1 = new Round(1, FirstWoman);
 
         //Creating match instances
-        Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", round1);
-        Match match2 = new Match("Joker Swiecie", "MKS Dabrowa", round1);
-        Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", round1);
-        Match match4 = new Match("Uni Opole", "MKS Dabrowa", round1);
-        Match match5 = new Match("MKS Dabrowa", "7R Solna Wieliczka", round1);
+        Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1);
+        Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1);
+        Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1);
+        Match match4 = new Match("Uni Opole", "MKS Dabrowa", 4, round1);
+        Match match5 = new Match("MKS Dabrowa", "7R Solna Wieliczka", 5, round1);
+
 
         //Creating team instances
         Team team1 = new Team("MKS", "MKS Dabrowa", "Adam Grabowsk", "Irek Borzecki", match1);
         Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", match1);
+
+        Match match6 = new Match(team1.getTeamName(), "PWSZ Tarnow", round1);
 
         //Creating Players of both teams
         Player Bryda = new Player(1, "Kat-Bry", "Katarzyna", "Bryda", team1);

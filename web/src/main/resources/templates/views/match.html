@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+        <head th:replace="layouts/MainLayout :: head(title = 'Informacje o meczu')"/>
+</head>
+<body>
+
+<nav>
+    <nav th:replace="layouts/MainLayout :: navbar"/>
+</nav>
+        <p>Mecz jest z rundy : <span th:text="${currentMatch.getRound().getRoundNumber()}" /></p>
+        <p>Mecz nr : <span th:text="${currentMatch.getMatchNumber()}" /></p>
+        <p>Gospodarz : <span th:text="${currentMatch.getHomeTeam()}"/> </p>
+        <p>Gość : <span th:text="${currentMatch.getAwayTeam()}"/></p>
+<footer>
+    <footer th:replace="layouts/MainLayout :: footer"/>
+</footer>
+
+</body>
+</html>

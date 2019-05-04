@@ -23,6 +23,7 @@ public class Match {
     private String awayTeam;
     private String matchDate;
     private String matchResult;
+    private int matchNumber;
 
     @ManyToOne
     Round round;
@@ -39,6 +40,14 @@ public class Match {
     public Match(String homeTeam, String awayTeam, Round round) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.round = round;
+        teams = new LinkedList<>();
+    }
+
+    public Match(String homeTeam, String awayTeam, int matchNumber, Round round) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.matchNumber = matchNumber;
         this.round = round;
         teams = new LinkedList<>();
     }

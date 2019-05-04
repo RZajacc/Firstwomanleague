@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:replace="layouts/MainLayout :: head(title = 'Zespoly')"/>
+</head>
+
+<body>
+
+<nav>
+    <nav th:replace="layouts/MainLayout :: navbar"/>
+</nav>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <table class="table table-hover tableData" >
+        <tr>
+            <th>Nazwa zespolu</th>
+            <th>Pierwszy trener</th>
+            <th>Drugi trener</th>
+
+        </tr>
+
+        <tr th:each="team : ${teams}">
+            <td th:text="${team.getTeamName()}"></td>
+            <td th:text="${team.getFirstCoach()}"></td>
+            <td th:text="${team.getSecondCoach()}"></td>
+        </tr>
+    </table>
+
+</div>
+
+<footer>
+    <footer th:replace="layouts/MainLayout :: footer"/>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="layouts/MainLayout :: head(title = 'Mecze')"/>
+</head>
+<body>
+<nav>
+    <nav th:replace="layouts/MainLayout :: navbar"/>
+</nav>
+
+
+
+<div class="container" id="roundTable" th:each="round : ${rounds}">
+
+    <h4 class="centeredText">Kolejka nr : <span th:text="${round.getRoundNumber()}" /></h4>
+        <br/><br/>
+    <table class="table table-hover tableData" >
+        <tr>
+            <th>Mecz nr</th>
+            <th>Gospodarz</th>
+            <th>Gość</th>
+            <th>Statystyki</th>
+        </tr>
+
+        <tr th:each="match : ${matches}">
+            <td th:text="${match.getMatchNumber()}"></td>
+            <td th:text="${match.getHomeTeam()}"></td>
+            <td th:text="${match.getAwayTeam()}"></td>
+            <td>
+                <a th:href="@{'/round/' + ${match.id}}">Otwórz</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<footer>
+    <footer th:replace="layouts/MainLayout :: footer"/>
+</footer>
+</body>
+</html>
