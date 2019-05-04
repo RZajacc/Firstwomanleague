@@ -30,17 +30,19 @@ public class MainController {
     @GetMapping("/round")
     public String league(Model model) {
 
-        League league = leagueService.getLeague("1LK");
+        Optional<League> league = leagueService.getLeagueById(1L);
 
-
-        model.addAttribute("league", league);
-//        model.addAttribute("round", round1);
-//        model.addAttribute("match", match1);
+        if(league.isPresent()){
+            League currentLeague = league.get();
+            model.addAttribute("league",currentLeague);
+        }
 
         //TODO list
 
 
         //Stworz interfejs do dodawania wszystkiego
+        //Scieżki powinny być w kontrolerze jako path variable
+        //Na tym etapie chyba trzeba będzie już łączyć tabele
 
 
         //Przemyslenia

@@ -1,9 +1,11 @@
 package org.rafalzajac.service;
 
 import org.rafalzajac.domain.League;
+import org.rafalzajac.domain.Match;
 import org.rafalzajac.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +21,9 @@ public class LeagueService {
         return leagueRepository.save(league);
     }
 
-    public League getLeague(String name) {
-        return leagueRepository.findByLeagueName(name);
+    public Optional<League> getLeagueById(Long id){
+        return leagueRepository.findById(id);
     }
+
+
 }
