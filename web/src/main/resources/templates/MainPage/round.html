@@ -5,17 +5,27 @@
     <title>round</title>
 </head>
 <body>
-    <h3 th:text="${league.getLeagueName()}"></h3>
-    <h3 th:text="${league.getSeason()}"></h3>
-    <h3 th:text="${league.getId()}"></h3>
 
-<!--    <h3 th:text="${round.getRoundNumber()}"></h3>-->
-<!--&lt;!&ndash;    <h3 th:text="${round.getLeague().getLeagueName()}"></h3>&ndash;&gt;-->
-<!--    <h3 th:text="${match.getHomeTeam()}"></h3>-->
-<!--    <h3 th:text="${match.getAwayTeam()}"></h3>-->
-<!--    <h3 th:text="${match.getRound().getRoundNumber()}"></h3>-->
-<!--    <h3 th:text="${match.getRound().getLeague().getLeagueName()}"></h3>-->
-<!--    <h3 th:text="${match.getRound().getLeague().getSeason()}"></h3>-->
+
+    <div class="row link" th:each="match : ${matches}">
+<!--        <div class="col-1">-->
+<!--            <div><a href="#" class="upvote" th:data-id="${match.id}"><i class="fas fa-arrow-up"></i></a></div>-->
+<!--            <div><span th:id="|votecount-${match.id}|" class="votecount" th:text="${match.getRound().getRoundNumber()}">0</span></div>-->
+<!--        </div>-->
+
+        <p>Kolejka nr : <span th:text="${match.getRound().getRoundNumber()}"></span></p>
+        <div class="col-11">
+            <p class="title"></p>
+            <p><b>Mecz nr :</b> <span th:text="${match.getId()} + ' ' + ${match.getHomeTeam()} + ' vs ' + ${match.getAwayTeam()}"/>
+                <a class="title " th:href="@{'/round/' + ${match.id}}">
+                    Statystyki</a>
+            </p>
+
+
+
+        </div>
+    </div>
+
 
 </body>
 </html>

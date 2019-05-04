@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Match</title>
+</head>
+<body>
+    <p>Match is from round : </p>
+    <p th:text="${currentMatch.getRound().getRoundNumber()}"></p>
+    <p>Home team : </p>
+    <p th:text="${currentMatch.getHomeTeam()}"></p>
+    <p>Away team : </p>
+    <p th:text="${currentMatch.getAwayTeam()}"></p>
+</body>
+</html>
