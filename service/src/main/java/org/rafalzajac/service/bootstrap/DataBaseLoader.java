@@ -41,7 +41,7 @@ public class DataBaseLoader implements CommandLineRunner {
 
 
         //Creating team instances
-        Team team1 = new Team("MKS", "MKS Dabrowa", "Adam Grabowsk", "Irek Borzecki", match1);
+        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki","http://www.mks.dabrowa.pl","https://www.facebook.com/mks.dabrowa" ,match1);
         Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", match1);
 
         Match match6 = new Match(team1.getTeamName(), "PWSZ Tarnow", round1);

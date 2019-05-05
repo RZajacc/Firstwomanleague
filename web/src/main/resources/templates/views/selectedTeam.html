@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Zespol')"/>
+
+<body>
+
+<nav th:replace="layouts/MainLayout :: navbar"/>
+
+
+<div class="container" id="selectedteamTable">
+
+    <h4 class="centeredText" th:text="${selectedTeam.getTeamName()}"></h4>
+    <br/><br/>
+    <table class="table table-hover tableData" >
+        <tr>
+            <th>Nr</th>
+            <th>Nazwisko</th>
+            <th>Imię</th>
+            <th>Wiek</th>
+            <th>Wzrost</th>
+        </tr>
+
+        <tr th:each="player : ${teamPlayers}">
+            <td th:text="${player.getNumber()}"></td>
+            <td th:text="${player.getLastName()}"></td>
+            <td th:text="${player.getFirstName()}"></td>
+            <td ></td>
+            <td ></td>
+        </tr>
+    </table>
+</div>
+
+
+<footer th:replace="layouts/MainLayout :: footer"/>
+</body>
+</html>

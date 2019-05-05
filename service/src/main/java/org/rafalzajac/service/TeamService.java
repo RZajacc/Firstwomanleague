@@ -5,6 +5,7 @@ import org.rafalzajac.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -21,5 +22,9 @@ public class TeamService {
 
     public List<Team> findAllTeams() {
         return teamRepository.findAll();
+    }
+
+    public Optional<Team> getTeamById(Long id) {
+        return teamRepository.findById(id);
     }
 }

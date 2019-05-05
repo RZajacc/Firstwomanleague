@@ -24,6 +24,8 @@ public class Team {
     private String teamName;
     private String firstCoach;
     private String secondCoach;
+    private String webPage;
+    private String facebook;
 
     @ManyToOne
     private Match match;
@@ -45,6 +47,17 @@ public class Team {
         this.teamName = teamName;
         this.firstCoach = firstCoach;
         this.secondCoach = secondCoach;
+        this.match = match;
+        playerList = new LinkedList<>();
+    }
+
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, String webPage, String facebook, Match match) {
+        this.teamTag = teamTag;
+        this.teamName = teamName;
+        this.firstCoach = firstCoach;
+        this.secondCoach = secondCoach;
+        this.webPage = webPage;
+        this.facebook = facebook;
         this.match = match;
         playerList = new LinkedList<>();
     }

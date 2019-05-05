@@ -1,6 +1,5 @@
 package org.rafalzajac.web.controllers;
 
-
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
 import org.springframework.stereotype.Controller;
@@ -39,10 +38,6 @@ public class MainController {
 
         //TODO list
 
-        // Obecny branch
-        // 1. Dopracuj kartki z zespołami i przynajmniej te dwa zrób w całości
-        // 2. Dodaj widok zespołu gdzie są zawodniczki
-        // 3. Zrób jeszcze coś z widokiem meczu
 
         //  Branch z danymi
         // 1. Dodaj do klasy mecz numer (String sciezka) i skoryguj konstrukor do tego oraz Command Line Runnera
@@ -82,13 +77,14 @@ public class MainController {
 
     @GetMapping("/table")
     public String leagueTable() {
-            return "/views/table";
+            return "views/table";
     }
 
     @GetMapping("/rank")
     public String rankTable() {
-        return "/views/rank";
+        return "views/rank";
     }
+
 
     @GetMapping("/teams")
     public  String teamData(Model model) {
@@ -96,12 +92,27 @@ public class MainController {
         List<Team> allTeams = teamService.findAllTeams();
         model.addAttribute("teams", allTeams);
 
-        return "/views/teams";
+        return "views/teams";
     }
 
+    @GetMapping("/teams/currentteam/{id}")
+    public String currentTeam(@PathVariable Long id, Model model){
+
+            Optional<Team> team = teamService.getTeamById(id);
+
+            if (team.isPresent()) {
+                Team currentTeam = team.get();
+                List<Player> players = currentTeam.getPlayerList();
+                model.addAttribute("selectedTeam", currentTeam);
+                model.addAttribute("teamPlayers", players);
+                return "views/selectedTeam";
+            }
+
+            return "redirect:/";
+    }
 
     @GetMapping("/contact")
     public String contact() {
-        return "/views/contact";
+        return "views/contact";
     }
 }

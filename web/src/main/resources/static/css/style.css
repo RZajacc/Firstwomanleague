@@ -2,16 +2,16 @@
     background-color: #e3f2fd;
 }
 
-footer {
-    background-color: #f2f2f2;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 7%;
-    text-align: center;
-    vertical-align: top;
-}
+/*footer {*/
+/*    background-color: #f2f2f2;*/
+/*    position: fixed;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*    height: 7%;*/
+/*    text-align: center;*/
+/*    vertical-align: top;*/
+/*}*/
 
 body {
     margin-bottom: 5%;
@@ -33,14 +33,20 @@ nav {
 }
 
 footer {
-    background-color: transparent;
-    position: fixed;
-    left: 0;
+    position: absolute;
     bottom: 0;
     width: 100%;
-    height: 7%;
-    text-align: center;
-    vertical-align: top;
+    height: 2.5rem;
+    background-color: #e3f2fd;
+
+    /*background-color: transparent;*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+    /*height: 7%;*/
+    /*text-align: center;*/
+    /*vertical-align: top;*/
 }
 
 #contact {
@@ -52,9 +58,27 @@ footer {
 }
 
 #roundTable {
+    position: relative;
+    padding-bottom: 2.5rem;
     margin-top: 3%;
+}
+
+#selectedteamTable{
+    margin-top: 3%;
+    position: relative;
+    padding-bottom: 2.5rem;
 }
 
 .tableData {
     font-size: medium;
+}
+
+.teamButton{
+    margin-left: 25%
+}
+
+#teamTable {
+    margin-top: 3%;
+    position: relative;
+    padding-bottom: 2.5rem;
 }
