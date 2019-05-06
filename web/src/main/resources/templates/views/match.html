@@ -12,6 +12,7 @@
         <p>Mecz nr : <span th:text="${currentMatch.getMatchNumber()}" /></p>
         <p>Gospodarz : <span th:text="${currentMatch.getHomeTeam()}"/> </p>
         <p>Gość : <span th:text="${currentMatch.getAwayTeam()}"/></p>
+        <p>Scieżka : <span th:text="${currentMatch.getScoutPath()}"/> </p>
 
 
 <footer th:replace="layouts/MainLayout :: footer"/>

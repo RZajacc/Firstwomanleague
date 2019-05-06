@@ -20,6 +20,7 @@
             <th>Gospodarz</th>
             <th>Gość</th>
             <th>Statystyki</th>
+            <th>Scout</th>
         </tr>
 
         <tr th:each="match : ${matches}">
@@ -29,10 +30,22 @@
             <td>
                 <a th:href="@{'/round/' + ${match.id}}">Otwórz</a>
             </td>
+
+            <td>
+                <form method="POST" action="/round" enctype="multipart/form-data">
+                    <input type="file" name="file"/><br/><br/>
+                    <input type="submit" value="Submit" />
+                    <input type="hidden" th:value="${match.getId()}" name="id">
+                </form>
+            </td>
         </tr>
     </table>
 </div>
 
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
 
 
 <footer th:replace="layouts/MainLayout :: footer"/>

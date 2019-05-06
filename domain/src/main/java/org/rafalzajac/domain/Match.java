@@ -24,6 +24,7 @@ public class Match {
     private String matchDate;
     private String matchResult;
     private int matchNumber;
+    private String scoutPath;
 
     @ManyToOne
     Round round;
