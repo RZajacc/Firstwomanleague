@@ -27,7 +27,7 @@ public class DataBaseLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Creating league instance
-        League FirstWoman = new League("1LK", "2018/2019");
+        League FirstWoman = new League("1LK", "2018-2019");
 
         //Creating round instance
         Round round1 = new Round(1, FirstWoman);

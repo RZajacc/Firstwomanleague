@@ -14,6 +14,18 @@
         <p>Gość : <span th:text="${currentMatch.getAwayTeam()}"/></p>
         <p>Scieżka : <span th:text="${currentMatch.getScoutPath()}"/> </p>
 
+<br/>
+<br/>
+
+<table>
+        <tr>
+                <th>Data:</th>
+        </tr>
+        <tr th:each="str : ${fileContent}">
+                <td th:text="${str}"></td>
+        </tr>
+
+</table>
 
 <footer th:replace="layouts/MainLayout :: footer"/>
 

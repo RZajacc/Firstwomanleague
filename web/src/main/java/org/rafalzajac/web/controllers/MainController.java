@@ -7,12 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.transaction.UserTransaction;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,29 +49,23 @@ public class MainController {
 
         //TODO list
 
-        //  Branch z danymi (Wzoruj się na przykładzie Mykonga
-        // 1. Folder w którym będa dane scouta powinien miec podfolder z sezonem
-        // 2. Działa to dość pokracznie, ale jednak działa, pomyśl jak lepiej przekazać plik z formularza
-        // 3. Wygeneruj scouta na stronie meczu ze ścieżki.
-        // 4. Jeżeli to wszystko zadziała możesz po trochu zacząć dłubać z generowaniem statystyk
-
-
         // Branch - z ligą i informacjami o niej
         // 1. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
         // 2. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
 
 
-        //Przemyslenia
+        //Do zrobienia później
         //Być może oddziel statystyki od zawodnika (nowa klasa w domain, repo, service)
         //Do statystyk dodaj pozycję na której zaczyna na boisku
         //Czy na pewno team musi mieć info o meczu w konstruktorze? -> Być może many do many (Rounda - mecze - zespoly?)
         //Wyszukiwanie wszystkich meczów oraz wybranej kolejki lub drużyny
+        //Komunikat, że się udało bądź nie wgrać scouta dodaj w inne miejsce
 
         return "views/round";
     }
 
-    //************************************************************
-    @PostMapping("/round") // //new annotation since 4.3
+
+    @PostMapping("/round")
     public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam("id") Long id) {
 
         if (file.isEmpty()) {
@@ -80,21 +75,22 @@ public class MainController {
 
         try {
 
-            // Get the file and save it somewhere
-            // A gdyby wszystko to dać do wybranego meczu i do ścieżki dopisać sezon z klasy?
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
-
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'" + path.toString());
-
             Optional<Match> match = matchService.getMatchById(id);
             if(match.isPresent()) {
+
                 Match current = match.get();
+
+                Path path = Paths.get(UPLOADED_FOLDER + current.getRound().getLeague().getLeagueName() + "_"
+                + current.getRound().getLeague().getSeason() + "_R" + current.getRound().getRoundNumber()
+                + "M" + current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
+                Files.write(path, file.getBytes());
+
+
+                redirectAttributes.addFlashAttribute("message",
+                        "You successfully uploaded '" + file.getOriginalFilename() + "'" + path.toString());
+
                 current.setScoutPath(path.toString());
                 matchService.addMatch(current);
-                System.out.println(current.getRound().getLeague().getLeagueName());
             }
 
         } catch (IOException e) {
@@ -105,17 +101,34 @@ public class MainController {
     }
 
 
-    //********************************************************************
-
     @GetMapping("/round/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) {
+
         Optional<Match> match = matchService.getMatchById(id);
 
         if(match.isPresent()) {
             Match currentMatch = match.get();
             model.addAttribute("currentMatch", currentMatch);
-            return "views/match";
-        }
+
+            //Now for file data
+            Path path = Paths.get(currentMatch.getScoutPath());
+
+
+            try (BufferedReader reader = Files.newBufferedReader(path, Charset.forName("ISO-8859-1"))) {
+
+                List<String> content = new ArrayList<>();
+                model.addAttribute("fileContent", content);
+
+                String currentLine = null;
+                while((currentLine = reader.readLine()) != null){//while there is content on the current line
+                    content.add(currentLine); // add the line to the list
+                }
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+
+                return "views/match";
+            }
 
         return "redirect:/";
     }
