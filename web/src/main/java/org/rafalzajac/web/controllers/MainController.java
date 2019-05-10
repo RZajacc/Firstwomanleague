@@ -2,6 +2,7 @@ package org.rafalzajac.web.controllers;
 
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
+import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Controller
 public class MainController {
@@ -37,6 +40,7 @@ public class MainController {
     //Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "web/src/main/resources/static/scouts/";
 
+
     @GetMapping("/round")
     public String league(Model model) {
 
@@ -48,6 +52,13 @@ public class MainController {
 
 
         //TODO list
+
+        //Branch obecny
+        //1. Wyluskaj z pliku info o meczu i statystki (Regex)
+        //2. Stwórz klasę dla statystyk i egzemplarz klasy będzie elementem modelu
+        //3. Wystarczy, że do tego co jest znajdziesz regexem team tag i nazwę zespołu, resztę na tej podstawie znajdziez
+        //   w bazie danych i dodasz zespół więc zawodników nie musisz tworzyć z regexa!
+        //4. Pomyśl jak zrobić statystyki rozgrywającego
 
         // Branch - z ligą i informacjami o niej
         // 1. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
@@ -80,11 +91,20 @@ public class MainController {
 
                 Match current = match.get();
 
-                Path path = Paths.get(UPLOADED_FOLDER + current.getRound().getLeague().getLeagueName() + "_"
-                + current.getRound().getLeague().getSeason() + "_R" + current.getRound().getRoundNumber()
-                + "M" + current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
-                Files.write(path, file.getBytes());
+                if(!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName() ))) {
+                    Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
+                }
 
+                if(!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))){
+                    Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
+                }
+
+                Path path = Paths.get(UPLOADED_FOLDER,  current.getRound().getLeague().getLeagueName(),
+                        current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber()+ "M"+
+                        current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
+
+                Files.write(path, file.getBytes());
+                
 
                 redirectAttributes.addFlashAttribute("message",
                         "You successfully uploaded '" + file.getOriginalFilename() + "'" + path.toString());
@@ -102,7 +122,7 @@ public class MainController {
 
 
     @GetMapping("/round/{id}")
-    public  String matchInfo(@PathVariable Long id, Model model) {
+    public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
 
         Optional<Match> match = matchService.getMatchById(id);
 
@@ -111,22 +131,26 @@ public class MainController {
             model.addAttribute("currentMatch", currentMatch);
 
             //Now for file data
-            Path path = Paths.get(currentMatch.getScoutPath());
+            ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()));
+            List<String> lines = scoutFileProcess.getHomeTeamData();
+
+            model.addAttribute("lines", lines);
 
 
-            try (BufferedReader reader = Files.newBufferedReader(path, Charset.forName("ISO-8859-1"))) {
 
-                List<String> content = new ArrayList<>();
-                model.addAttribute("fileContent", content);
-
-                String currentLine = null;
-                while((currentLine = reader.readLine()) != null){//while there is content on the current line
-                    content.add(currentLine); // add the line to the list
-                }
-            }catch(IOException ex){
-                ex.printStackTrace();
-            }
-
+//            try (BufferedReader reader = Files.newBufferedReader(path, Charset.forName("ISO-8859-1"))) {
+//
+//                List<String> content = new ArrayList<>();
+//                model.addAttribute("fileContent", content);
+//
+//                String currentLine = null;
+//                while((currentLine = reader.readLine()) != null){//while there is content on the current line
+//                    content.add(currentLine); // add the line to the list
+//                }
+//            }catch(IOException ex){
+//                ex.printStackTrace();
+//            }
+//
                 return "views/match";
             }
 

@@ -17,15 +17,27 @@
 <br/>
 <br/>
 
+<!--<table>-->
+<!--        <tr>-->
+<!--                <th>Data:</th>-->
+<!--        </tr>-->
+<!--        <tr th:each="str : ${fileContent}">-->
+<!--                <td th:text="${str}"></td>-->
+<!--        </tr>-->
+
+<!--</table>-->
+
 <table>
         <tr>
                 <th>Data:</th>
         </tr>
-        <tr th:each="str : ${fileContent}">
+        <tr th:each="str : ${lines}">
                 <td th:text="${str}"></td>
         </tr>
 
 </table>
+
+
 
 <footer th:replace="layouts/MainLayout :: footer"/>
 

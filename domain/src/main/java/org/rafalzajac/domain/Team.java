@@ -11,7 +11,6 @@ import java.util.List;
 
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
 public class Team {
@@ -33,6 +32,9 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Player> playerList;
 
+    public Team () {
+        playerList = new LinkedList<>();
+    }
 
     public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
         this.teamTag = teamTag;
@@ -60,5 +62,9 @@ public class Team {
         this.facebook = facebook;
         this.match = match;
         playerList = new LinkedList<>();
+    }
+
+    public void addPlayer (Player player) {
+        playerList.add(player);
     }
 }
