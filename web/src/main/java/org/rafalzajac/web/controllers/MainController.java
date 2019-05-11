@@ -54,11 +54,10 @@ public class MainController {
         //TODO list
 
         //Branch obecny
-        //1. Wyluskaj z pliku info o meczu i statystki (Regex)
-        //2. Stwórz klasę dla statystyk i egzemplarz klasy będzie elementem modelu
-        //3. Wystarczy, że do tego co jest znajdziesz regexem team tag i nazwę zespołu, resztę na tej podstawie znajdziez
-        //   w bazie danych i dodasz zespół więc zawodników nie musisz tworzyć z regexa!
-        //4. Pomyśl jak zrobić statystyki rozgrywającego
+        //1. Stwórz klasę dla statystyk
+        //2. Czy będzie się dało zapisać statystyki tak, żeby przynależały do meczu i osobną tabelą były ligowe?
+        //2. identyfikuj zespół który tworzysz przetwarzając scouta z bazą danych (team po tagu i nazwie, zawodnik po numerze i nazwisku)
+
 
         // Branch - z ligą i informacjami o niej
         // 1. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
@@ -71,6 +70,7 @@ public class MainController {
         //Czy na pewno team musi mieć info o meczu w konstruktorze? -> Być może many do many (Rounda - mecze - zespoly?)
         //Wyszukiwanie wszystkich meczów oraz wybranej kolejki lub drużyny
         //Komunikat, że się udało bądź nie wgrać scouta dodaj w inne miejsce
+        //Usuwanie pliku ze ścieżki
 
         return "views/round";
     }
@@ -132,25 +132,14 @@ public class MainController {
 
             //Now for file data
             ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()));
-            List<String> lines = scoutFileProcess.getHomeTeamData();
-
-            model.addAttribute("lines", lines);
+            scoutFileProcess.processScoutFile();
 
 
+            model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
+            model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
+            model.addAttribute("scout", scoutFileProcess.getMatchData());
 
-//            try (BufferedReader reader = Files.newBufferedReader(path, Charset.forName("ISO-8859-1"))) {
-//
-//                List<String> content = new ArrayList<>();
-//                model.addAttribute("fileContent", content);
-//
-//                String currentLine = null;
-//                while((currentLine = reader.readLine()) != null){//while there is content on the current line
-//                    content.add(currentLine); // add the line to the list
-//                }
-//            }catch(IOException ex){
-//                ex.printStackTrace();
-//            }
-//
+
                 return "views/match";
             }
 

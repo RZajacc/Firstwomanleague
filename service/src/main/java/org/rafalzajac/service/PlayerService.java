@@ -17,4 +17,8 @@ public class PlayerService {
     public Player addPlayer (Player player) {
         return playerRepository.save(player);
     }
+
+    public Player findPlayerByNumber(int number){
+        return playerRepository.findByNumber(number);
+    }
 }

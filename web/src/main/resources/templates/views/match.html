@@ -17,26 +17,103 @@
 <br/>
 <br/>
 
-<!--<table>-->
-<!--        <tr>-->
-<!--                <th>Data:</th>-->
-<!--        </tr>-->
-<!--        <tr th:each="str : ${fileContent}">-->
-<!--                <td th:text="${str}"></td>-->
-<!--        </tr>-->
-
-<!--</table>-->
-
 <table>
         <tr>
-                <th>Data:</th>
+                <th>Team Tag: </th>
+                <th>Team Name: </th>
+                <th>First coach: </th>
+                <th>Second coach: </th>
         </tr>
-        <tr th:each="str : ${lines}">
-                <td th:text="${str}"></td>
+        <tr>
+                <td th:text="${homeTeam.getTeamTag()}"></td>
+                <td th:text="${homeTeam.getTeamName()}"></td>
+                <td th:text="${homeTeam.getFirstCoach()}"></td>
+                <td th:text="${homeTeam.getSecondCoach()}"></td>
         </tr>
-
+        <tr>
+                <td th:text="${awayTeam.getTeamTag()}"></td>
+                <td th:text="${awayTeam.getTeamName()}"></td>
+                <td th:text="${awayTeam.getFirstCoach()}"></td>
+                <td th:text="${awayTeam.getSecondCoach()}"></td>
+        </tr>
 </table>
 
+<div class = "container" id = statsTable>
+
+        <table class="table table-hover table-bordered table-striped">
+                <thead class="thead-dark" style="text-align: center">
+                        <tr>
+                                <th scope="col" colspan="1"></th>
+                                <th scope="col" colspan="2"></th>
+                                <th scope="col" colspan="5">Ustawienie</th>
+                                <th scope="col" colspan="2">Punkty</th>
+                                <th scope="col" colspan="4">Zagrywka</th>
+                                <th scope="col" colspan="4">Przyjęcie</th>
+                                <th scope="col" colspan="5">Atak</th>
+                                <th scope="col" colspan="1">Blok</th>
+                        </tr>
+                </thead>
+
+                <thead class="thead-light">
+                        <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">1</th>
+                                <th scope="col">2</th>
+                                <th scope="col">3</th>
+                                <th scope="col">4</th>
+                                <th scope="col">5</th>
+                                <th scope="col">Suma</th>
+                                <th scope="col">Ratio</th>
+                                <th scope="col">Suma</th>
+                                <th scope="col">Błąd</th>
+                                <th scope="col">As</th>
+                                <th scope="col">Skut%</th>
+                                <th scope="col">Suma</th>
+                                <th scope="col">Błąd</th>
+                                <th scope="col">Poz%</th>
+                                <th scope="col">Perf%</th>
+                                <th scope="col">Suma</th>
+                                <th scope="col">Błąd</th>
+                                <th scope="col">Blk</th>
+                                <th scope="col">Pkt</th>
+                                <th scope="col">Skut%</th>
+                                <th scope="col">Pkt</th>
+                        </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="player : ${homeTeam.getPlayerList()}" style="text-align: center">
+                        <th scope="row" th:text="${player.getNumber()}"/>
+                        <td th:text="${player.getFirstName()}" style="text-align: left"/>
+                        <td th:text="${player.getLastName()}" style="text-align: left"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS1()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS2()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS3()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS4()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS5()}"/>
+                        <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getPointsRatio() != 0} ? ${player.getPlayerStats().getPointsRatio()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeAttempts() != 0} ? ${player.getPlayerStats().getServeAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeErrors() != 0} ? ${player.getPlayerStats().getServeErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeAce() != 0} ? ${player.getPlayerStats().getServeAce()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServePositivePercent()!= 0} ? ${player.getPlayerStats().getServePositivePercent() + '%'}  : '-' "/>
+                        <td th:text="${player.getPlayerStats().getReceptionAttempts() != 0} ? ${player.getPlayerStats().getReceptionAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionErrors() != 0} ? ${player.getPlayerStats().getReceptionErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionPositivePercent() != 0} ? ${player.getPlayerStats().getReceptionPositivePercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionPerfectPercent() != 0} ? ${player.getPlayerStats().getReceptionPerfectPercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackAttempts() != 0} ? ${player.getPlayerStats().getAttackAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackErrors() != 0} ? ${player.getPlayerStats().getAttackErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackBlocked() != 0} ? ${player.getPlayerStats().getAttackBlocked()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackFinished() != 0} ? ${player.getPlayerStats().getAttackFinished()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackFinishedPercent() != 0} ? ${player.getPlayerStats().getAttackFinishedPercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getBlockScore() != 0} ? ${player.getPlayerStats().getBlockScore()}  : '-'"/>
+                </tr>
+                </tbody>
+        </table>
+
+</div>
 
 
 <footer th:replace="layouts/MainLayout :: footer"/>

@@ -82,3 +82,11 @@ footer {
     position: relative;
     padding-bottom: 2.5rem;
 }
+
+#statsTable{
+    position: relative;
+    margin-left: 5%;
+    padding-bottom: 2.5rem;
+    margin-top: 3%;
+    font-size: small;
+}
