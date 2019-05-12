@@ -38,7 +38,7 @@
         </tr>
 </table>
 
-<div class = "container" id = statsTable>
+<div class = "container" id="homeTeamStats">
 
         <table class="table table-hover table-bordered table-striped">
                 <thead class="thead-dark" style="text-align: center">
@@ -109,6 +109,132 @@
                         <td th:text="${player.getPlayerStats().getAttackFinished() != 0} ? ${player.getPlayerStats().getAttackFinished()}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getAttackFinishedPercent() != 0} ? ${player.getPlayerStats().getAttackFinishedPercent()+ '%'}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getBlockScore() != 0} ? ${player.getPlayerStats().getBlockScore()}  : '-'"/>
+                </tr>
+                <tr style="text-align: center">
+                        <th scope="row" colspan="3">ŁĄCZNIE :</th>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getPointsTotal() != 0} ? ${homeTeam.getTeamStats().getPointsTotal()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getPointsRatio() != 0} ? ${homeTeam.getTeamStats().getPointsRatio()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getServeAttempts() != 0} ? ${homeTeam.getTeamStats().getServeAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getServeErrors() != 0} ? ${homeTeam.getTeamStats().getServeErrors()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getServeAce() != 0} ? ${homeTeam.getTeamStats().getServeAce()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getServePositivePercent() != 0} ? ${homeTeam.getTeamStats().getServePositivePercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getReceptionAttempts() != 0} ? ${homeTeam.getTeamStats().getReceptionAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getReceptionErrors() != 0} ? ${homeTeam.getTeamStats().getReceptionErrors()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getReceptionPositivePercent() != 0} ? ${homeTeam.getTeamStats().getReceptionPositivePercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getReceptionPerfectPercent() != 0} ? ${homeTeam.getTeamStats().getReceptionPerfectPercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getAttackAttempts() != 0} ? ${homeTeam.getTeamStats().getAttackAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getAttackErrors() != 0} ? ${homeTeam.getTeamStats().getAttackErrors()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getAttackBlocked() != 0} ? ${homeTeam.getTeamStats().getAttackBlocked()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getAttackFinished() != 0} ? ${homeTeam.getTeamStats().getAttackFinished()}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getAttackFinishedPercent() != 0} ? ${homeTeam.getTeamStats().getAttackFinishedPercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${homeTeam.getTeamStats().getBlockScore() != 0} ? ${homeTeam.getTeamStats().getBlockScore()}  : '-'"/>
+                </tr>
+                </tbody>
+        </table>
+
+</div>
+
+
+<div class = "container" id="awayTeamStats">
+
+        <table class="table table-hover table-bordered table-striped">
+                <thead class="thead-dark" style="text-align: center">
+                <tr>
+                        <th scope="col" colspan="1"></th>
+                        <th scope="col" colspan="2"></th>
+                        <th scope="col" colspan="5">Ustawienie</th>
+                        <th scope="col" colspan="2">Punkty</th>
+                        <th scope="col" colspan="4">Zagrywka</th>
+                        <th scope="col" colspan="4">Przyjęcie</th>
+                        <th scope="col" colspan="5">Atak</th>
+                        <th scope="col" colspan="1">Blok</th>
+                </tr>
+                </thead>
+
+                <thead class="thead-light">
+                <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">1</th>
+                        <th scope="col">2</th>
+                        <th scope="col">3</th>
+                        <th scope="col">4</th>
+                        <th scope="col">5</th>
+                        <th scope="col">Suma</th>
+                        <th scope="col">Ratio</th>
+                        <th scope="col">Suma</th>
+                        <th scope="col">Błąd</th>
+                        <th scope="col">As</th>
+                        <th scope="col">Skut%</th>
+                        <th scope="col">Suma</th>
+                        <th scope="col">Błąd</th>
+                        <th scope="col">Poz%</th>
+                        <th scope="col">Perf%</th>
+                        <th scope="col">Suma</th>
+                        <th scope="col">Błąd</th>
+                        <th scope="col">Blk</th>
+                        <th scope="col">Pkt</th>
+                        <th scope="col">Skut%</th>
+                        <th scope="col">Pkt</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="player : ${awayTeam.getPlayerList()}" style="text-align: center">
+                        <th scope="row" th:text="${player.getNumber()}"/>
+                        <td th:text="${player.getFirstName()}" style="text-align: left"/>
+                        <td th:text="${player.getLastName()}" style="text-align: left"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS1()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS2()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS3()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS4()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS5()}"/>
+                        <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getPointsRatio() != 0} ? ${player.getPlayerStats().getPointsRatio()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeAttempts() != 0} ? ${player.getPlayerStats().getServeAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeErrors() != 0} ? ${player.getPlayerStats().getServeErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServeAce() != 0} ? ${player.getPlayerStats().getServeAce()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getServePositivePercent()!= 0} ? ${player.getPlayerStats().getServePositivePercent() + '%'}  : '-' "/>
+                        <td th:text="${player.getPlayerStats().getReceptionAttempts() != 0} ? ${player.getPlayerStats().getReceptionAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionErrors() != 0} ? ${player.getPlayerStats().getReceptionErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionPositivePercent() != 0} ? ${player.getPlayerStats().getReceptionPositivePercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getReceptionPerfectPercent() != 0} ? ${player.getPlayerStats().getReceptionPerfectPercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackAttempts() != 0} ? ${player.getPlayerStats().getAttackAttempts()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackErrors() != 0} ? ${player.getPlayerStats().getAttackErrors()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackBlocked() != 0} ? ${player.getPlayerStats().getAttackBlocked()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackFinished() != 0} ? ${player.getPlayerStats().getAttackFinished()}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getAttackFinishedPercent() != 0} ? ${player.getPlayerStats().getAttackFinishedPercent()+ '%'}  : '-'"/>
+                        <td th:text="${player.getPlayerStats().getBlockScore() != 0} ? ${player.getPlayerStats().getBlockScore()}  : '-'"/>
+                </tr>
+                <tr style="text-align: center">
+                        <th scope="row" colspan="3">ŁĄCZNIE :</th>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getPointsTotal() != 0} ? ${awayTeam.getTeamStats().getPointsTotal()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getPointsRatio() != 0} ? ${awayTeam.getTeamStats().getPointsRatio()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getServeAttempts() != 0} ? ${awayTeam.getTeamStats().getServeAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getServeErrors() != 0} ? ${awayTeam.getTeamStats().getServeErrors()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getServeAce() != 0} ? ${awayTeam.getTeamStats().getServeAce()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getServePositivePercent() != 0} ? ${awayTeam.getTeamStats().getServePositivePercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getReceptionAttempts() != 0} ? ${awayTeam.getTeamStats().getReceptionAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getReceptionErrors() != 0} ? ${awayTeam.getTeamStats().getReceptionErrors()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getReceptionPositivePercent() != 0} ? ${awayTeam.getTeamStats().getReceptionPositivePercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getReceptionPerfectPercent() != 0} ? ${awayTeam.getTeamStats().getReceptionPerfectPercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getAttackAttempts() != 0} ? ${awayTeam.getTeamStats().getAttackAttempts()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getAttackErrors() != 0} ? ${awayTeam.getTeamStats().getAttackErrors()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getAttackBlocked() != 0} ? ${awayTeam.getTeamStats().getAttackBlocked()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getAttackFinished() != 0} ? ${awayTeam.getTeamStats().getAttackFinished()}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getAttackFinishedPercent() != 0} ? ${awayTeam.getTeamStats().getAttackFinishedPercent() + '%'}  : '-'"/>
+                        <th scope="row" th:text="${awayTeam.getTeamStats().getBlockScore() != 0} ? ${awayTeam.getTeamStats().getBlockScore()}  : '-'"/>
                 </tr>
                 </tbody>
         </table>

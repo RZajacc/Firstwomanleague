@@ -1,0 +1,42 @@
+
+//Zapis danych ze scouta do bazy danych:
+        //1. Pomyśl jak wynik który uzyskasz zapisać w bazie danych
+        //2. Jak wymyslisz, to zrób metodę która to uczyni
+        //3. Sortowanie tabeli zawodniczek drużyn po numerach
+
+//Strona runda:
+        //1. Zmień schemat tabeli
+        //2. Statystyki jako button i być może nie w tym miejscu
+        //3. Submit pliku w osobnej kolumnie inny schemat
+        //4. Komunikat, że się udało bądź nie wgrać scouta dodaj w inne miejsce
+        //5. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
+
+//Strona mecz:
+        //1. Umieść na statystykami nazwę drużyny i trenerów
+        //2. Na górze strony przemyśl jak przedstawić ogólnie ten mecz(wynik, zespoły, runda, nr meczu)
+
+//Strona zespoły:
+        //1. Zmień schemat tabeli
+        //2. Być może jakieś info u góry (Liga, sezon)
+
+//Strona zespół:
+        //1. Zmień schemat tabeli
+        //2. Być może jakieś info u góry (Liga, sezon, trenerzy, logo?)
+
+//Wynik meczu:
+        //1. Stwórz możliwość poprzez formularza dodania wyniku meczu
+        //2. Pomyśl, czy potrzebna jest nowa klasa z wynikim dla meczu zmapowana na mecz jeżeli tak utwórz
+
+//Tabela:
+        //1. Tabela sortowana wg zasad PZPS
+
+//Ranking:
+        //1. Ranking wg wybranego elementu
+
+//Rundy:
+        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą?
+
+// Panel administracyjny
+        //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
+        //2. Kontroler dla admina
+        //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi

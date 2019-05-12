@@ -12,17 +12,10 @@ import javax.persistence.OneToOne;
 @Entity
 @NoArgsConstructor
 @Getter @Setter
-public class PlayerStats {
+public class TeamStats {
 
     @Id @GeneratedValue
     private Long id;
-
-    //Starting rotation
-    private String startingRotS1;
-    private String startingRotS2;
-    private String startingRotS3;
-    private String startingRotS4;
-    private String startingRotS5;
 
     //Points
     private int pointsTotal = 0;
@@ -53,6 +46,7 @@ public class PlayerStats {
     //Block
     private int blockScore = 0;
 
+
     @OneToOne
-    private Player player;
+    private Team team;
 }

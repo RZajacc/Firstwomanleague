@@ -8,17 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+
 
 @Controller
 public class MainController {
@@ -48,29 +44,6 @@ public class MainController {
         List<Match> matchList = matchService.findAllMatches();
         model.addAttribute("rounds", rounds);
         model.addAttribute("matches", matchList);
-
-
-
-        //TODO list
-
-        //Branch obecny
-        //1. Stwórz klasę dla statystyk
-        //2. Czy będzie się dało zapisać statystyki tak, żeby przynależały do meczu i osobną tabelą były ligowe?
-        //2. identyfikuj zespół który tworzysz przetwarzając scouta z bazą danych (team po tagu i nazwie, zawodnik po numerze i nazwisku)
-
-
-        // Branch - z ligą i informacjami o niej
-        // 1. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
-        // 2. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
-
-
-        //Do zrobienia później
-        //Być może oddziel statystyki od zawodnika (nowa klasa w domain, repo, service)
-        //Do statystyk dodaj pozycję na której zaczyna na boisku
-        //Czy na pewno team musi mieć info o meczu w konstruktorze? -> Być może many do many (Rounda - mecze - zespoly?)
-        //Wyszukiwanie wszystkich meczów oraz wybranej kolejki lub drużyny
-        //Komunikat, że się udało bądź nie wgrać scouta dodaj w inne miejsce
-        //Usuwanie pliku ze ścieżki
 
         return "views/round";
     }
@@ -137,7 +110,6 @@ public class MainController {
 
             model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
             model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
-            model.addAttribute("scout", scoutFileProcess.getMatchData());
 
 
                 return "views/match";

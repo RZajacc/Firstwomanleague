@@ -32,6 +32,9 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Player> playerList;
 
+    @OneToOne
+    private TeamStats teamStats;
+
     public Team () {
         playerList = new LinkedList<>();
     }
@@ -63,6 +66,17 @@ public class Team {
         this.match = match;
         playerList = new LinkedList<>();
     }
+
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, TeamStats teamStats) {
+        this.teamTag = teamTag;
+        this.teamName = teamName;
+        this.firstCoach = firstCoach;
+        this.secondCoach = secondCoach;
+        this.teamStats = teamStats;
+        playerList = new LinkedList<>();
+    }
+
+
 
     public void addPlayer (Player player) {
         playerList.add(player);
