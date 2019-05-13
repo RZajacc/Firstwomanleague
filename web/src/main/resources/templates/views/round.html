@@ -26,11 +26,12 @@
                <th>Gospodarz</th>
                <th>Gość</th>
                <th>Statystyki</th>
+               <th></th>
                <th>Scout</th>
                <th>Akcja</th>
                <th></th>
                <th></th>
-               <th></th>
+
            </tr>
        </thead>
         <tbody>
@@ -43,16 +44,16 @@
                     <a th:href="@{'/round/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
 
-                <form method="POST" action="/round" enctype="multipart/form-data">
-                    <td><button id="uploadButton" type="button" class="btn btn-secondary" onclick="$('#fileupload').click()">Wybierz plik</button></td>
-                    <td><button id="fileSubmitButton" type="button" class="btn btn-info" onclick="$('#submitFile').click()">Wyślij</button></td>
-                    <td><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
-                    <td><input type="file" name="file" id="fileupload" style="display: none" onchange="$('#uploadButton').hide()"/></td>
-                    <td><input type="submit" value="Submit" id="submitFile" style="display: none" onchange="$('#fileSubmitButton').hide()"/></td>
+                <td>
+                    <form method="POST" action="/round" enctype="multipart/form-data">
+                        <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
+                        <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
+                        <td><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
                 </form>
-
-
+                </td>
+                <td/>
             </tr>
+
         </tbody>
     </table>
 </div>
