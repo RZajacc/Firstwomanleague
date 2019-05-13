@@ -36,13 +36,22 @@ public class DataBaseLoader implements CommandLineRunner {
         Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1);
         Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1);
         Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1);
-        Match match4 = new Match("Uni Opole", "MKS Dabrowa", 4, round1);
-        Match match5 = new Match("MKS Dabrowa", "7R Solna Wieliczka", 5, round1);
+
 
 
         //Creating team instances
-        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki","http://www.mks.dabrowa.pl","https://www.facebook.com/mks.dabrowa" ,match1);
-        Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", match1);
+        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki");
+        Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski");
+        Team team3 = new Team("JOK", "Joker Swiecie", "Michal Wojtowicz", "Milosz Szwaba");
+        Team team4 = new Team("ENE", "Energetyk Poznan", "Michal Patyk");
+
+        team1.getMatchList().add(match1);
+        team1.getMatchList().add(match2);
+        team1.getMatchList().add(match3);
+
+        team2.getMatchList().add(match1);
+        team3.getMatchList().add(match2);
+        team4.getMatchList().add(match3);
 
         Match match6 = new Match(team1.getTeamName(), "PWSZ Tarnow", round1);
 
@@ -88,12 +97,13 @@ public class DataBaseLoader implements CommandLineRunner {
         matchService.addMatch(match1);
         matchService.addMatch(match2);
         matchService.addMatch(match3);
-        matchService.addMatch(match4);
-        matchService.addMatch(match5);
+
 
         //Adding teams to database
         teamService.addTeam(team1);
         teamService.addTeam(team2);
+        teamService.addTeam(team3);
+        teamService.addTeam(team4);
 
         //Adding players to database
         playerService.addPlayer(Bryda);

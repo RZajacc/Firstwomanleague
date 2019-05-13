@@ -96,10 +96,10 @@
                         <td th:text="${player.getFirstName()}" style="text-align: left"/>
                         <td th:text="${player.getLastName()}" style="text-align: left"/>
                         <td th:text="${player.getPlayerStats().getStartingRotS1()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS2()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS3()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS4()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS5()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS2()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS3()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS4()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS5()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
                         <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getPointsRatio() != 0} ? ${player.getPlayerStats().getPointsRatio()}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getServeAttempts() != 0} ? ${player.getPlayerStats().getServeAttempts()}  : '-'"/>
@@ -198,10 +198,10 @@
                         <td th:text="${player.getFirstName()}" style="text-align: left"/>
                         <td th:text="${player.getLastName()}" style="text-align: left"/>
                         <td th:text="${player.getPlayerStats().getStartingRotS1()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS2()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS3()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS4()}"/>
-                        <td th:text="${player.getPlayerStats().getStartingRotS5()}"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS2()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS3()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS4()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
+                        <td th:text="${player.getPlayerStats().getStartingRotS5()!= null} ? ${player.getPlayerStats().getStartingRotS1()} : '-'"/>
                         <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getPointsRatio() != 0} ? ${player.getPlayerStats().getPointsRatio()}  : '-'"/>
                         <td th:text="${player.getPlayerStats().getServeAttempts() != 0} ? ${player.getPlayerStats().getServeAttempts()}  : '-'"/>

@@ -1,10 +1,6 @@
 
 //Strona runda:
-        //1. Zmień schemat tabeli
-        //2. Statystyki jako button i być może nie w tym miejscu
-        //3. Submit pliku w osobnej kolumnie inny schemat
-        //4. Komunikat, że się udało bądź nie wgrać scouta dodaj w inne miejsce i innej treści
-        //5. Dodać fazę rozgrywek do ligi (Zasadnicza, Playoff, Playout?)
+        //1. Statystyki jako button i być może nie w tym miejscu. Pozostałe buttony zmien szablon
 
 
 //Strona zespoły:
@@ -40,3 +36,4 @@
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
         //2. Kontroler dla admina
         //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
+        //4. Faza rozgrywek?

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class Team {
     private String webPage;
     private String facebook;
 
-    @ManyToOne
-    private Match match;
+    @ManyToMany
+    private List<Match> matchList;
 
     @OneToMany(mappedBy = "team")
     private List<Player> playerList;
@@ -45,25 +46,34 @@ public class Team {
         this.firstCoach = firstCoach;
         this.secondCoach = secondCoach;
         playerList = new LinkedList<>();
+        matchList = new LinkedList<>();
     }
 
-    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, Match match) {
+    public Team(String teamTag, String teamName, String firstCoach) {
         this.teamTag = teamTag;
         this.teamName = teamName;
         this.firstCoach = firstCoach;
-        this.secondCoach = secondCoach;
-        this.match = match;
         playerList = new LinkedList<>();
+        matchList = new LinkedList<>();
     }
 
-    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, String webPage, String facebook, Match match) {
+//    public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
+//        this.teamTag = teamTag;
+//        this.teamName = teamName;
+//        this.firstCoach = firstCoach;
+//        this.secondCoach = secondCoach;
+//        match = new ArrayList<>()
+//        playerList = new LinkedList<>();
+//    }
+
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, String webPage, String facebook) {
         this.teamTag = teamTag;
         this.teamName = teamName;
         this.firstCoach = firstCoach;
         this.secondCoach = secondCoach;
         this.webPage = webPage;
         this.facebook = facebook;
-        this.match = match;
+        matchList = new ArrayList<>();
         playerList = new LinkedList<>();
     }
 

@@ -29,7 +29,7 @@ public class Match {
     @ManyToOne
     Round round;
 
-    @OneToMany(mappedBy = "match")
+    @ManyToMany(mappedBy = "matchList")
     private List<Team> teams;
 
     public Match(String homeTeam, String awayTeam) {

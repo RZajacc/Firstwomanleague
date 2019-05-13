@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.transaction.TransactionManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -79,8 +81,9 @@ public class MainController {
                 Files.write(path, file.getBytes());
                 
 
-                redirectAttributes.addFlashAttribute("message",
-                        "You successfully uploaded '" + file.getOriginalFilename() + "'" + path.toString());
+                redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
+                        current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
+                        "-" + current.getAwayTeam() + ".dvw");
 
                 current.setScoutPath(path.toString());
                 matchService.addMatch(current);
@@ -103,13 +106,24 @@ public class MainController {
             Match currentMatch = match.get();
             model.addAttribute("currentMatch", currentMatch);
 
+
             //Now for file data
-            ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()));
-            scoutFileProcess.processScoutFile();
-
-
-            model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
-            model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
+            if(currentMatch.getScoutPath() != null) {
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()));
+                scoutFileProcess.processScoutFile();
+                model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
+                model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
+            } else {
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess();
+                Team hTeam = currentMatch.getTeams().get(0);
+                hTeam.setTeamStats(new TeamStats());
+                hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
+                Team aTeam = currentMatch.getTeams().get(1);
+                aTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
+                aTeam.setTeamStats(new TeamStats());
+                model.addAttribute("homeTeam", hTeam);
+                model.addAttribute("awayTeam", aTeam);
+            }
 
 
                 return "views/match";

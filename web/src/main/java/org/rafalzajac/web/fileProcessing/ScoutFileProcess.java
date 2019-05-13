@@ -2,6 +2,7 @@ package org.rafalzajac.web.fileProcessing;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Data
+@NoArgsConstructor
 public class ScoutFileProcess {
 
     private Path scoutFilePath;
@@ -23,6 +25,7 @@ public class ScoutFileProcess {
     List<String> teamData = new LinkedList<>();
     List<String> playerData = new LinkedList<>();
     List<String> matchData = new LinkedList<>();
+
 
     public ScoutFileProcess(Path scoutFilePath) {
         this.scoutFilePath = scoutFilePath;
