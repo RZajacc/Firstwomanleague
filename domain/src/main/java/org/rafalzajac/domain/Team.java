@@ -57,6 +57,15 @@ public class Team {
         matchList = new LinkedList<>();
     }
 
+    public Team(String teamTag, String teamName, String firstCoach, TeamStats teamStats) {
+        this.teamTag = teamTag;
+        this.teamName = teamName;
+        this.firstCoach = firstCoach;
+        this.teamStats = teamStats;
+        playerList = new LinkedList<>();
+        matchList = new LinkedList<>();
+    }
+
 //    public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
 //        this.teamTag = teamTag;
 //        this.teamName = teamName;

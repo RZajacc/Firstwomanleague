@@ -85,11 +85,23 @@ public class ScoutFileProcess {
             String[] data = teamData.get(0).split(";");
             String[] data1 = teamData.get(1).split(";");
 
+        System.out.println("data length" + data.length);
+        System.out.println("data length" + data1.length);
+
             TeamStats hTeamStats = new TeamStats();
-            homeTeam = new Team(data[0], data[1], data[2], data[3], hTeamStats);
+            if (data.length == 3) {
+                homeTeam = new Team(data[0], data[1], data[2], hTeamStats);
+            } else {
+                homeTeam = new Team(data[0], data[1], data[2], data[3], hTeamStats);
+            }
 
             TeamStats aTeamStats = new TeamStats();
-            awayTeam = new Team(data1[0], data1[1], data1[2], data1[3], aTeamStats);
+            if (data1.length == 3) {
+                awayTeam = new Team(data1[0], data1[1], data1[2], aTeamStats);
+            } else {
+                awayTeam = new Team(data1[0], data1[1], data1[2], data1[3], aTeamStats);
+            }
+
         }
 
 

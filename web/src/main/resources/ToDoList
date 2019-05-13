@@ -1,12 +1,8 @@
 
 //Strona zespoły:
         //1. Zmień schemat tabeli
-        //2. Być może jakieś info u góry (Liga, sezon)
-
-
-//Strona zespół:
-        //1. Zmień schemat tabeli
-        //2. Być może jakieś info u góry (Liga, sezon, trenerzy, logo?)
+        //2. Być może jakieś info u góry (Liga, sezon, , trenerzy)
+        //3. Zmień schemat tabeli każdego zespołu
 
 
 //Zapis danych ze scouta do bazy danych:
