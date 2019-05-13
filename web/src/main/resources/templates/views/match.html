@@ -8,40 +8,47 @@
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
 
-        <p>Mecz jest z rundy : <span th:text="${currentMatch.getRound().getRoundNumber()}" /></p>
-        <p>Mecz nr : <span th:text="${currentMatch.getMatchNumber()}" /></p>
-        <p>Gospodarz : <span th:text="${currentMatch.getHomeTeam()}"/> </p>
-        <p>Gość : <span th:text="${currentMatch.getAwayTeam()}"/></p>
-        <p>Scieżka : <span th:text="${currentMatch.getScoutPath()}"/> </p>
+<div class="container col-md-5" id="matchInfo">
 
-<br/>
-<br/>
+        <table class="table table-hover">
+                <thead class="thead-light">
+                        <tr>
+                                <th colspan="3" style="text-align: center">Informacje o meczu: </th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                <th th:text="${homeTeam.getTeamName()}"/>
+                                <td>-Zespoły-</td>
+                                <th th:text="${awayTeam.getTeamName()}"/>
+                        </tr>
+                                <tr>
+                                        <th th:text="${homeTeam.getFirstCoach()!= 0} ? ${homeTeam.getFirstCoach()}  : '-'"/>
+                                        <td>-I Trener-</td>
+                                        <th th:text="${awayTeam.getFirstCoach()!= 0} ? ${awayTeam.getFirstCoach()}  : '-'"/>
+                                </tr>
+                        <tr>
+                                <th th:text="${homeTeam.getSecondCoach()!= 0} ? ${homeTeam.getSecondCoach()}  : '-'"/>
+                                <td>-II Trener-</td>
+                                <th th:text="${awayTeam.getSecondCoach()!= 0} ? ${awayTeam.getSecondCoach()}  : '-'"/>
+                        </tr>
+                        <tr>
+                                <th/>
+                                <td>-Wynik-</td>
+                                <th/>
+                        </tr>
+                </tbody>
 
-<table>
-        <tr>
-                <th>Team Tag: </th>
-                <th>Team Name: </th>
-                <th>First coach: </th>
-                <th>Second coach: </th>
-        </tr>
-        <tr>
-                <td th:text="${homeTeam.getTeamTag()}"></td>
-                <td th:text="${homeTeam.getTeamName()}"></td>
-                <td th:text="${homeTeam.getFirstCoach()}"></td>
-                <td th:text="${homeTeam.getSecondCoach()}"></td>
-        </tr>
-        <tr>
-                <td th:text="${awayTeam.getTeamTag()}"></td>
-                <td th:text="${awayTeam.getTeamName()}"></td>
-                <td th:text="${awayTeam.getFirstCoach()}"></td>
-                <td th:text="${awayTeam.getSecondCoach()}"></td>
-        </tr>
-</table>
+        </table>
+</div>
 
+
+<h3 th:text="${homeTeam.getTeamName()} + ' :'" class="centeredText"/>
 <div class = "container" id="homeTeamStats">
 
         <table class="table table-hover table-bordered table-striped">
                 <thead class="thead-dark" style="text-align: center">
+
                         <tr>
                                 <th scope="col" colspan="1"></th>
                                 <th scope="col" colspan="2"></th>
@@ -139,7 +146,7 @@
 
 </div>
 
-
+<h4 th:text="${awayTeam.getTeamName()} + ' :'" class="centeredText"/>
 <div class = "container" id="awayTeamStats">
 
         <table class="table table-hover table-bordered table-striped">
