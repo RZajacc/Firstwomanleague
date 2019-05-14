@@ -55,4 +55,8 @@ public class PlayerStats {
 
     @OneToOne
     private Player player;
+
+    public PlayerStats(Player player) {
+        this.player = player;
+    }
 }

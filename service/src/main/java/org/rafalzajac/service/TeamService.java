@@ -27,4 +27,8 @@ public class TeamService {
     public Optional<Team> getTeamById(Long id) {
         return teamRepository.findById(id);
     }
+
+    public Team getTeamByTag(String tag) {
+        return teamRepository.findByTeamTag(tag);
+    }
 }

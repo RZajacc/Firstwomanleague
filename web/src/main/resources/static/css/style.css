@@ -58,6 +58,12 @@ body {
     padding-bottom: 2.5rem;
 }
 
+#rankTable {
+    margin-top: 5%;
+    position: relative;
+    padding-bottom: 2.5rem;
+}
+
 #homeTeamStats{
     position: relative;
     margin-left: 5%;

@@ -49,4 +49,8 @@ public class TeamStats {
 
     @OneToOne
     private Team team;
+
+    public TeamStats(Team team) {
+        this.team = team;
+    }
 }

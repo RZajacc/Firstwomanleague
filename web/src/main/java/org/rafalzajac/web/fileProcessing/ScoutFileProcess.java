@@ -4,10 +4,14 @@ package org.rafalzajac.web.fileProcessing;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.*;
+import org.rafalzajac.service.PlayerService;
+import org.rafalzajac.service.PlayerStatsService;
+import org.rafalzajac.service.TeamService;
+import org.rafalzajac.service.TeamStatsService;
+
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,13 +26,20 @@ public class ScoutFileProcess {
     private Team homeTeam;
     private Team awayTeam;
     private Player player;
-    List<String> teamData = new LinkedList<>();
-    List<String> playerData = new LinkedList<>();
-    List<String> matchData = new LinkedList<>();
+    private List<String> teamData = new LinkedList<>();
+    private List<String> playerData = new LinkedList<>();
+    private List<String> matchData = new LinkedList<>();
+    private PlayerService playerService;
+    private TeamService teamService;
+    private PlayerStatsService playerStatsService;
+    private TeamStatsService teamStatsService;
 
-
-    public ScoutFileProcess(Path scoutFilePath) {
+    public ScoutFileProcess(Path scoutFilePath, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
         this.scoutFilePath = scoutFilePath;
+        this.teamService = teamService;
+        this.playerService = playerService;
+        this.playerStatsService = playerStatsService;
+        this.teamStatsService = teamStatsService;
     }
 
     public void processScoutFile() throws Exception {
@@ -114,9 +125,9 @@ public class ScoutFileProcess {
 
             // W przypadk zawodnikóa "0" identyfikuje zespół gospodarza, "1" gościa
             if(teamData[0].equals("0")){
-                createEachPlayer(homeTeam, teamData, playerStats );
+                createEachPlayer(homeTeam, teamData, playerStats);
             }else {
-                createEachPlayer(awayTeam, teamData, playerStats );
+                createEachPlayer(awayTeam, teamData, playerStats);
             }
         });
     }
@@ -342,6 +353,38 @@ public class ScoutFileProcess {
 
             }
         }
+    }
+
+    public void saveStatsToDatabase() {
+
+        TeamStats teamStats = homeTeam.getTeamStats();
+        teamStatsService.saveTeamStats(teamStats);
+        homeTeam.setTeamStats(teamStats);
+        teamService.addTeam(homeTeam);
+
+        TeamStats teamStats2 = awayTeam.getTeamStats();
+        teamStatsService.saveTeamStats(teamStats2);
+        awayTeam.setTeamStats(teamStats2);
+        teamService.addTeam(awayTeam);
+
+        homeTeam.getPlayerList().forEach((player) -> {
+
+            PlayerStats stats = player.getPlayerStats();
+            playerStatsService.savePlayerStats(stats);
+            player.setPlayerStats(stats);
+            playerService.addPlayer(player);
+        });
+
+        awayTeam.getPlayerList().forEach((player) -> {
+
+            PlayerStats stats = player.getPlayerStats();
+            playerStatsService.savePlayerStats(stats);
+            player.setPlayerStats(stats);
+            playerService.addPlayer(player);
+        });
+
+
+
     }
 
 

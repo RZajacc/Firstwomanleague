@@ -5,6 +5,9 @@ import org.rafalzajac.domain.Player;
 import org.rafalzajac.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 public class PlayerService {
 
@@ -18,7 +21,8 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Player findPlayerByNumber(int number){
-        return playerRepository.findByNumber(number);
+    public List<Player> findAllPlayers() {
+        return playerRepository.findAll();
     }
+
 }

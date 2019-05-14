@@ -8,12 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.transaction.TransactionManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +26,17 @@ public class MainController {
         private MatchService matchService;
         private TeamService teamService;
         private PlayerService playerService;
+        private PlayerStatsService playerStatsService;
+        private TeamStatsService teamStatsService;
 
-        public MainController(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService) {
+        public MainController(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
         this.leagueService = leagueService;
         this.roundService = roundService;
         this.matchService = matchService;
         this.teamService = teamService;
         this.playerService = playerService;
+        this.playerStatsService = playerStatsService;
+        this.teamStatsService = teamStatsService;
         }
 
     //Save the uploaded file to this folder
@@ -109,8 +113,13 @@ public class MainController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()));
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
                 scoutFileProcess.processScoutFile();
+                scoutFileProcess.saveStatsToDatabase();
+                //Znajdz zawodnika po teamie i numerze!
+                //Request param boolean? Którym sobie wyzwolę zapis danych?
+                //Zmienna zadeklarowana tutaj i dodana do modelu?
+
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
                 model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
             } else {
@@ -125,7 +134,6 @@ public class MainController {
                 model.addAttribute("awayTeam", aTeam);
             }
 
-
                 return "views/match";
             }
 
@@ -138,7 +146,17 @@ public class MainController {
     }
 
     @GetMapping("/rank")
-    public String rankTable() {
+    public String rankTable(Model model) {
+
+        List<Player> players = playerService.findAllPlayers();
+        players.sort((p1, p2) ->
+            p2.getPlayerStats().getPointsTotal() - p1.getPlayerStats().getPointsTotal()
+        );
+
+        List<Integer> a = Arrays.asList(1,2,3,4,5);
+
+        model.addAttribute("allPlayers", players);
+
         return "views/rank";
     }
 
