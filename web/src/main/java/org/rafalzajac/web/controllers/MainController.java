@@ -145,10 +145,8 @@ public class MainController {
 
     @GetMapping("/teams")
     public  String teamData(Model model) {
-
         List<Team> allTeams = teamService.findAllTeams();
         model.addAttribute("teams", allTeams);
-
         return "views/teams";
     }
 
@@ -159,9 +157,7 @@ public class MainController {
 
             if (team.isPresent()) {
                 Team currentTeam = team.get();
-                List<Player> players = currentTeam.getPlayerList();
                 model.addAttribute("selectedTeam", currentTeam);
-                model.addAttribute("teamPlayers", players);
                 return "views/selectedTeam";
             }
 

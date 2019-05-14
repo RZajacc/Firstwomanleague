@@ -66,14 +66,15 @@ public class Team {
         matchList = new LinkedList<>();
     }
 
-//    public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
-//        this.teamTag = teamTag;
-//        this.teamName = teamName;
-//        this.firstCoach = firstCoach;
-//        this.secondCoach = secondCoach;
-//        match = new ArrayList<>()
-//        playerList = new LinkedList<>();
-//    }
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, TeamStats teamStats) {
+        this.teamTag = teamTag;
+        this.teamName = teamName;
+        this.firstCoach = firstCoach;
+        this.secondCoach = secondCoach;
+        this.teamStats = teamStats;
+        playerList = new LinkedList<>();
+    }
+
 
     public Team(String teamTag, String teamName, String firstCoach, String secondCoach, String webPage, String facebook) {
         this.teamTag = teamTag;
@@ -85,16 +86,6 @@ public class Team {
         matchList = new ArrayList<>();
         playerList = new LinkedList<>();
     }
-
-    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, TeamStats teamStats) {
-        this.teamTag = teamTag;
-        this.teamName = teamName;
-        this.firstCoach = firstCoach;
-        this.secondCoach = secondCoach;
-        this.teamStats = teamStats;
-        playerList = new LinkedList<>();
-    }
-
 
 
     public void addPlayer (Player player) {

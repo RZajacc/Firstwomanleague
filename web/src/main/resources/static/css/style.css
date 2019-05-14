@@ -53,7 +53,7 @@ body {
 }
 
 #teamTable {
-    margin-top: 3%;
+    margin-top: 5%;
     position: relative;
     padding-bottom: 2.5rem;
 }
@@ -91,3 +91,7 @@ body {
     padding-bottom: 1%;
 }
 
+#teamInfo {
+    margin-top: 3%;
+    position: relative;
+}

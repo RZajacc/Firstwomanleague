@@ -1,14 +1,10 @@
 
-//Strona zespoły:
-        //1. Zmień schemat tabeli
-        //2. Być może jakieś info u góry (Liga, sezon, , trenerzy)
-        //3. Zmień schemat tabeli każdego zespołu
-
-
 //Zapis danych ze scouta do bazy danych:
         //1. Pomyśl jak wynik który uzyskasz zapisać w bazie danych
         //2. Jak wymyslisz, to zrób metodę która to uczyni
-        //3. Sortowanie tabeli zawodniczek drużyn po numerach
+
+//Ranking:
+        //1. Ranking wg wybranego elementu
 
 
 //Wynik meczu:
@@ -18,14 +14,19 @@
 //Tabela:
         //1. Tabela sortowana wg zasad PZPS
 
-//Ranking:
-        //1. Ranking wg wybranego elementu
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą?
+
+
+// Security
+        //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
+        //2. Panel administracyjny również
+
 
 // Panel administracyjny
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
         //2. Kontroler dla admina
         //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
         //4. Faza rozgrywek?
+

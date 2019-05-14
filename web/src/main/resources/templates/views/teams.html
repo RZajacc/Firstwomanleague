@@ -11,21 +11,19 @@
 
 
 <div class="container" id="teamTable">
-
-    <h4 class="centeredText">Zespoły</h4>
-    <br/><br/>
     <table class="table table-hover tableData" >
-        <tr>
-            <th>Nazwa zespołu</th>
-            <th>Pierwszy trener</th>
-            <th>Drugi trener</th>
-            <th>Strona www</th>
-            <th>Facebook</th>
-            <th>Więcej</th>
+        <thead class="thead-light">
+            <tr>
+                <th>Nazwa zespołu</th>
+                <th>Pierwszy trener</th>
+                <th>Drugi trener</th>
+                <th>Strona www</th>
+                <th>Facebook</th>
+                <th>Więcej</th>
 
-
-        </tr>
-
+            </tr>
+        </thead>
+        <tbody>
         <tr th:each="team : ${teams}">
             <td th:text="${team.getTeamName()}"></td>
             <td th:text="${team.getFirstCoach()}"></td>
@@ -37,31 +35,13 @@
                 <a th:href="${team.getFacebook()}"><span th:text="${team.getFacebook()}"/></a>
             </td>
             <td>
-                <a th:href="@{'/teams/currentteam/' + ${team.getId()}}">Zespół</a>
+                <a th:href="@{'/teams/currentteam/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>
             </td>
         </tr>
+        </tbody>
+
     </table>
 </div>
-
-
-
-<!--<div>-->
-<!--    <table class="table table-hover tableData" >-->
-<!--        <tr>-->
-<!--            <th>Nazwa zespolu</th>-->
-<!--            <th>Pierwszy trener</th>-->
-<!--            <th>Drugi trener</th>-->
-
-<!--        </tr>-->
-
-<!--        <tr th:each="team : ${teams}">-->
-<!--            <td th:text="${team.getTeamName()}"></td>-->
-<!--            <td th:text="${team.getFirstCoach()}"></td>-->
-<!--            <td th:text="${team.getSecondCoach()}"></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-
-<!--</div>-->
 
 
 <footer th:replace="layouts/MainLayout :: footer"/>

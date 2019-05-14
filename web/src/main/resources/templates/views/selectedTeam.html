@@ -8,27 +8,61 @@
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
 
+<div class="container col-md-3" id="teamInfo">
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th>Zespół: </th>
+                <td th:text="${selectedTeam.getTeamName()}"/>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+
+            </tr>
+            <tr>
+                <th>I Trener: </th>
+                <td th:text="${selectedTeam.getFirstCoach()}"/>
+            </tr>
+            <tr>
+                <th>II Trener: </th>
+                <td th:text="${selectedTeam.getSecondCoach()}"/>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
 <div class="container" id="selectedteamTable">
 
-    <h4 class="centeredText" th:text="${selectedTeam.getTeamName()}"></h4>
-    <br/><br/>
     <table class="table table-hover tableData" >
-        <tr>
-            <th>Nr</th>
-            <th>Nazwisko</th>
-            <th>Imię</th>
-            <th>Wiek</th>
-            <th>Wzrost</th>
-        </tr>
 
-        <tr th:each="player : ${teamPlayers}">
-            <td th:text="${player.getNumber()}"></td>
-            <td th:text="${player.getLastName()}"></td>
-            <td th:text="${player.getFirstName()}"></td>
-            <td ></td>
-            <td ></td>
-        </tr>
+        <thead class="thead-light">
+            <tr>
+                <th>Nr</th>
+                <th>Nazwisko</th>
+                <th>Imię</th>
+                <th>Wiek</th>
+                <th>Wzrost</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="player : ${selectedTeam.getPlayerList()}">
+                <td th:text="${player.getNumber()}"></td>
+                <td th:text="${player.getLastName()}"></td>
+                <td th:text="${player.getFirstName()}"></td>
+                <td ></td>
+                <td ></td>
+            </tr>
+        </tbody>
+
     </table>
+
 </div>
 
 
