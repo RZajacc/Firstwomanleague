@@ -14,14 +14,20 @@ public class DataBaseLoader implements CommandLineRunner {
     private MatchService matchService;
     private TeamService teamService;
     private PlayerService playerService;
+    private PlayerStatsService playerStatsService;
+    private TeamStatsService teamStatsService;
 
-    public DataBaseLoader(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService) {
+    public DataBaseLoader(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
         this.leagueService = leagueService;
         this.roundService = roundService;
         this.matchService = matchService;
         this.teamService = teamService;
         this.playerService = playerService;
+        this.playerStatsService = playerStatsService;
+        this.teamStatsService = teamStatsService;
     }
+
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -53,11 +59,14 @@ public class DataBaseLoader implements CommandLineRunner {
         team3.getMatchList().add(match2);
         team4.getMatchList().add(match3);
 
-        Match match6 = new Match(team1.getTeamName(), "PWSZ Tarnow", round1);
+        PlayerStats playerStats1 = new PlayerStats();
+        PlayerStats playerStats2 = new PlayerStats();
+        PlayerStats playerStats3 = new PlayerStats();
+        PlayerStats playerStats4 = new PlayerStats();
 
         //Creating Players of both teams
-        Player Bryda = new Player(1, "Kat-Bry", "Katarzyna", "Bryda", team1);
-        Player Colik = new Player(2, "Col-Kam", "Kamila", "Colik", team1);
+        Player Bryda = new Player(1, "Kat-Bry", "Katarzyna", "Bryda", team1, playerStats1);
+        Player Colik = new Player(2, "Col-Kam", "Kamila", "Colik", team1, playerStats2);
         Player Szynkiel = new Player(3, "Zuz-Szy", "Zuzanna", "Szynkiel", team1);
         Player Stroiwas = new Player(5, "Pau-Str", "Paulina", "Stroiwas", team1);
         Player Lipska = new Player(7, "Ale-Lip", "Aleksandra", "Lipska", team1);
@@ -70,8 +79,8 @@ public class DataBaseLoader implements CommandLineRunner {
         Player Szczygiol = new Player(16, "San-Szc", "Sandra", "Szczygiol", team1);
         Player Bodasinska = new Player(17, "Ann-Bod", "Anna", "Bodasinska", team1);
 
-        Player Grodzka = new Player(1, "Maj-Gro", "Maja", "Grodzka", team2);
-        Player Szabo = new Player(2, "Mag-Sza", "Magdalena", "Szabo", team2);
+        Player Grodzka = new Player(1, "Maj-Gro", "Maja", "Grodzka", team2, playerStats3);
+        Player Szabo = new Player(2, "Mag-Sza", "Magdalena", "Szabo", team2, playerStats4);
         Player Gliniecka = new Player(4, "Mar-Gli", "Marcelina", "Gliniecka", team2);
         Player Pytel = new Player(5, "Mag-Pyt", "Magdalena", "Pytel", team2);
         Player Glaz = new Player(6, "Pau-Gla", "Paulina", "Glaz", team2);
@@ -92,7 +101,6 @@ public class DataBaseLoader implements CommandLineRunner {
         //Adding round to database
         roundService.addRound(round1);
 
-
         //Adding matches to database
         matchService.addMatch(match1);
         matchService.addMatch(match2);
@@ -105,9 +113,15 @@ public class DataBaseLoader implements CommandLineRunner {
         teamService.addTeam(team3);
         teamService.addTeam(team4);
 
+        playerStatsService.savePlayerStats(playerStats1);
+        playerStatsService.savePlayerStats(playerStats2);
+        playerStatsService.savePlayerStats(playerStats3);
+        playerStatsService.savePlayerStats(playerStats4);
+
+
         //Adding players to database
-//        playerService.addPlayer(Bryda);
-//        playerService.addPlayer(Colik);
+        playerService.addPlayer(Bryda);
+        playerService.addPlayer(Colik);
 //        playerService.addPlayer(Szynkiel);
 //        playerService.addPlayer(Stroiwas);
 //        playerService.addPlayer(Lipska);
@@ -119,8 +133,8 @@ public class DataBaseLoader implements CommandLineRunner {
 //        playerService.addPlayer(Wilczek);
 //        playerService.addPlayer(Szczygiol);
 //        playerService.addPlayer(Bodasinska);
-//        playerService.addPlayer(Grodzka);
-//        playerService.addPlayer(Szabo);
+        playerService.addPlayer(Grodzka);
+        playerService.addPlayer(Szabo);
 //        playerService.addPlayer(Gliniecka);
 //        playerService.addPlayer(Pytel);
 //        playerService.addPlayer(Glaz);

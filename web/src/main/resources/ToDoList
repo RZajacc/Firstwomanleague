@@ -1,7 +1,8 @@
 
 //Zapis danych ze scouta do bazy danych:
-        //1. Pomyśl jak wynik który uzyskasz zapisać w bazie danych
-        //2. Jak wymyslisz, to zrób metodę która to uczyni
+        //1. Zrób żeby po pierwsze statystyki się nie nadpisywały tylko dopisywały easy
+        //2. Dodaj więcej scoutów dąbrowy, żeby można było testować dodawanie statystyk
+        //3. Jeżlei zadziała to w zasadzie na ten moment wystarczy
 
 //Ranking:
         //1. Ranking wg wybranego elementu
@@ -30,3 +31,6 @@
         //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
         //4. Faza rozgrywek?
 
+
+// Inne:
+        //1. Tabele i staty lepiej jakby się centrowały na środku strony, tak jak ta z meczami chociażby

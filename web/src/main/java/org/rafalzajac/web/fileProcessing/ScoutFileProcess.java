@@ -357,31 +357,60 @@ public class ScoutFileProcess {
 
     public void saveStatsToDatabase() {
 
-        TeamStats teamStats = homeTeam.getTeamStats();
-        teamStatsService.saveTeamStats(teamStats);
-        homeTeam.setTeamStats(teamStats);
-        teamService.addTeam(homeTeam);
+//        TeamStats teamStats = homeTeam.getTeamStats();
+//        teamStatsService.saveTeamStats(teamStats);
+//        homeTeam.setTeamStats(teamStats);
+//        teamService.addTeam(homeTeam);
+//
+//        TeamStats teamStats2 = awayTeam.getTeamStats();
+//        teamStatsService.saveTeamStats(teamStats2);
+//        awayTeam.setTeamStats(teamStats2);
+//        teamService.addTeam(awayTeam);
 
-        TeamStats teamStats2 = awayTeam.getTeamStats();
-        teamStatsService.saveTeamStats(teamStats2);
-        awayTeam.setTeamStats(teamStats2);
-        teamService.addTeam(awayTeam);
+//        homeTeam.getPlayerList().forEach((player) -> {
+//
+//            PlayerStats stats = player.getPlayerStats();
+//            playerStatsService.savePlayerStats(stats);
+//            player.setPlayerStats(stats);
+//            playerService.addPlayer(player);
+//        });
+//
+//        awayTeam.getPlayerList().forEach((player) -> {
+//
+//            PlayerStats stats = player.getPlayerStats();
+//            playerStatsService.savePlayerStats(stats);
+//            player.setPlayerStats(stats);
+//            playerService.addPlayer(player);
+//        });
 
-        homeTeam.getPlayerList().forEach((player) -> {
+        Team t1 = teamService.getTeamByTag(homeTeam.getTeamTag());
+        Team t2 = teamService.getTeamByTag(awayTeam.getTeamTag());
 
-            PlayerStats stats = player.getPlayerStats();
-            playerStatsService.savePlayerStats(stats);
-            player.setPlayerStats(stats);
-            playerService.addPlayer(player);
-        });
+        if (t1 != null) {
+            t1.getPlayerList().forEach((player) -> {
+                for (Player player1 : homeTeam.getPlayerList()) {
+                    if (player.getNumber() == player1.getNumber()){
+                        PlayerStats stats = player1.getPlayerStats();
+                        playerStatsService.savePlayerStats(stats);
+                        player.setPlayerStats(stats);
+                        playerService.addPlayer(player);
+                    }
+                }
+            });
+        }
 
-        awayTeam.getPlayerList().forEach((player) -> {
-
-            PlayerStats stats = player.getPlayerStats();
-            playerStatsService.savePlayerStats(stats);
-            player.setPlayerStats(stats);
-            playerService.addPlayer(player);
-        });
+        if (t2 != null) {
+            t2.getPlayerList().forEach((player) -> {
+                for (Player player1 : awayTeam.getPlayerList()) {
+                    if (player.getNumber() == player1.getNumber()){
+                        PlayerStats stats = player1.getPlayerStats();
+                        playerStatsService.savePlayerStats(stats);
+                        player.setPlayerStats(stats);
+                        playerService.addPlayer(player);
+                    }
+                }
+            });
+        }
 
 
 
