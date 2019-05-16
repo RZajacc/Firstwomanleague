@@ -1,11 +1,8 @@
 
-//Zapis danych ze scouta do bazy danych:
-        //1. Zrób żeby po pierwsze statystyki się nie nadpisywały tylko dopisywały easy
-        //2. Dodaj więcej scoutów dąbrowy, żeby można było testować dodawanie statystyk
-        //3. Jeżlei zadziała to w zasadzie na ten moment wystarczy
-
 //Ranking:
         //1. Ranking wg wybranego elementu
+        //2. Dodaj opcję zapisu danych do bazy żeby się nie zapisywaly cały czas od nowa
+        //3. Napraw przyjęcie, nakładają się więc przestają być procentem, trzeba brać ilość przyjęć i liczyć w metodzie zapisującej
 
 
 //Wynik meczu:
