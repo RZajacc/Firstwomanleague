@@ -134,7 +134,7 @@ public class ScoutFileProcess {
 
 
     public void createEachPlayer(Team team, String[] teamData, PlayerStats playerStats){
-        Player player = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[9], teamData[10], team, playerStats);
+        Player player = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[10], teamData[9], team, playerStats);
         player.getPlayerStats().setStartingRotS1(teamData[3]);
         player.getPlayerStats().setStartingRotS2(teamData[4]);
         player.getPlayerStats().setStartingRotS3(teamData[5]);
@@ -371,8 +371,15 @@ public class ScoutFileProcess {
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
-                        stats.setReceptionPerfectPercent(stats.getReceptionPerfectPercent() + player1.getPlayerStats().getReceptionPerfectPercent());
+                        stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
+                        stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
+                        stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());
+
+                        stats.setReceptionPositivePercent(Math.round( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100)));
+                        stats.setReceptionPerfectPercent(Math.round( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100)));
+
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
+
                         playerStatsService.savePlayerStats(stats);
                         player.setPlayerStats(stats);
                         playerService.addPlayer(player);
@@ -399,12 +406,20 @@ public class ScoutFileProcess {
             t2.getPlayerList().forEach((player) -> {
                 for (Player player1 : awayTeam.getPlayerList()) {
                     if (player.getNumber() == player1.getNumber()){
+
                         PlayerStats stats = player.getPlayerStats();
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
-                        stats.setReceptionPerfectPercent(stats.getReceptionPerfectPercent() + player1.getPlayerStats().getReceptionPerfectPercent());
+                        stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
+                        stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
+                        stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());
+
+                        stats.setReceptionPositivePercent(Math.round( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100)));
+                        stats.setReceptionPerfectPercent(Math.round( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100)));
+
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
+
                         playerStatsService.savePlayerStats(stats);
                         player.setPlayerStats(stats);
                         playerService.addPlayer(player);

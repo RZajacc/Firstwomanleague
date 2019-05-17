@@ -1,13 +1,10 @@
 
-//Ranking:
-        //1. Ranking wg wybranego elementu
-        //2. Dodaj opcję zapisu danych do bazy żeby się nie zapisywaly cały czas od nowa
-        //3. Napraw przyjęcie, nakładają się więc przestają być procentem, trzeba brać ilość przyjęć i liczyć w metodzie zapisującej
-
-
 //Wynik meczu:
-        //1. Stwórz możliwość poprzez formularza dodania wyniku meczu
-        //2. Pomyśl, czy potrzebna jest nowa klasa z wynikim dla meczu zmapowana na mecz jeżeli tak utwórz
+        //1. Dołóż ataki wykonane do rankingu, skuteczność ataku w % i ilość przyjęć
+        //2. Dopracuj wygląd strony (imię nazwisko, klub do lewej, reszta środek tak jak jest)
+        //3. Spróbuj z thymeleaf wygenerować do pierwszej kolumny numer i pogrub czcionkę
+        //3. Stwórz możliwość poprzez formularza dodania wyniku meczu
+        //4. Pomyśl, czy potrzebna jest nowa klasa z wynikim dla meczu zmapowana na mecz jeżeli tak utwórz
 
 //Tabela:
         //1. Tabela sortowana wg zasad PZPS
@@ -15,6 +12,7 @@
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą?
+        //2. Być może zmień nieco widok i numer rundy jakoś w tabeli?
 
 
 // Security

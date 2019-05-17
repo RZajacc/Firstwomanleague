@@ -66,16 +66,16 @@ body {
 
 #homeTeamStats{
     position: relative;
-    margin-left: 5%;
     padding-bottom: 2.5rem;
+    margin-left: 17%;
     margin-top: 1%;
     font-size: small;
 }
 
 #awayTeamStats{
     position: relative;
-    margin-left: 5%;
     padding-bottom: 2.5rem;
+    margin-left: 17%;
     margin-top: 1%;
     font-size: small;
 }
@@ -88,7 +88,13 @@ body {
 #uploadMessage {
     text-align: center;
     font-size: medium;
-    color: lawngreen;
+    color: blue;
+}
+
+#scoutFilePathMessage {
+    text-align: center;
+    font-size: medium;
+    color: blue;
 }
 
 #roundHeader {
@@ -100,4 +106,14 @@ body {
 #teamInfo {
     margin-top: 3%;
     position: relative;
+}
+
+#selectForRankSort {
+    width: 200px;
+
+}
+
+#containerForSelectRank {
+    margin-left: 50%;
+    margin-top: 3%;
 }

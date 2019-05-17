@@ -7,6 +7,25 @@
 
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
+    <div class="container" id="containerForSelectRank">
+
+        <select class="form-control" name="selectBy" id="selectForRankSort" form="sortRankTable">
+            <option value="pointsTotal">Punkty zdobyte</option>
+            <option value="serveAce">Asy serwisowe</option>
+            <option value="attackFinished">Atak pkt.</option>
+            <option value="receptionPositive">Przyjęcie poz.%</option>
+            <option value="receptrionPerfect">Przyjęcie perf.%</option>
+            <option value="blockScore">Bloki pkt.</option>
+        </select>
+
+        <form method="POST" id="sortRankTable" action="/rank">
+            <input type="submit" id="sort" style="display: none">
+            <button type="button" class="btn btn-info" onclick="$('#sort').click()">Sortuj!</button>
+        </form>
+
+    </div>
+
+
     <div class="container" id="rankTable">
 
         <table class="table table-hover">
@@ -16,11 +35,12 @@
                 <th>Nazwisko</th>
                 <th>imię</th>
                 <th>Klub</th>
-                <th>Punkty</th>
-                <th>Zagrywka</th>
-                <th>Atak</th>
-                <th>Przyjęcie</th>
-                <th>Blok</th>
+                <th>Punkty zdobyte</th>
+                <th>Asy serwisowe</th>
+                <th>Atak pkt.</th>
+                <th>Przyjęcie poz.%</th>
+                <th>Przyjęcie perf.%</th>
+                <th>Blok pkt.</th>
             </tr>
             </thead>
 
@@ -32,6 +52,7 @@
                 <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()} : '-'"/>
                 <td th:text="${player.getPlayerStats().getServeAce()!= 0} ? ${player.getPlayerStats().getServeAce()} : '-'"/>
                 <td th:text="${player.getPlayerStats().getAttackFinished()!= 0} ? ${player.getPlayerStats().getAttackFinished()} : '-'"/>
+                <td th:text="${player.getPlayerStats().getReceptionPositivePercent()!= 0} ? ${player.getPlayerStats().getReceptionPositivePercent() + '%'} : '-'"/>
                 <td th:text="${player.getPlayerStats().getReceptionPerfectPercent()!= 0} ? ${player.getPlayerStats().getReceptionPerfectPercent() + '%'} : '-'"/>
                 <td th:text="${player.getPlayerStats().getBlockScore()!= 0} ? ${player.getPlayerStats().getBlockScore()} : '-'"/>
             </tr>

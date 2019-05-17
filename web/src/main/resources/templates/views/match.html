@@ -25,24 +25,36 @@
                         </tr>
                                 <tr>
                                         <th th:text="${homeTeam.getFirstCoach()!= 0} ? ${homeTeam.getFirstCoach()}  : '-'"/>
-                                        <td>-I Trener-</td>
+                                        <td >-I Trener-</td>
                                         <th th:text="${awayTeam.getFirstCoach()!= 0} ? ${awayTeam.getFirstCoach()}  : '-'"/>
                                 </tr>
                         <tr>
                                 <th th:text="${homeTeam.getSecondCoach()!= 0} ? ${homeTeam.getSecondCoach()}  : '-'"/>
-                                <td>-II Trener-</td>
+                                <td> -II Trener-</td>
                                 <th th:text="${awayTeam.getSecondCoach()!= 0} ? ${awayTeam.getSecondCoach()}  : '-'"/>
                         </tr>
                         <tr>
                                 <th/>
-                                <td>-Wynik-</td>
+                                <td> -Wynik-</td>
                                 <th/>
+                        </tr>
+                        <tr>
+                                <form method="POST" action="/round/{id}">
+                                        <td><button name="save" type="submit" value="true" id="saveStats" style="display: none">Save</button> </td>
+                                        <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Save stats</button></td>
+                                        <td><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
+                                </form>
                         </tr>
                 </tbody>
 
         </table>
 </div>
 
+
+
+<div th:if="${message}" id="scoutFilePathMessage">
+        <p th:text="${message}"/>
+</div>
 
 <h3 th:text="${homeTeam.getTeamName()} + ' :'" class="centeredText"/>
 <div class = "container" id="homeTeamStats">

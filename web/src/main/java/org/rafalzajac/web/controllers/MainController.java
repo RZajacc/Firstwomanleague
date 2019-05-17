@@ -56,45 +56,44 @@ public class MainController {
 
 
     @PostMapping("/round")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam("id") Long id) {
+    public String singleFileUpload(@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam(value = "id", required = false) Long id) {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
-        }
+        } else{
+                try {
 
-        try {
+                    Optional<Match> match = matchService.getMatchById(id);
+                    if (match.isPresent()) {
 
-            Optional<Match> match = matchService.getMatchById(id);
-            if(match.isPresent()) {
+                        Match current = match.get();
 
-                Match current = match.get();
+                        if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
+                            Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
+                        }
 
-                if(!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName() ))) {
-                    Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
+                        if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))) {
+                            Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
+                        }
+
+                        Path path = Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(),
+                                current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber() + "M" +
+                                        current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
+
+                        Files.write(path, file.getBytes());
+
+
+                        redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
+                                current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
+                                "-" + current.getAwayTeam() + ".dvw");
+
+                        current.setScoutPath(path.toString());
+                        matchService.addMatch(current);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                if(!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))){
-                    Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
-                }
-
-                Path path = Paths.get(UPLOADED_FOLDER,  current.getRound().getLeague().getLeagueName(),
-                        current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber()+ "M"+
-                        current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
-
-                Files.write(path, file.getBytes());
-                
-
-                redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
-                        current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
-                        "-" + current.getAwayTeam() + ".dvw");
-
-                current.setScoutPath(path.toString());
-                matchService.addMatch(current);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return "redirect:round/";
@@ -115,10 +114,7 @@ public class MainController {
             if(currentMatch.getScoutPath() != null) {
                 ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
                 scoutFileProcess.processScoutFile();
-                scoutFileProcess.saveStatsToDatabase();
-                //Znajdz zawodnika po teamie i numerze!
-                //Request param boolean? Którym sobie wyzwolę zapis danych?
-                //Zmienna zadeklarowana tutaj i dodana do modelu?
+
 
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
                 model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
@@ -140,6 +136,27 @@ public class MainController {
         return "redirect:/";
     }
 
+    @PostMapping("/round/{id}")
+    public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws Exception {
+
+        System.out.println("Match id = " + id);
+        Optional<Match> selectedMatch = matchService.getMatchById(id);
+        if (selectedMatch.isPresent()) {
+            Match match = selectedMatch.get();
+            if (match.getScoutPath() != null) {
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(match.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
+                scoutFileProcess.processScoutFile();
+                scoutFileProcess.saveStatsToDatabase();
+                redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "There is no scout file available for this match!");
+            }
+        }
+
+
+    return "redirect:/round/" + id;
+    }
+
     @GetMapping("/table")
     public String leagueTable() {
             return "views/table";
@@ -157,6 +174,44 @@ public class MainController {
 
         model.addAttribute("allPlayers", players);
 
+        return "views/rank";
+    }
+
+    @PostMapping("/rank")
+    public String sortedRankTable (Model model, @RequestParam("selectBy") String text ) {
+        System.out.println(text);
+
+            List<Player> players = playerService.findAllPlayers();
+            if (text.equals("pointsTotal")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getPointsTotal() - p1.getPlayerStats().getPointsTotal()
+                );
+            } else if (text.equals("serveAce")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getServeAce() - p1.getPlayerStats().getServeAce()
+                );
+            }else if (text.equals("attackFinished")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getAttackFinished() - p1.getPlayerStats().getAttackFinished()
+                );
+            }else if (text.equals("receptionPositive")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getReceptionPositivePercent() - p1.getPlayerStats().getReceptionPositivePercent()
+                );
+            }else if (text.equals("receptrionPerfect")) {
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getReceptionPerfectPercent() - p1.getPlayerStats().getReceptionPerfectPercent()
+                );
+            }else {
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getBlockScore() - p1.getPlayerStats().getBlockScore()
+                );
+            }
+
+
+            List<Integer> a = Arrays.asList(1,2,3,4,5);
+
+            model.addAttribute("allPlayers", players);
         return "views/rank";
     }
 
