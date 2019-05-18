@@ -9,19 +9,32 @@
 
     <div class="container" id="containerForSelectRank">
 
-        <select class="form-control" name="selectBy" id="selectForRankSort" form="sortRankTable">
-            <option value="pointsTotal">Punkty zdobyte</option>
-            <option value="serveAce">Asy serwisowe</option>
-            <option value="attackFinished">Atak pkt.</option>
-            <option value="receptionPositive">Przyjęcie poz.%</option>
-            <option value="receptrionPerfect">Przyjęcie perf.%</option>
-            <option value="blockScore">Bloki pkt.</option>
-        </select>
-
-        <form method="POST" id="sortRankTable" action="/rank">
-            <input type="submit" id="sort" style="display: none">
-            <button type="button" class="btn btn-info" onclick="$('#sort').click()">Sortuj!</button>
-        </form>
+        <h3><b>Sortuj listę według :</b></h3>
+        <table>
+            <tr>
+                <th>
+                    <select class="form-control" name="selectBy" id="selectForRankSort" form="sortRankTable" >
+                        <option value="alphabetically">Alfabetycznie</option>
+                        <option value="club">Klub</option>
+                        <option value="pointsTotal">Punkty zdobyte</option>
+                        <option value="serveAce">Asy serwisowe</option>
+                        <option value="attackAttempt">Atak suma</option>
+                        <option value="attackFinished">Atak pkt.</option>
+                        <option value="attackFinishedPercent">Atak skut.%</option>
+                        <option value="receptionAttempts">Przyjęcie suma</option>
+                        <option value="receptionPositive">Przyjęcie poz.%</option>
+                        <option value="receptrionPerfect">Przyjęcie perf.%</option>
+                        <option value="blockScore">Bloki pkt.</option>
+                    </select>
+                </th>
+                <th>
+                    <form method="POST" id="sortRankTable" action="/rank">
+                        <input type="submit" id="sort" style="display: none">
+                        <button type="button" class="btn btn-info" onclick="$('#sort').click()">Sortuj!</button>
+                    </form>
+                </th>
+            </tr>
+        </table>
 
     </div>
 
@@ -32,12 +45,16 @@
 
             <thead class="thead-light">
             <tr class="centeredText">
+                <th>Nr.</th>
                 <th>Nazwisko</th>
                 <th>imię</th>
                 <th>Klub</th>
                 <th>Punkty zdobyte</th>
                 <th>Asy serwisowe</th>
+                <th>Ataki suma</th>
                 <th>Atak pkt.</th>
+                <th>Atak skut.%</th>
+                <th>Przyjęcie suma</th>
                 <th>Przyjęcie poz.%</th>
                 <th>Przyjęcie perf.%</th>
                 <th>Blok pkt.</th>
@@ -46,12 +63,16 @@
 
             <tbody>
             <tr  th:each="player : ${allPlayers}" class="centeredText">
-                <td th:text="${player.getLastName()}"/>
-                <td th:text="${player.getFirstName()}"/>
+                <td th:text="${playerStat.count} + '.'" class="indexNumber"/>
+                <td th:text="${player.getLastName()}" class="leftAlignedText"/>
+                <td th:text="${player.getFirstName()}" class="leftAlignedText"/>
                 <td th:text="${player.getTeam().getTeamName()}"/>
                 <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()} : '-'"/>
                 <td th:text="${player.getPlayerStats().getServeAce()!= 0} ? ${player.getPlayerStats().getServeAce()} : '-'"/>
+                <td th:text="${player.getPlayerStats().getAttackAttempts()!= 0} ? ${player.getPlayerStats().getAttackAttempts()} : '-'"/>
                 <td th:text="${player.getPlayerStats().getAttackFinished()!= 0} ? ${player.getPlayerStats().getAttackFinished()} : '-'"/>
+                <td th:text="${player.getPlayerStats().getAttackFinishedPercent()!= 0} ? ${player.getPlayerStats().getAttackFinishedPercent() + '%'} : '-'"/>
+                <td th:text="${player.getPlayerStats().getReceptionAttempts()!= 0} ? ${player.getPlayerStats().getReceptionAttempts()} : '-'"/>
                 <td th:text="${player.getPlayerStats().getReceptionPositivePercent()!= 0} ? ${player.getPlayerStats().getReceptionPositivePercent() + '%'} : '-'"/>
                 <td th:text="${player.getPlayerStats().getReceptionPerfectPercent()!= 0} ? ${player.getPlayerStats().getReceptionPerfectPercent() + '%'} : '-'"/>
                 <td th:text="${player.getPlayerStats().getBlockScore()!= 0} ? ${player.getPlayerStats().getBlockScore()} : '-'"/>
@@ -61,7 +82,6 @@
         </table>
 
     </div>
-
 
 <footer th:replace="layouts/MainLayout :: footer"/>
 

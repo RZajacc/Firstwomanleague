@@ -1,18 +1,16 @@
 
 //Wynik meczu:
-        //1. Dołóż ataki wykonane do rankingu, skuteczność ataku w % i ilość przyjęć
-        //2. Dopracuj wygląd strony (imię nazwisko, klub do lewej, reszta środek tak jak jest)
-        //3. Spróbuj z thymeleaf wygenerować do pierwszej kolumny numer i pogrub czcionkę
-        //3. Stwórz możliwość poprzez formularza dodania wyniku meczu
-        //4. Pomyśl, czy potrzebna jest nowa klasa z wynikim dla meczu zmapowana na mecz jeżeli tak utwórz
 
-//Tabela:
-        //1. Tabela sortowana wg zasad PZPS
+        //1. Stwórz możliwość poprzez formularza dodania wyniku meczu
+        //2. Tabela sortowana wg zasad PZPS
+        //3. Raczej utwórz klasę matchData i zmapuj
+        //4. Utworzoną klasę dodaj jako model attribute na post
+        //5. Być może nowy widok na stronę dodawania wyniku
 
 
 //Rundy:
-        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą?
-        //2. Być może zmień nieco widok i numer rundy jakoś w tabeli?
+        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
+        //2. Być może zmień nieco widok i numer rundy jakoś w tabeli? -> to raczej wyjdzie dopiero po security
 
 
 // Security

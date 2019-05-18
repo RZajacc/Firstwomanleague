@@ -84,6 +84,7 @@ public class ScoutFileProcess {
             createTeams();
             createAllPlayers();
             collectAllStats();
+
             //Sorting players by number - sometimes its messed up
             homeTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
             awayTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
@@ -370,7 +371,10 @@ public class ScoutFileProcess {
                         PlayerStats stats = player.getPlayerStats();
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
+                        stats.setAttackAttempts(stats.getAttackAttempts() + player1.getPlayerStats().getAttackAttempts());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
+                        stats.setAttackFinishedPercent(Math.round( (int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100)));
+
                         stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
                         stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
                         stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());
@@ -410,7 +414,10 @@ public class ScoutFileProcess {
                         PlayerStats stats = player.getPlayerStats();
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
+                        stats.setAttackAttempts(stats.getAttackAttempts() + player1.getPlayerStats().getAttackAttempts());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
+                        stats.setAttackFinishedPercent(Math.round( (int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100)));
+
                         stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
                         stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
                         stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());

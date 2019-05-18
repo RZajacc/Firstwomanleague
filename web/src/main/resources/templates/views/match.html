@@ -44,6 +44,16 @@
                                         <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Save stats</button></td>
                                         <td><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
                                 </form>
+
+<!--                                <form method="POST" action="/round/{id}" th:object="${currentMatch}">-->
+<!--                                        <td><input type="text" th:field="*{matchResult}">Match result</button> </td>-->
+<!--                                        <td><input type="text" th:field="*{set1Result}">Set 1</button> </td>-->
+<!--                                        <td><input type="text" th:field="*{set2Result}">Set 2</button> </td>-->
+<!--                                        <td><input type="text" th:field="*{set3Result}">Set 3</button> </td>-->
+<!--                                        <td><input type="text" th:field="*{set4Result}">Set 4</button> </td>-->
+<!--                                        <td><input type="text" th:field="*{set5Result}">Set 5</button> </td>-->
+<!--                                        <td><input type="submit" value="submit"></td>-->
+<!--                                </form>-->
                         </tr>
                 </tbody>
 

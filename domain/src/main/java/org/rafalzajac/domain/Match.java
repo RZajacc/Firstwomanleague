@@ -21,10 +21,17 @@ public class Match {
 
     private String homeTeam;
     private String awayTeam;
-    private String matchDate;
-    private String matchResult;
     private int matchNumber;
     private String scoutPath;
+
+    //Match data
+    private String matchDate;
+    private String matchResult;
+    private String set1Result;
+    private String set2Result;
+    private String set3Result;
+    private String set4Result;
+    private String set5Result;
 
     @ManyToOne
     Round round;

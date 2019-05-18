@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -115,7 +112,6 @@ public class MainController {
                 ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
                 scoutFileProcess.processScoutFile();
 
-
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
                 model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
             } else {
@@ -139,23 +135,24 @@ public class MainController {
     @PostMapping("/round/{id}")
     public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws Exception {
 
-        System.out.println("Match id = " + id);
         Optional<Match> selectedMatch = matchService.getMatchById(id);
         if (selectedMatch.isPresent()) {
-            Match match = selectedMatch.get();
-            if (match.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(match.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
+            Match currentMatch = selectedMatch.get();
+            model.addAttribute("currentMatch", currentMatch);
+            if (currentMatch.getScoutPath() != null) {
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
                 scoutFileProcess.processScoutFile();
                 scoutFileProcess.saveStatsToDatabase();
+                System.out.println("Current match result" + currentMatch.getMatchResult());
                 redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
             } else {
                 redirectAttributes.addFlashAttribute("message", "There is no scout file available for this match!");
             }
         }
 
-
     return "redirect:/round/" + id;
     }
+
 
     @GetMapping("/table")
     public String leagueTable() {
@@ -170,8 +167,6 @@ public class MainController {
             p2.getPlayerStats().getPointsTotal() - p1.getPlayerStats().getPointsTotal()
         );
 
-        List<Integer> a = Arrays.asList(1,2,3,4,5);
-
         model.addAttribute("allPlayers", players);
 
         return "views/rank";
@@ -182,7 +177,11 @@ public class MainController {
         System.out.println(text);
 
             List<Player> players = playerService.findAllPlayers();
-            if (text.equals("pointsTotal")){
+            if (text.equals("alphabetically")){
+                players.sort(Comparator.comparing(Player::getLastName));
+            }else if (text.equals("club")){
+                players.sort(Comparator.comparing(p -> p.getTeam().getTeamName()));
+            } else if (text.equals("pointsTotal")){
                 players.sort((p1, p2) ->
                         p2.getPlayerStats().getPointsTotal() - p1.getPlayerStats().getPointsTotal()
                 );
@@ -190,9 +189,21 @@ public class MainController {
                 players.sort((p1, p2) ->
                         p2.getPlayerStats().getServeAce() - p1.getPlayerStats().getServeAce()
                 );
+            }else if (text.equals("attackAttempt")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getAttackAttempts() - p1.getPlayerStats().getAttackAttempts()
+                );
             }else if (text.equals("attackFinished")){
                 players.sort((p1, p2) ->
                         p2.getPlayerStats().getAttackFinished() - p1.getPlayerStats().getAttackFinished()
+                );
+            }else if (text.equals("attackFinishedPercent")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getAttackFinishedPercent() - p1.getPlayerStats().getAttackFinishedPercent()
+                );
+            }else if (text.equals("receptionAttempts")){
+                players.sort((p1, p2) ->
+                        p2.getPlayerStats().getReceptionAttempts() - p1.getPlayerStats().getReceptionAttempts()
                 );
             }else if (text.equals("receptionPositive")){
                 players.sort((p1, p2) ->
