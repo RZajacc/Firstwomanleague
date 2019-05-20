@@ -7,6 +7,34 @@
 
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
+<div class="container">
+
+    <table class="table table-hover" id="leagueTable">
+
+        <thead class="thead-light">
+        <tr>
+            <th>Miejsce</th>
+            <th>Nazwa Zespołu</th>
+            <th>Mecze</th>
+            <th>Wygrane</th>
+            <th>Przegrane</th>
+            <th>Punkty</th>
+            <th>Sety</th>
+            <th>Ratio</th>
+            <th>Małe pkt.</th>
+            <th>Ratio</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="team : ${allTeams}">
+            <td th:text="${teamStat.count}"/>
+            <td th:text="${team.getTeamName()}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 
 

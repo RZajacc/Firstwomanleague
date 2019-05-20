@@ -18,42 +18,41 @@
                         </tr>
                 </thead>
                 <tbody>
+                <col width="300">
+                <col width="200">
+                <col width="300">
                         <tr>
-                                <th th:text="${homeTeam.getTeamName()}"/>
-                                <td>-Zespoły-</td>
-                                <th th:text="${awayTeam.getTeamName()}"/>
+                                <th th:text="${homeTeam.getTeamName()}" class="matchInfo"/>
+                                <td class="matchInfo">-Zespoły-</td>
+                                <th th:text="${awayTeam.getTeamName()}" class="matchInfo"/>
                         </tr>
                                 <tr>
-                                        <th th:text="${homeTeam.getFirstCoach()!= 0} ? ${homeTeam.getFirstCoach()}  : '-'"/>
-                                        <td >-I Trener-</td>
-                                        <th th:text="${awayTeam.getFirstCoach()!= 0} ? ${awayTeam.getFirstCoach()}  : '-'"/>
+                                        <th th:text="${homeTeam.getFirstCoach()!= 0} ? ${homeTeam.getFirstCoach()}  : '-'" class="matchInfo"/>
+                                        <td class="matchInfo">-I Trener-</td>
+                                        <th th:text="${awayTeam.getFirstCoach()!= 0} ? ${awayTeam.getFirstCoach()}  : '-'" class="matchInfo"/>
                                 </tr>
                         <tr>
-                                <th th:text="${homeTeam.getSecondCoach()!= 0} ? ${homeTeam.getSecondCoach()}  : '-'"/>
-                                <td> -II Trener-</td>
-                                <th th:text="${awayTeam.getSecondCoach()!= 0} ? ${awayTeam.getSecondCoach()}  : '-'"/>
+                                <th th:text="${homeTeam.getSecondCoach()!= 0} ? ${homeTeam.getSecondCoach()}  : '-'" class="matchInfo"/>
+                                <td class="matchInfo"> -II Trener-</td>
+                                <th th:text="${awayTeam.getSecondCoach()!= 0} ? ${awayTeam.getSecondCoach()}  : '-'" class="matchInfo"/>
                         </tr>
                         <tr>
-                                <th/>
-                                <td> -Wynik-</td>
-                                <th/>
+                                <th th:text="${currentMatch.matchResult.homeTeamSetsWon}" class="matchScore"/>
+                                <td class="matchInfo"> -Wynik-</td>
+                                <th th:text="${currentMatch.matchResult.awayTeamSetsWon}" class="matchScore"/>
                         </tr>
                         <tr>
                                 <form method="POST" action="/round/{id}">
                                         <td><button name="save" type="submit" value="true" id="saveStats" style="display: none">Save</button> </td>
-                                        <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Save stats</button></td>
+                                        <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Zapisz statystyki</button></td>
                                         <td><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
                                 </form>
 
-<!--                                <form method="POST" action="/round/{id}" th:object="${currentMatch}">-->
-<!--                                        <td><input type="text" th:field="*{matchResult}">Match result</button> </td>-->
-<!--                                        <td><input type="text" th:field="*{set1Result}">Set 1</button> </td>-->
-<!--                                        <td><input type="text" th:field="*{set2Result}">Set 2</button> </td>-->
-<!--                                        <td><input type="text" th:field="*{set3Result}">Set 3</button> </td>-->
-<!--                                        <td><input type="text" th:field="*{set4Result}">Set 4</button> </td>-->
-<!--                                        <td><input type="text" th:field="*{set5Result}">Set 5</button> </td>-->
-<!--                                        <td><input type="submit" value="submit"></td>-->
-<!--                                </form>-->
+                        </tr>
+                        <tr>
+                                <td/>
+                                <td><a th:href="@{'/round/result/' + ${currentMatch.getId()}} " class="btn btn-primary" id="saveResultButton" \>Zapisz wynik meczu</a></td>
+                                <td/>
                         </tr>
                 </tbody>
 

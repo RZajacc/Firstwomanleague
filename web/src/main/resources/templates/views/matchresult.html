@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="layouts/MainLayout :: head(title = 'Wynik')"/>
+</head>
+<body>
+
+<nav th:replace="layouts/MainLayout :: navbar"/>
+
+<div class="container col-md-2" id="matchResult">
+
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th colspan="3" style="text-align: center">Wprowadź wynik meczu: </th>
+        </tr>
+        </thead>
+        <tbody>
+        <col width="100">
+        <col width="200">
+        <col width="100">
+
+            <form method="POST" action="/round/result/{id}"  th:object="${currentMatch}" name="currentMatch">
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSetsWon}" class="matchInfo"></td>
+                    <th class="matchInfo">- Sety -</th>
+                    <td><input type="text" th:field="*{matchResult.awayTeamSetsWon}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSet1Score}" class="matchInfo"></td>
+                    <th class="matchInfo">- Set 1 -</th>
+                    <td ><input type="text" th:field="*{matchResult.awayTeamSet1Score}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSet2Score}" class="matchInfo"></td>
+                    <th class="matchInfo">- Set 2 -</th>
+                    <td><input type="text" th:field="*{matchResult.awayTeamSet2Score}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSet3Score}" class="matchInfo"></td>
+                    <th class="matchInfo">- Set 3 -</th>
+                    <td><input type="text" th:field="*{matchResult.awayTeamSet3Score}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSet4Score}" class="matchInfo"></td>
+                    <th class="matchInfo">- Set 4 -</th>
+                    <td><input type="text" th:field="*{matchResult.awayTeamSet4Score}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td ><input type="text" th:field="*{matchResult.homeTeamSet5Score}" class="matchInfo"></td>
+                    <th class="matchInfo">- Set 5 -</th>
+                    <td><input type="text" th:field="*{matchResult.awayTeamSet5Score}" class="matchInfo"></td>
+                </tr>
+
+                <tr>
+                    <td />
+                    <th><input type="submit" value="Zapisz wynik" class="btn btn-warning"></th>
+                    <td/>
+                </tr>
+
+                <tr>
+                    <td />
+                    <th><input th:field="*{id}" th:value="${currentMatch.id}"  style="display: none"/></th>
+                    <td/>
+                </tr>
+
+
+            </form>
+        </tbody>
+
+    </table>
+</div>
+
+
+<!--<form method="POST" action="/round/result/{id}"  th:object="${currentMatch}" name="currentMatch">-->
+<!--    <td><input type="text" th:field="*{matchResult.matchResult}">Match result</button> </td>-->
+<!--    <td><input type="text" th:field="*{matchResult.set1Result}" id="ew">Set 1</button> </td>-->
+<!--    <td><input type="text" th:field="*{matchResult.set2Result}">Set 2</button> </td>-->
+<!--    <td><input type="text" th:field="*{matchResult.set3Result}">Set 3</button> </td>-->
+<!--    <td><input type="text" th:field="*{matchResult.set4Result}">Set 4</button> </td>-->
+<!--    <td><input type="text" th:field="*{matchResult.set5Result}">Set 5</button> </td>-->
+<!--    <td><input th:field="*{id}" th:value="${currentMatch.id}"  style="display: none"/></td>-->
+<!--    <td><input type="submit" value="submit"></td>-->
+<!--</form>-->
+
+<footer th:replace="layouts/MainLayout :: footer"/>
+
+</body>
+</html>

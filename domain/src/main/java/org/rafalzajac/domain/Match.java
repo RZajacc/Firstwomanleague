@@ -25,19 +25,22 @@ public class Match {
     private String scoutPath;
 
     //Match data
-    private String matchDate;
-    private String matchResult;
-    private String set1Result;
-    private String set2Result;
-    private String set3Result;
-    private String set4Result;
-    private String set5Result;
+//    private String matchDate;
+//    private String matchResult;
+//    private String set1Result;
+//    private String set2Result;
+//    private String set3Result;
+//    private String set4Result;
+//    private String set5Result;
 
     @ManyToOne
     Round round;
 
     @ManyToMany(mappedBy = "matchList")
     private List<Team> teams;
+
+    @OneToOne
+    private MatchResult matchResult;
 
     public Match(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;
@@ -52,11 +55,12 @@ public class Match {
         teams = new LinkedList<>();
     }
 
-    public Match(String homeTeam, String awayTeam, int matchNumber, Round round) {
+    public Match(String homeTeam, String awayTeam, int matchNumber, Round round, MatchResult matchResult) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchNumber = matchNumber;
         this.round = round;
+        this.matchResult = matchResult;
         teams = new LinkedList<>();
     }
 }

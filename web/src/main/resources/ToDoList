@@ -1,17 +1,14 @@
 
 //Wynik meczu:
 
-        //1. Stwórz możliwość poprzez formularza dodania wyniku meczu
-        //2. Tabela sortowana wg zasad PZPS
-        //3. Raczej utwórz klasę matchData i zmapuj
-        //4. Utworzoną klasę dodaj jako model attribute na post
-        //5. Być może nowy widok na stronę dodawania wyniku
+        //2. Inny button w wyniku meczu
+        //3. Przekierowanie do strony meczu a nie rundy
+        //4. Tabela sortowana wg zasad PZPS
 
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
         //2. Być może zmień nieco widok i numer rundy jakoś w tabeli? -> to raczej wyjdzie dopiero po security
-
 
 // Security
         //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego

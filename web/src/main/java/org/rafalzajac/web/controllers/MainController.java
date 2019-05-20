@@ -2,6 +2,7 @@ package org.rafalzajac.web.controllers;
 
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
+import org.rafalzajac.web.fileProcessing.ProcessMatchResult;
 import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -153,9 +154,40 @@ public class MainController {
     return "redirect:/round/" + id;
     }
 
+    @GetMapping("/round/result/{id}")
+    public String matchResultInfo(@PathVariable Long id, Model model) {
+
+        Optional<Match> match = matchService.getMatchById(id);
+        if (match.isPresent()) {
+            Match current = match.get();
+            model.addAttribute("currentMatch", current);
+        }
+
+
+        return "views/matchresult";
+    }
+
+    @PostMapping("/round/result/{id}")
+    public String updateMatchResult(@ModelAttribute("currentMatch") Match match){
+
+        // Wydobądź z meczu zespoły -> zagnieźdź metodę do aktualizacji zespołu w pierwszej metodzie
+        // Dodaj w statystykach zespołu punkty do tabeli, mecze wygrane i przegrane, wygrane sety, przegrane sety, zdobyte i stracone punkty, ratio setów i ratio pkt
+        // przypisz wyliczone wyniki drużynom
+
+        ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService);
+        processMatchResult.addMatchResult(match);
+
+
+        return "redirect:/round/" + match.getId();
+    }
+
 
     @GetMapping("/table")
-    public String leagueTable() {
+    public String leagueTable(Model model) {
+
+        List<Team> teams = teamService.findAllTeams();
+        model.addAttribute("allTeams", teams);
+
             return "views/table";
     }
 
@@ -219,10 +251,8 @@ public class MainController {
                 );
             }
 
-
-            List<Integer> a = Arrays.asList(1,2,3,4,5);
-
             model.addAttribute("allPlayers", players);
+
         return "views/rank";
     }
 

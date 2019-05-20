@@ -12,12 +12,13 @@ public class DataBaseLoader implements CommandLineRunner {
     private LeagueService leagueService;
     private RoundService roundService;
     private MatchService matchService;
+    private MatchResultService matchResultService;
     private TeamService teamService;
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
     private TeamStatsService teamStatsService;
 
-    public DataBaseLoader(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
+    public DataBaseLoader(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, MatchResultService matchResultService) {
         this.leagueService = leagueService;
         this.roundService = roundService;
         this.matchService = matchService;
@@ -25,6 +26,7 @@ public class DataBaseLoader implements CommandLineRunner {
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
         this.teamStatsService = teamStatsService;
+        this.matchResultService = matchResultService;
     }
 
 
@@ -38,10 +40,14 @@ public class DataBaseLoader implements CommandLineRunner {
         //Creating round instance
         Round round1 = new Round(1, FirstWoman);
 
+        MatchResult result1 = new MatchResult();
+        MatchResult result2 = new MatchResult();
+        MatchResult result3 = new MatchResult();
+
         //Creating match instances
-        Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1);
-        Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1);
-        Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1);
+        Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1, result1);
+        Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1, result2);
+        Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1, result3);
 
 
 
@@ -100,6 +106,11 @@ public class DataBaseLoader implements CommandLineRunner {
 
         //Adding round to database
         roundService.addRound(round1);
+
+        //Adding match result
+        matchResultService.saveMatchResult(result1);
+        matchResultService.saveMatchResult(result2);
+        matchResultService.saveMatchResult(result3);
 
         //Adding matches to database
         matchService.addMatch(match1);
