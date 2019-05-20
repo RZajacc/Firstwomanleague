@@ -47,6 +47,20 @@ public class TeamStats {
     private int blockScore = 0;
 
 
+    //Overall stats for team
+    private int matchPlayed = 0;
+    private int leaguePoints = 0;
+    private int matchWon = 0;
+    private int matchLost = 0;
+    private int setsWon = 0;
+    private int setsLost = 0;
+    private float setRatio = 0;
+    private int pointsWon = 0;
+    private int pointsLost = 0;
+    private float teamPointsRatio = 0;
+
+
+
 
     @OneToOne
     private Team team;

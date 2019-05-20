@@ -51,11 +51,16 @@ public class DataBaseLoader implements CommandLineRunner {
 
 
 
+        TeamStats team1Stats = new TeamStats();
+        TeamStats team2Stats = new TeamStats();
+        TeamStats team3Stats = new TeamStats();
+        TeamStats team4Stats = new TeamStats();
+
         //Creating team instances
-        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki");
-        Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski");
-        Team team3 = new Team("JOK", "Joker Swiecie", "Michal Wojtowicz", "Milosz Szwaba");
-        Team team4 = new Team("ENE", "Energetyk Poznan", "Michal Patyk");
+        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki", team1Stats);
+        Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", team2Stats);
+        Team team3 = new Team("JOK", "Joker Swiecie", "Michal Wojtowicz", "Milosz Szwaba", team3Stats);
+        Team team4 = new Team("ENE", "Energetyk Poznan", "Michal Patyk", team4Stats);
 
         team1.getMatchList().add(match1);
         team1.getMatchList().add(match2);
@@ -117,6 +122,11 @@ public class DataBaseLoader implements CommandLineRunner {
         matchService.addMatch(match2);
         matchService.addMatch(match3);
 
+        //Adding team stats to database
+        teamStatsService.saveTeamStats(team1Stats);
+        teamStatsService.saveTeamStats(team2Stats);
+        teamStatsService.saveTeamStats(team3Stats);
+        teamStatsService.saveTeamStats(team4Stats);
 
         //Adding teams to database
         teamService.addTeam(team1);

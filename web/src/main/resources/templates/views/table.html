@@ -12,25 +12,33 @@
     <table class="table table-hover" id="leagueTable">
 
         <thead class="thead-light">
-        <tr>
+        <tr class="centeredText">
             <th>Miejsce</th>
             <th>Nazwa Zespołu</th>
             <th>Mecze</th>
-            <th>Wygrane</th>
-            <th>Przegrane</th>
             <th>Punkty</th>
-            <th>Sety</th>
+            <th>Zwycięstwa</th>
+            <th>Porażki</th>
+            <th>Sety W/P</th>
             <th>Ratio</th>
-            <th>Małe pkt.</th>
+            <th>Małe pkt. Z/S</th>
             <th>Ratio</th>
 
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="team : ${allTeams}">
-            <td th:text="${teamStat.count}"/>
-            <td th:text="${team.getTeamName()}"/>
+        <tr th:each="team : ${allTeams}" class="centeredText">
+            <td th:text="${teamStat.count}" class="indexNumber"/>
+            <td th:text="${team.teamName}" class="leftAlignedText"/>
+            <td th:text="${team.teamStats.matchPlayed != 0} ? ${team.teamStats.matchPlayed} : '-'"/>
+            <td th:text="${team.teamStats.leaguePoints != 0} ? ${team.teamStats.leaguePoints} : '-'"/>
+            <td th:text="${team.teamStats.matchWon != 0} ? ${team.teamStats.matchWon} : '-'"/>
+            <td th:text="${team.teamStats.matchLost != 0} ? ${team.teamStats.matchLost} : '-'"/>
+            <td th:text="${team.teamStats.matchPlayed != 0} ? ${team.teamStats.setsWon} + ':' + ${team.teamStats.setsLost} : '-'"/>
+            <td th:text="${team.teamStats.setRatio != 0.0} ? ${#numbers.formatDecimal(team.teamStats.setRatio, 0, 'COMMA', 3, 'POINT')} : '-'"/>
+            <td th:text="${team.teamStats.matchPlayed != 0} ? ${team.teamStats.pointsWon} + ':' + ${team.teamStats.pointsLost} : '-'"/>
+            <td th:text="${team.teamStats.teamPointsRatio != 0.0} ? ${#numbers.formatDecimal(team.teamStats.teamPointsRatio, 0, 'COMMA', 3, 'POINT')} : '-'"/>
         </tr>
         </tbody>
     </table>

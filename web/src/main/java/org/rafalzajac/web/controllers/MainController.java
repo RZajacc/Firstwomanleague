@@ -170,13 +170,8 @@ public class MainController {
     @PostMapping("/round/result/{id}")
     public String updateMatchResult(@ModelAttribute("currentMatch") Match match){
 
-        // Wydobądź z meczu zespoły -> zagnieźdź metodę do aktualizacji zespołu w pierwszej metodzie
-        // Dodaj w statystykach zespołu punkty do tabeli, mecze wygrane i przegrane, wygrane sety, przegrane sety, zdobyte i stracone punkty, ratio setów i ratio pkt
-        // przypisz wyliczone wyniki drużynom
-
         ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService);
         processMatchResult.addMatchResult(match);
-
 
         return "redirect:/round/" + match.getId();
     }
@@ -186,6 +181,7 @@ public class MainController {
     public String leagueTable(Model model) {
 
         List<Team> teams = teamService.findAllTeams();
+        // Tutaj powinno sie odbyć sortowanie
         model.addAttribute("allTeams", teams);
 
             return "views/table";

@@ -73,6 +73,7 @@ public class Team {
         this.secondCoach = secondCoach;
         this.teamStats = teamStats;
         playerList = new LinkedList<>();
+        matchList = new LinkedList<>();
     }
 
 

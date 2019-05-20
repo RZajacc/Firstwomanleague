@@ -1,10 +1,9 @@
 
 //Wynik meczu:
 
-        //2. Inny button w wyniku meczu
-        //3. Przekierowanie do strony meczu a nie rundy
-        //4. Tabela sortowana wg zasad PZPS
-
+        //1. przypisz pozostałe wyniki drużynom
+        //2. Tabela sortowana wg zasad PZPS
+        //3. Pozmieniaj thymeleafowe odwołania na te bez getterów
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
@@ -22,5 +21,3 @@
         //4. Faza rozgrywek?
 
 
-// Inne:
-        //1. Tabele i staty lepiej jakby się centrowały na środku strony, tak jak ta z meczami chociażby
