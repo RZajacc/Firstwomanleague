@@ -1,17 +1,21 @@
 
 //Wynik meczu:
 
-        //1. przypisz pozostałe wyniki drużynom
-        //2. Tabela sortowana wg zasad PZPS
-        //3. Pozmieniaj thymeleafowe odwołania na te bez getterów
+        //1. Tabela sortowana wg zasad PZPS
+
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
         //2. Być może zmień nieco widok i numer rundy jakoś w tabeli? -> to raczej wyjdzie dopiero po security
 
+
 // Security
         //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
         //2. Panel administracyjny również
+
+
+// Cleanup
+        //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
 
 
 // Panel administracyjny

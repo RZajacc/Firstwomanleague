@@ -14,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -181,8 +183,18 @@ public class MainController {
     public String leagueTable(Model model) {
 
         List<Team> teams = teamService.findAllTeams();
-        // Tutaj powinno sie odbyć sortowanie
-        model.addAttribute("allTeams", teams);
+
+        Comparator<Team> comparator = (t1, t2) -> t2.getTeamStats().getLeaguePoints() - t1.getTeamStats().getLeaguePoints();
+        comparator.thenComparing(team -> team.getTeamStats().getSetRatio());
+//        comparator.thenComparing(team -> team.getTeamStats().getMatchWon());
+//
+//        comparator.thenComparing(team -> team.getTeamStats().getPointsRatio()).reversed();
+
+        Stream<Team> teamStream = teams.stream().sorted(comparator);
+        List<Team> sortedTeams = teamStream.collect(Collectors.toList());
+
+//        teams.sort( (t1, t2) -> t2.getTeamStats().getLeaguePoints() - t1.getTeamStats().getLeaguePoints());
+        model.addAttribute("allTeams", sortedTeams);
 
             return "views/table";
     }

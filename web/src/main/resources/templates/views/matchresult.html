@@ -23,6 +23,11 @@
             <form method="POST" action="/round/result/{id}"  th:object="${currentMatch}" name="currentMatch">
 
                 <tr>
+                    <td th:text="${currentMatch.teams.get(0).teamName}" class="matchInfo"/>
+                    <th class="matchInfo">- Drużyny -</th>
+                    <td th:text="${currentMatch.teams.get(1).teamName}" class="matchInfo"/>
+                </tr>
+                <tr>
                     <td ><input type="text" th:field="*{matchResult.homeTeamSetsWon}" class="matchInfo"></td>
                     <th class="matchInfo">- Sety -</th>
                     <td><input type="text" th:field="*{matchResult.awayTeamSetsWon}" class="matchInfo"></td>

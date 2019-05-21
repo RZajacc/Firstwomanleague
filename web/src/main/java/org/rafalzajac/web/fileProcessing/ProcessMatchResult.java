@@ -2,8 +2,10 @@ package org.rafalzajac.web.fileProcessing;
 
 import org.rafalzajac.domain.Match;
 import org.rafalzajac.domain.Team;
+import org.rafalzajac.domain.TeamStats;
 import org.rafalzajac.service.MatchService;
 import org.rafalzajac.service.TeamService;
+import org.rafalzajac.service.TeamStatsService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,7 @@ public class ProcessMatchResult {
 
     private TeamService teamService;
     private MatchService matchService;
+
 
     public ProcessMatchResult(TeamService teamService, MatchService matchService) {
         this.teamService = teamService;
@@ -55,17 +58,17 @@ public class ProcessMatchResult {
         Team homeTeam = match.getTeams().get(0);
         Team awayTeam = match.getTeams().get(1);
 
-        if(  (Integer.parseInt(match.getMatchResult().getHomeTeamSetsWon()) != 0) || (Integer.parseInt(match.getMatchResult().getAwayTeamSetsWon()) != 0) )  {
+        if(match.getMatchResult().getAwayTeamSetsWon() != 0 || match.getMatchResult().getHomeTeamSetsWon() != 0){
 
             //Setting matches played for both teams
             homeTeam.getTeamStats().setMatchPlayed(homeTeam.getTeamStats().getMatchPlayed() + 1);
             awayTeam.getTeamStats().setMatchPlayed(awayTeam.getTeamStats().getMatchPlayed() + 1);
 
             //Setting sets won and lost for both teams
-            homeTeam.getTeamStats().setSetsWon(homeTeam.getTeamStats().getSetsWon() + Integer.parseInt(match.getMatchResult().getHomeTeamSetsWon()));
-            homeTeam.getTeamStats().setSetsLost(homeTeam.getTeamStats().getSetsLost() + Integer.parseInt(match.getMatchResult().getAwayTeamSetsWon()));
-            awayTeam.getTeamStats().setSetsWon(awayTeam.getTeamStats().getSetsWon() + Integer.parseInt(match.getMatchResult().getAwayTeamSetsWon()));
-            awayTeam.getTeamStats().setSetsLost(awayTeam.getTeamStats().getSetsLost() + Integer.parseInt(match.getMatchResult().getHomeTeamSetsWon()));
+            homeTeam.getTeamStats().setSetsWon(homeTeam.getTeamStats().getSetsWon() + match.getMatchResult().getHomeTeamSetsWon());
+            homeTeam.getTeamStats().setSetsLost(homeTeam.getTeamStats().getSetsLost() + match.getMatchResult().getAwayTeamSetsWon());
+            awayTeam.getTeamStats().setSetsWon(awayTeam.getTeamStats().getSetsWon() + match.getMatchResult().getAwayTeamSetsWon());
+            awayTeam.getTeamStats().setSetsLost(awayTeam.getTeamStats().getSetsLost() + match.getMatchResult().getHomeTeamSetsWon());
 
             //Setting sets ratio for home team
             if (homeTeam.getTeamStats().getSetsLost() == 0) {
@@ -82,14 +85,38 @@ public class ProcessMatchResult {
             }
 
             //Setting points scored by both teams
-            //Tutaj seria ifów żeby rozwiącać problem pustych pól jeżeli mecz jest 3 setowy
-            homeTeam.getTeamStats().setPointsWon(homeTeam.getTeamStats().getPointsWon() + Integer.parseInt(match.getMatchResult().getHomeTeamSet1Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet2Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet3Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet4Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet5Score()));
-            homeTeam.getTeamStats().setPointsLost(homeTeam.getTeamStats().getPointsLost() + Integer.parseInt(match.getMatchResult().getAwayTeamSet1Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet2Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet3Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet4Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet5Score()));
-            homeTeam.getTeamStats().setTeamPointsRatio((float) homeTeam.getTeamStats().getPointsWon() / homeTeam.getTeamStats().getPointsLost());
-            awayTeam.getTeamStats().setPointsWon(awayTeam.getTeamStats().getPointsWon() + Integer.parseInt(match.getMatchResult().getAwayTeamSet1Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet2Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet3Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet4Score()) + Integer.parseInt(match.getMatchResult().getAwayTeamSet5Score()));
-            awayTeam.getTeamStats().setPointsLost(awayTeam.getTeamStats().getPointsLost() + Integer.parseInt(match.getMatchResult().getHomeTeamSet1Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet2Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet3Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet4Score()) + Integer.parseInt(match.getMatchResult().getHomeTeamSet5Score()));
-            awayTeam.getTeamStats().setTeamPointsRatio((float) awayTeam.getTeamStats().getPointsWon() / awayTeam.getTeamStats().getPointsLost());
+                homeTeam.getTeamStats().setPointsWon(homeTeam.getTeamStats().getPointsWon() + match.getMatchResult().getHomeTeamSet1Score() + match.getMatchResult().getHomeTeamSet2Score() + match.getMatchResult().getHomeTeamSet3Score() + match.getMatchResult().getHomeTeamSet4Score() + match.getMatchResult().getHomeTeamSet5Score());
+                homeTeam.getTeamStats().setPointsLost(homeTeam.getTeamStats().getPointsLost() + match.getMatchResult().getAwayTeamSet1Score() + match.getMatchResult().getAwayTeamSet2Score() + match.getMatchResult().getAwayTeamSet3Score() + match.getMatchResult().getAwayTeamSet4Score() + match.getMatchResult().getAwayTeamSet5Score());
+                homeTeam.getTeamStats().setTeamPointsRatio((float) homeTeam.getTeamStats().getPointsWon() / homeTeam.getTeamStats().getPointsLost());
+                awayTeam.getTeamStats().setPointsWon(awayTeam.getTeamStats().getPointsWon() + match.getMatchResult().getAwayTeamSet1Score() + match.getMatchResult().getAwayTeamSet2Score() + match.getMatchResult().getAwayTeamSet3Score() + match.getMatchResult().getAwayTeamSet4Score() + match.getMatchResult().getAwayTeamSet5Score());
+                awayTeam.getTeamStats().setPointsLost(awayTeam.getTeamStats().getPointsLost() + match.getMatchResult().getHomeTeamSet1Score() + match.getMatchResult().getHomeTeamSet2Score() + match.getMatchResult().getHomeTeamSet3Score() + match.getMatchResult().getHomeTeamSet4Score() + match.getMatchResult().getHomeTeamSet5Score());
+                awayTeam.getTeamStats().setTeamPointsRatio((float) awayTeam.getTeamStats().getPointsWon() / awayTeam.getTeamStats().getPointsLost());
 
+            //Setting league points, matches won and matches lost
+            if( match.getMatchResult().getHomeTeamSetsWon() == 3 && (match.getMatchResult().getAwayTeamSetsWon() == 0 || match.getMatchResult().getAwayTeamSetsWon() == 1) ) {
+                homeTeam.getTeamStats().setLeaguePoints(homeTeam.getTeamStats().getLeaguePoints() + 3);
+                homeTeam.getTeamStats().setMatchWon(homeTeam.getTeamStats().getMatchWon() + 1);
+
+                awayTeam.getTeamStats().setMatchLost(awayTeam.getTeamStats().getMatchLost() + 1);
+
+            } else if ( match.getMatchResult().getHomeTeamSetsWon() == 3 && match.getMatchResult().getAwayTeamSetsWon() == 2 ) {
+                homeTeam.getTeamStats().setLeaguePoints(homeTeam.getTeamStats().getLeaguePoints() + 2);
+                homeTeam.getTeamStats().setMatchWon(homeTeam.getTeamStats().getMatchWon() + 1);
+                awayTeam.getTeamStats().setLeaguePoints(awayTeam.getTeamStats().getLeaguePoints() + 1);
+
+                awayTeam.getTeamStats().setMatchLost(awayTeam.getTeamStats().getMatchLost() + 1);
+            } else if ( (match.getMatchResult().getHomeTeamSetsWon() == 0 || match.getMatchResult().getHomeTeamSetsWon() == 1) && match.getMatchResult().getAwayTeamSetsWon() == 3 ) {
+                awayTeam.getTeamStats().setLeaguePoints(awayTeam.getTeamStats().getLeaguePoints() + 3);
+                awayTeam.getTeamStats().setMatchWon(awayTeam.getTeamStats().getMatchWon() + 1);
+
+                homeTeam.getTeamStats().setMatchLost(homeTeam.getTeamStats().getMatchLost() + 1);
+            } else {
+                awayTeam.getTeamStats().setLeaguePoints(awayTeam.getTeamStats().getLeaguePoints() + 2);
+                awayTeam.getTeamStats().setMatchWon(awayTeam.getTeamStats().getMatchWon() + 1);
+                homeTeam.getTeamStats().setLeaguePoints(homeTeam.getTeamStats().getLeaguePoints() + 1);
+
+                homeTeam.getTeamStats().setMatchLost(homeTeam.getTeamStats().getMatchLost() + 1);
+            }
 
             teamService.addTeam(homeTeam);
             teamService.addTeam(awayTeam);
