@@ -184,17 +184,24 @@ public class MainController {
 
         List<Team> teams = teamService.findAllTeams();
 
-        Comparator<Team> comparator = (t1, t2) -> t2.getTeamStats().getLeaguePoints() - t1.getTeamStats().getLeaguePoints();
-        comparator.thenComparing(team -> team.getTeamStats().getSetRatio());
-//        comparator.thenComparing(team -> team.getTeamStats().getMatchWon());
-//
-//        comparator.thenComparing(team -> team.getTeamStats().getPointsRatio()).reversed();
+        //Do tego else ify z kolejnymi warunkami
 
-        Stream<Team> teamStream = teams.stream().sorted(comparator);
-        List<Team> sortedTeams = teamStream.collect(Collectors.toList());
+        teams.sort((t1, t2) -> {
+            if ( ((t1.getTeamStats().getLeaguePoints() - t2.getTeamStats().getLeaguePoints() ) == 0) &&
+                    ((t1.getTeamStats().getMatchWon() - t2.getTeamStats().getMatchWon()) == 0) &&
+                    ((t1.getTeamStats().getSetRatio() - t2.getTeamStats().getSetRatio()) == 0) ) {
+                return t2.getTeamStats().getPointsRatio() - t1.getTeamStats().getPointsRatio();
+            } else if( ((t1.getTeamStats().getLeaguePoints() - t2.getTeamStats().getLeaguePoints() ) == 0) &&
+                    ((t1.getTeamStats().getMatchWon() - t2.getTeamStats().getMatchWon()) == 0) ){
+                return (int)(t2.getTeamStats().getSetRatio() - t1.getTeamStats().getSetRatio());
+            } else if( (t1.getTeamStats().getLeaguePoints() - t2.getTeamStats().getLeaguePoints()) == 0 ){
+                return t2.getTeamStats().getMatchWon() - t1.getTeamStats().getMatchWon();
+            } else{
+                return t2.getTeamStats().getLeaguePoints() - t1.getTeamStats().getLeaguePoints();
+            }
+        });
 
-//        teams.sort( (t1, t2) -> t2.getTeamStats().getLeaguePoints() - t1.getTeamStats().getLeaguePoints());
-        model.addAttribute("allTeams", sortedTeams);
+        model.addAttribute("allTeams", teams);
 
             return "views/table";
     }

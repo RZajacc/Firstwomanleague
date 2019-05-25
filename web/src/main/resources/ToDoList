@@ -1,12 +1,8 @@
 
-//Wynik meczu:
-
-        //1. Tabela sortowana wg zasad PZPS
-
-
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
         //2. Być może zmień nieco widok i numer rundy jakoś w tabeli? -> to raczej wyjdzie dopiero po security
+        //3. Dodaj wynik setów w tym widoku
 
 
 // Security
@@ -16,6 +12,9 @@
 
 // Cleanup
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
+        //2. Dodaj wyniki setów w widoku meczu
+        //3. Możliwość generowania od nowa z wszystkich scoutów rankingu?
+        //4. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta?
 
 
 // Panel administracyjny
@@ -24,4 +23,6 @@
         //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
         //4. Faza rozgrywek?
 
+// Test
+        //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej
 
