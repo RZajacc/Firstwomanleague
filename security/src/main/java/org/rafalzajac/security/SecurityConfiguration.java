@@ -16,6 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").access("permitAll()")
                 .antMatchers("/console/**").access("permitAll()")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
         .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
