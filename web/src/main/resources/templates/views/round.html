@@ -26,9 +26,11 @@
                <th>Gospodarz</th>
                <th>Gość</th>
                <th>Statystyki</th>
+               <th>Wynik</th>
                <th></th>
                <th>Scout</th>
                <th>Akcja</th>
+               <th></th>
                <th></th>
                <th></th>
            </tr>
@@ -42,6 +44,8 @@
                 <td>
                     <a th:href="@{'/round/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
+
+                <td th:text="${match.matchResult.homeTeamSetsWon} + ':' + ${match.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
 
                 <td>
                     <form method="POST" action="/round" enctype="multipart/form-data">

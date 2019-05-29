@@ -156,3 +156,15 @@ body {
 #saveResultButton {
     width: 200px;
 }
+
+#inRoundResult {
+    font-weight: bold;
+    color: red;
+    font-size: 24px;
+}
+
+.setScore {
+    font-size: 18px;
+    color: orangered;
+    text-align: center;
+}
