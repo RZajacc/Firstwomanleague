@@ -2,12 +2,8 @@ package org.rafalzajac.web.fileProcessing;
 
 import org.rafalzajac.domain.Match;
 import org.rafalzajac.domain.Team;
-import org.rafalzajac.domain.TeamStats;
 import org.rafalzajac.service.MatchService;
 import org.rafalzajac.service.TeamService;
-import org.rafalzajac.service.TeamStatsService;
-
-import java.util.List;
 import java.util.Optional;
 
 

@@ -1,14 +1,14 @@
 
 //Rundy:
         //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
-        //2. Zamknij sortowania w metodach
-        //3. Dodaj chociaż jeden mecz drugiej rundy, żeby sprawdzić czy to działa
+        //2. Dodaj chociaż jeden mecz drugiej rundy, żeby sprawdzić czy to działa
 
 
 // Security
-        //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
-        //2. Panel administracyjny również
-
+        //1. Dodaj konto administratora w kodzie, nie chcę tworzyć nowych kont
+        //2. Skonfiguruj dostęp do stron tak jak jest + dostęp do panalu admina
+        //3. Skopiuj widok logowania z projektu managera
+        //4. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
 
 // Panel administracyjny
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
