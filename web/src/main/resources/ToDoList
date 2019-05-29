@@ -1,8 +1,6 @@
 // Security
-        //1. Dodaj konto administratora w kodzie, nie chcę tworzyć nowych kont
-        //2. Skonfiguruj dostęp do stron tak jak jest + dostęp do panalu admina
-        //3. Skopiuj widok logowania z projektu managera
-        //4. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
+        //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
+
 
 // Panel administracyjny
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek

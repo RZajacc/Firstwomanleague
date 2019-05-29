@@ -168,3 +168,19 @@ body {
     color: orangered;
     text-align: center;
 }
+
+#loginForm {
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.topText {
+    text-align: center;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.form-group {
+    width: 20%;
+    margin: auto;
+}

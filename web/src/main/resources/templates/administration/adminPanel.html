@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head th:replace="layouts/MainLayout :: head(title = 'Panel administracyjny')"/>
 
@@ -7,7 +8,10 @@
 
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
-
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 <footer th:replace="layouts/MainLayout :: footer"/>
 
