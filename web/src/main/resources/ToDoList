@@ -1,9 +1,3 @@
-
-//Rundy:
-        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
-        //2. Dodaj chociaż jeden mecz drugiej rundy, żeby sprawdzić czy to działa
-
-
 // Security
         //1. Dodaj konto administratora w kodzie, nie chcę tworzyć nowych kont
         //2. Skonfiguruj dostęp do stron tak jak jest + dostęp do panalu admina
@@ -22,6 +16,7 @@
         //3. Możliwość generowania od nowa z wszystkich scoutów rankingu?
         //4. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki
              żeby był szybko, potem ze scouta update?
+        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej
