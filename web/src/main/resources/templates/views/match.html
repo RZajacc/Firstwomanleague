@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layouts/MainLayout :: head(title = 'Informacje o meczu')"/>
 
@@ -38,7 +38,7 @@
                         </tr>
                         <tr>
                                 <th th:text="${currentMatch.matchResult.homeTeamSetsWon}" class="matchScore"/>
-                                <td class="matchInfo"> -Wynik-
+                                <td class="matchInfo" > -Wynik-
                                         <p class="matchInfo" th:text=" (${currentMatch.matchResult.homeTeamSet1Score != 0} ? ${currentMatch.matchResult.homeTeamSet1Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet1Score != 0} ? ${currentMatch.matchResult.awayTeamSet1Score} + '; ' : '') +
                                               (${currentMatch.matchResult.homeTeamSet2Score != 0} ? ${currentMatch.matchResult.homeTeamSet2Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet2Score != 0} ? ${currentMatch.matchResult.awayTeamSet2Score} + '; ' : '') +
                                               (${currentMatch.matchResult.homeTeamSet3Score != 0} ? ${currentMatch.matchResult.homeTeamSet3Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet3Score != 0} ? ${currentMatch.matchResult.awayTeamSet3Score} + '; ' : '') +
@@ -49,16 +49,16 @@
                         </tr>
                         <tr>
                                 <form method="POST" action="/round/{id}">
-                                        <td><button name="save" type="submit" value="true" id="saveStats" style="display: none">Save</button> </td>
-                                        <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Zapisz statystyki</button></td>
-                                        <td><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
+                                        <td sec:authorize="isAuthenticated()"><button name="save" type="submit" value="true" id="saveStats" style="display: none">Save</button> </td>
+                                        <td sec:authorize="isAuthenticated()"><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Zapisz statystyki</button></td>
+                                        <td sec:authorize="isAuthenticated()"><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
                                 </form>
 
                         </tr>
                         <tr>
-                                <td/>
-                                <td><a th:href="@{'/round/result/' + ${currentMatch.getId()}} " class="btn btn-primary" id="saveResultButton" \>Zapisz wynik meczu</a></td>
-                                <td/>
+                                <td sec:authorize="isAuthenticated()"/>
+                                <td sec:authorize="isAuthenticated()"><a th:href="@{'/round/result/' + ${currentMatch.getId()}} " class="btn btn-primary" id="saveResultButton" \>Zapisz wynik meczu</a></td>
+                                <td sec:authorize="isAuthenticated()"/>
                         </tr>
                 </tbody>
 

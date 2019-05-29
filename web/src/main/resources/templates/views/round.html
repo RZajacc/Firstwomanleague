@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layouts/MainLayout :: head(title = 'Mecze')"/>
 
@@ -8,16 +8,14 @@
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
 
-
+<div th:if="${message}" id="uploadMessage">
+    <p th:text="${message}"/>
+</div>
 
 
 <div class="container" id="roundTable" th:each="round : ${rounds}">
 
     <h4 id="roundHeader">Kolejka nr: <span th:text="${round.getRoundNumber()}" /></h4>
-
-    <div th:if="${message}" id="uploadMessage">
-        <p th:text="${message}"/>
-    </div>
 
     <table class="table table-hover tableData" >
        <thead class="thead-light">
@@ -28,10 +26,10 @@
                <th>Statystyki</th>
                <th>Wynik</th>
                <th></th>
-               <th>Scout</th>
-               <th>Akcja</th>
-               <th></th>
-               <th></th>
+               <th sec:authorize="isAuthenticated()">Scout</th>
+               <th sec:authorize="isAuthenticated()">Akcja</th>
+               <th sec:authorize="isAuthenticated()"></th>
+               <th sec:authorize="isAuthenticated()"></th>
                <th></th>
            </tr>
        </thead>
@@ -49,19 +47,22 @@
 
                 <td>
                     <form method="POST" action="/round" enctype="multipart/form-data">
-                        <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
-                        <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
-                        <td><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
+                        <td sec:authorize="isAuthenticated()"><input type="file" name="file" id="fileupload" class="btn btn-secondary" sec:authorize="isAuthenticated()"/></td>
+                        <td sec:authorize="isAuthenticated()"><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
+                        <td sec:authorize="isAuthenticated()"><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
                      </form>
                 </td>
                 <td/>
             </tr>
-
         </tbody>
     </table>
 </div>
 
+<ul>
+    <li>
 
+    </li>
+</ul>
 
 
 

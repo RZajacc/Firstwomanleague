@@ -1,13 +1,8 @@
-// Security
-        //1. Dodawanie scouta, wysyłanie i dodawanie wyniku meczu tylko dla zalogowanego
-
-
 // Panel administracyjny
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
-        //2. Kontroler dla admina
-        //3. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
-        //4. Faza rozgrywek?
-        //5. Inny layout niż pozostałe strony i ikona powrotu?
+        //2. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
+        //3. Faza rozgrywek?
+        //4. Inny layout niż pozostałe strony i ikona powrotu?
 
 // Cleanup
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
@@ -15,7 +10,8 @@
         //3. Możliwość generowania od nowa z wszystkich scoutów rankingu?
         //4. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki
              żeby był szybko, potem ze scouta update?
-        //1. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu
+        //5. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu spróbuj, jak nie to tylko zmień sposób
+             wyświetlania
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej

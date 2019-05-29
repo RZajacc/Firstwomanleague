@@ -101,6 +101,7 @@ body {
     text-align: center;
     font-size: medium;
     color: blue;
+    margin-top: 2%;
 }
 
 #scoutFilePathMessage {
