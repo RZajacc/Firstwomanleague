@@ -39,17 +39,24 @@ public class DataBaseLoader implements CommandLineRunner {
 
         //Creating round instance
         Round round1 = new Round(1, FirstWoman);
+        Round round2 = new Round(2, FirstWoman);
 
         MatchResult result1 = new MatchResult();
         MatchResult result2 = new MatchResult();
         MatchResult result3 = new MatchResult();
+        MatchResult result4 = new MatchResult();
+        MatchResult result5 = new MatchResult();
+        MatchResult result6 = new MatchResult();
+
 
         //Creating match instances
         Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1, result1);
         Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1, result2);
         Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1, result3);
 
-
+        Match match4 = new Match("Joker Swiecie", "PWSZ Tarnow", 4, round2, result4);
+        Match match5 = new Match("Energetyk Poznan", "Joker Swiecie",5,  round2, result5);
+        Match match6 = new Match("PWSZ Tarnow", "Energetyk Poznan", 6, round2, result6);
 
         TeamStats team1Stats = new TeamStats();
         TeamStats team2Stats = new TeamStats();
@@ -65,10 +72,16 @@ public class DataBaseLoader implements CommandLineRunner {
         team1.getMatchList().add(match1);
         team1.getMatchList().add(match2);
         team1.getMatchList().add(match3);
+        team3.getMatchList().add(match4);
+        team4.getMatchList().add(match5);
+        team2.getMatchList().add(match6);
 
         team2.getMatchList().add(match1);
         team3.getMatchList().add(match2);
         team4.getMatchList().add(match3);
+        team2.getMatchList().add(match4);
+        team3.getMatchList().add(match5);
+        team4.getMatchList().add(match6);
 
         PlayerStats playerStats1 = new PlayerStats();
         PlayerStats playerStats2 = new PlayerStats();
@@ -111,16 +124,24 @@ public class DataBaseLoader implements CommandLineRunner {
 
         //Adding round to database
         roundService.addRound(round1);
+        roundService.addRound(round2);
+
 
         //Adding match result
         matchResultService.saveMatchResult(result1);
         matchResultService.saveMatchResult(result2);
         matchResultService.saveMatchResult(result3);
+        matchResultService.saveMatchResult(result4);
+        matchResultService.saveMatchResult(result5);
+        matchResultService.saveMatchResult(result6);
 
         //Adding matches to database
         matchService.addMatch(match1);
         matchService.addMatch(match2);
         matchService.addMatch(match3);
+        matchService.addMatch(match4);
+        matchService.addMatch(match5);
+        matchService.addMatch(match6);
 
         //Adding team stats to database
         teamStatsService.saveTeamStats(team1Stats);

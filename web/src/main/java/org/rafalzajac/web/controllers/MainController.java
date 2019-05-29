@@ -50,7 +50,6 @@ public class MainController {
         List<Round> rounds = roundService.findAllRounds();
         List<Match> matchList = matchService.findAllMatches();
         model.addAttribute("rounds", rounds);
-        model.addAttribute("matches", matchList);
 
         return "views/round";
     }
