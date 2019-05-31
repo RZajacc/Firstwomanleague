@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Utwórz zespół')"/>
+
+<body>
+
+<form method="POST" action="/createteam" class="newElementForm" th:object="${newTeam}">
+
+    <div class="form-group text-center">
+        <label for="teamName">Podaj nazwę zespołu : </label>
+        <input type="text" class="form-control" name="teamName" id="teamName">
+    </div>
+    <div class="form-group text-center">
+        <label for="teamTag">Podaj tag zespołu : </label>
+        <input type="text" class="form-control" name="teamTag" id="teamTag">
+    </div>
+    <div class="form-group text-center">
+        <label for="firstCoach">Podaj imię i nazwisko pierwszego trenera : </label>
+        <input type="text" class="form-control" name="firstCoach" id="firstCoach">
+    </div>
+    <div class="form-group text-center">
+        <label for="secondCoach">Podaj imię i nazwisko drugiego trenera : </label>
+        <input type="text" class="form-control" name="secondCoach" id="secondCoach">
+    </div>
+    <div class="form-group text-center">
+        <label for="webPage">Podaj adres strony internetowej zespołu : </label>
+        <input type="text" class="form-control" name="webPage" id="webPage">
+    </div>
+    <div class="form-group text-center">
+        <label for="facebook">Podaj adres fanpage na facebook : </label>
+        <input type="text" class="form-control" name="facebook" id="facebook">
+    </div>
+
+    <div class="text-center" style="margin-top: 15px">
+        <button type="submit" class="btn btn-primary">Utwórz</button>
+    </div>
+
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+</form>
+
+</body>
+</html>

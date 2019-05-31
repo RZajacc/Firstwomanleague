@@ -4,10 +4,7 @@ import org.rafalzajac.domain.Match;
 import org.rafalzajac.domain.MatchResult;
 import org.rafalzajac.domain.Round;
 import org.rafalzajac.domain.Team;
-import org.rafalzajac.service.MatchResultService;
-import org.rafalzajac.service.MatchService;
-import org.rafalzajac.service.RoundService;
-import org.rafalzajac.service.TeamService;
+import org.rafalzajac.service.*;
 import org.rafalzajac.web.administration.CreateNewElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +22,14 @@ public class AdminPanelController {
     private MatchService matchService;
     private RoundService roundService;
     private MatchResultService matchResultService;
+    private TeamStatsService teamStatsService;
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService) {
+    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService) {
         this.matchService = matchService;
         this.roundService = roundService;
         this.matchResultService = matchResultService;
         this.teamService = teamService;
+        this.teamStatsService = teamStatsService;
     }
 
     @GetMapping("/admin")
@@ -53,13 +52,34 @@ public class AdminPanelController {
     }
 
     @PostMapping("/creatematch")
-    public String processTeam(@ModelAttribute("currentMatch") Match match, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
+    public String processMatch(@ModelAttribute("currentMatch") Match match, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
 
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService);
         createNewElement.addNewMatch(match);
         System.out.println("Selected team is : " + homeTeam);
 
-        return "redirect:/";
+        return "redirect:/round";
+    }
+
+    @GetMapping("/createteam")
+    public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {
+        System.out.println(team.getTeamName());
+        System.out.println(team.getFirstCoach());
+        System.out.println(team.getSecondCoach());
+
+        List<Round> rounds = roundService.findAllRounds();
+        List<Team> teams = teamService.findAllTeams();
+
+        model.addAttribute("roundSelect", rounds);
+        model.addAttribute("allTeams", teams);
+
+        return "/administration/createTeam";
+    }
+
+    @PostMapping("/createteam")
+    public String processTeam(@ModelAttribute("newTeam") Team team) {
+
+        return "redirect:/teams";
     }
 
 }

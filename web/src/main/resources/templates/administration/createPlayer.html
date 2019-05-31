@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Utwórz zawodniczkę')"/>
+
+<body>
+
+<!--<form method="POST" action="/creatematch" class="newElementForm" th:object="${newMatch}">-->
+
+<!--    <div class="form-group text-center">-->
+<!--        <label for="selectHomeTeam">Wybierz drużynę gospodarza : </label>-->
+<!--        <select class="form-control" name="homeTeam" id="selectHomeTeam">-->
+<!--            <option th:each="team : ${allTeams}"-->
+<!--                    th:text="${team.teamName}"-->
+<!--                    th:value="${team.teamName}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <div class="form-group text-center">-->
+<!--        <label for="selectAwayTeam">Wybierz drużynę gościa :</label>-->
+<!--        <select class="form-control" name="awayTeam" id="selectAwayTeam">-->
+<!--            <option th:each="team : ${allTeams}"-->
+<!--                    th:text="${team.teamName}"-->
+<!--                    th:value="${team.teamName}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+<!--    <div class="form-group text-center">-->
+<!--        <label for="matchNumber">Numer meczu: </label>-->
+<!--        <input type="text" class="form-control" id="matchNumber" th:field="*{matchNumber}" placeholder="np. 42">-->
+<!--    </div>-->
+<!--    <div class="form-group text-center">-->
+<!--        <label for="selectRound">Nr kolejki : </label>-->
+<!--        <select th:field="*{round.roundNumber}" class="form-control" name="selectRound" id="selectRound">-->
+<!--            <option th:each="round : ${roundSelect}"-->
+<!--                    th:text="${round.roundNumber}"-->
+<!--                    th:value="${round.roundNumber}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+<!--    <div class="text-center" style="margin-top: 15px">-->
+<!--        <button type="submit" class="btn btn-primary">Utwórz</button>-->
+<!--    </div>-->
+
+<!--    <div th:if="${param.error}">-->
+<!--        Invalid username and password.-->
+<!--    </div>-->
+<!--</form>-->
+
+
+</body>
+</html>

@@ -8,7 +8,7 @@
 <form method="POST" action="/creatematch" class="newElementForm" th:object="${newMatch}">
 
     <div class="form-group text-center">
-        <label for="selectHomeTeam">dddd : </label>
+        <label for="selectHomeTeam">Wybierz drużynę gospodarza : </label>
         <select class="form-control" name="homeTeam" id="selectHomeTeam">
             <option th:each="team : ${allTeams}"
                     th:text="${team.teamName}"
@@ -17,7 +17,7 @@
         </select>
     </div>
     <div class="form-group text-center">
-        <label for="selectAwayTeam">dddd : </label>
+        <label for="selectAwayTeam">Wybierz drużynę gościa :</label>
         <select class="form-control" name="awayTeam" id="selectAwayTeam">
             <option th:each="team : ${allTeams}"
                     th:text="${team.teamName}"

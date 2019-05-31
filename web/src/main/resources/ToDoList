@@ -1,6 +1,5 @@
 // Panel administracyjny
         //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
-        //2. Pomyśl jak dodawać rundy i mecze do istniejącej ligi
         //3. Faza rozgrywek?
         //4. Inny layout niż pozostałe strony i ikona powrotu?
 
@@ -16,6 +15,7 @@
         //7. Dodaj rzeczywiste kolejki i prawdziwe scouty
         //8. Uzupełnij plik readme
         //9. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
+        //10. Edycja danych meczu, drużyny
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej
