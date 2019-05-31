@@ -54,7 +54,7 @@ public class AdminPanelController {
     @PostMapping("/creatematch")
     public String processMatch(@ModelAttribute("currentMatch") Match match, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
 
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService);
         createNewElement.addNewMatch(match);
         System.out.println("Selected team is : " + homeTeam);
 
@@ -63,21 +63,15 @@ public class AdminPanelController {
 
     @GetMapping("/createteam")
     public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {
-        System.out.println(team.getTeamName());
-        System.out.println(team.getFirstCoach());
-        System.out.println(team.getSecondCoach());
 
-        List<Round> rounds = roundService.findAllRounds();
-        List<Team> teams = teamService.findAllTeams();
-
-        model.addAttribute("roundSelect", rounds);
-        model.addAttribute("allTeams", teams);
-
-        return "/administration/createTeam";
+        return "administration/createTeam";
     }
 
     @PostMapping("/createteam")
     public String processTeam(@ModelAttribute("newTeam") Team team) {
+
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService);
+        createNewElement.addNewTeam(team);
 
         return "redirect:/teams";
     }

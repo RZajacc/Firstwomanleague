@@ -4,10 +4,8 @@ import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.Match;
 import org.rafalzajac.domain.MatchResult;
 import org.rafalzajac.domain.Team;
-import org.rafalzajac.service.MatchResultService;
-import org.rafalzajac.service.MatchService;
-import org.rafalzajac.service.RoundService;
-import org.rafalzajac.service.TeamService;
+import org.rafalzajac.domain.TeamStats;
+import org.rafalzajac.service.*;
 
 
 @NoArgsConstructor
@@ -17,12 +15,14 @@ public class CreateNewElement {
     private MatchService matchService;
     private RoundService roundService;
     private TeamService teamService;
+    private TeamStatsService teamStatsService;
 
-    public CreateNewElement(MatchResultService matchResultService, MatchService matchService, RoundService roundService, TeamService teamService) {
+    public CreateNewElement(MatchResultService matchResultService, MatchService matchService, RoundService roundService, TeamService teamService, TeamStatsService teamStatsService) {
         this.matchResultService = matchResultService;
         this.matchService = matchService;
         this.roundService = roundService;
         this.teamService = teamService;
+        this.teamStatsService = teamStatsService;
     }
 
     public void addNewMatch(Match match) {
@@ -45,5 +45,17 @@ public class CreateNewElement {
         matchService.addMatch(match);
         teamService.addTeam(hTeam);
         teamService.addTeam(aTeam);
+    }
+
+    public void addNewTeam(Team team) {
+        //Adding new team stats
+        TeamStats stats = new TeamStats();
+        teamStatsService.saveTeamStats(stats);
+
+        //Setting team stats for team
+        team.setTeamStats(stats);
+
+        //Saving team
+        teamService.addTeam(team);
     }
 }
