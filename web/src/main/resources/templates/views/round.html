@@ -7,6 +7,31 @@
 
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
+<div class="container" id="containerForSelectRound">
+
+    <h3><b>Wybierz kolejkę :</b></h3>
+    <table>
+        <tr>
+            <th>
+                <select class="form-control" name="selectRound" id="selectForRoundSort" form="sortRoundTable" >
+                    <option value="allRounds">Wszystkie</option>
+                    <option th:each="round : ${rounds}"
+                            th:text="${round.roundNumber}"
+                            th:value="${round.roundNumber}">
+                    </option>
+                </select>
+            </th>
+            <th>
+                <form method="POST" id="sortRoundTable" action="/round">
+                    <input type="submit" id="sort" style="display: none">
+                    <button type="button" class="btn btn-info" onclick="$('#sort').click()">Wybierz</button>
+                </form>
+            </th>
+        </tr>
+    </table>
+
+</div>
+
 
 <div class="container" id="roundTable" th:each="round : ${rounds}">
 

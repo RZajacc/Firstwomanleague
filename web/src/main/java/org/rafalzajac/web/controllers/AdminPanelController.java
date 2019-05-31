@@ -202,7 +202,7 @@ public class AdminPanelController {
         createNewElement.addNewMatch(match);
         System.out.println("Selected team is : " + homeTeam);
 
-        return "redirect:/round";
+        return "redirect:/admin/round-admin";
     }
 
     @GetMapping("/teams-admin")

@@ -2,17 +2,11 @@ package org.rafalzajac.web.controllers;
 
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
-import org.rafalzajac.web.fileProcessing.ProcessMatchResult;
 import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
 import org.rafalzajac.web.fileProcessing.SortData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -46,6 +40,19 @@ public class MainController {
         List<Round> rounds = roundService.findAllRounds();
         List<Match> matchList = matchService.findAllMatches();
         model.addAttribute("rounds", rounds);
+
+        return "views/round";
+    }
+
+    @PostMapping("/round")
+    public String selectRound (Model model, @RequestParam("selectRound") String text ) {
+
+        if(text.equals("allRounds")) {
+            model.addAttribute("rounds", roundService.findAllRounds());
+        } else {
+            model.addAttribute("rounds", roundService.findRoundByRoundNumber((Integer.parseInt(text))));
+        }
+
 
         return "views/round";
     }
@@ -109,7 +116,6 @@ public class MainController {
 
     @PostMapping("/rank")
     public String sortedRankTable (Model model, @RequestParam("selectBy") String text ) {
-        System.out.println(text);
 
             List<Player> players = playerService.findAllPlayers();
             SortData sortData = new SortData();

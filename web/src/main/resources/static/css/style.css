@@ -122,11 +122,21 @@ body {
 }
 
 #selectForRankSort {
+     width: 200px;
+
+ }
+
+#selectForRoundSort{
     width: 200px;
 
 }
 
 #containerForSelectRank {
+    margin-left: 44%;
+    margin-top: 3%;
+}
+
+#containerForSelectRound {
     margin-left: 44%;
     margin-top: 3%;
 }
