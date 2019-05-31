@@ -10,17 +10,17 @@
 
 <div align="center" class="mainBody">
 
-    <h3 class="topText">Please enter your account details:</h3><br/>
+    <h3 class="topText">Podaj login i hasło administratora:</h3><br/>
 
     <form method="POST" th:action="@{/login}"  id="loginForm">
         <div class="form-group text-center">
-            <label for="UserName">User name:</label>
-            <input type="text" class="form-control" id="userName" name="username" aria-describedby="emailHelp" placeholder="Enter user name">
+            <label for="UserName">login:</label>
+            <input type="text" class="form-control" id="userName" name="username" aria-describedby="emailHelp" placeholder="nazwa użytkownika">
             <br/>
         </div>
         <div class="form-group text-center">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <label for="password">hasło:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="hasło">
         </div>
         <div class="text-center" style="margin-top: 15px">
             <button type="submit" class="btn btn-primary">Log in</button>

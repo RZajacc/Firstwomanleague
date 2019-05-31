@@ -212,6 +212,21 @@ public class AdminPanelController {
         return "administration/views/teamsAdmin";
     }
 
+    @GetMapping("/teams-admin/currentteam-admin/{id}")
+    public String currentTeam(@PathVariable Long id, Model model){
+
+        Optional<Team> team = teamService.getTeamById(id);
+
+        if (team.isPresent()) {
+            Team currentTeam = team.get();
+            model.addAttribute("selectedTeam", currentTeam);
+            return "administration/views/selectedTeamAdmin";
+        }
+
+        return "redirect:/admin/";
+    }
+
+
 
     @GetMapping("/createteam")
     public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {

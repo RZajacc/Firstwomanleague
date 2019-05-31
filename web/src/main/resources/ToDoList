@@ -1,10 +1,9 @@
 // Panel administracyjny
 
-        //1. Kontrollery POST z MainController przenieś do Admina
-        //2. W widokach z Main usuń elementy dodawania rzeczy - scout
-        //3. W round/Main zamiast formularzy które były dodaj wybór kolejki do wyświetlenia
-        //4. To samo z widokiem i kontrolerem meczu
-        //5. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki
+        //1. Mecz dodaj w rundzie - zmien odniesienia w controllerze
+        //2. Zespół dodaj w rundzie - zmien odniesienia w controllerze
+        //3. Dodawanie zawodniczek do zespołu - w oknie zespołu, spróbuj jako form dodać nową linię w tabeli
+        //4. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki
 
 
 // Edycja elementów
@@ -14,17 +13,14 @@
 
 // Cleanup
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
-        //2. Dodaj wyniki setów w widoku meczu
-        //3. Możliwość generowania od nowa z wszystkich scoutów rankingu?
-        //4. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki
+        //2. Możliwość generowania od nowa z wszystkich scoutów rankingu?
+        //3. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki
              żeby był szybko, potem ze scouta update?
-        //5. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu spróbuj, jak nie to tylko zmień sposób
-             wyświetlania
-        //6. Przetestuj ile zależności i gdzie faktycznie musi być bo niektóre się dublują np. sec extras
-        //7. Dodaj rzeczywiste kolejki i prawdziwe scouty
-        //8. Uzupełnij plik readme
-        //9. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
-        //10. Edycja danych meczu, drużyny
+        //4. Przetestuj ile zależności i gdzie faktycznie musi być bo niektóre się dublują np. sec extras
+        //5. Uzupełnij plik readme
+        //6. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
+        //7. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
+        //8. Pomyśl jak rozwiącać fazę playoff
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej

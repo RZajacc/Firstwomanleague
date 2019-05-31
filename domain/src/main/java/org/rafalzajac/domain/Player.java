@@ -20,6 +20,8 @@ public class Player {
     private String firstName;
     private String lastName;
     private String position;
+    private int age;
+    private int height;
 
     @ManyToOne
     private Team team;

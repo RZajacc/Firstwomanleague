@@ -15,10 +15,11 @@
 
 <div class="container" id="roundTable" th:each="round : ${rounds}">
 
-    <h4 id="roundHeader">Kolejka nr: <span th:text="${round.getRoundNumber()}" /></h4>
-
     <table class="table table-hover tableData" >
        <thead class="thead-light">
+           <tr>
+               <th colspan="11" class="roundNumber"> Kolejka nr: <span th:text="${round.getRoundNumber()}" /></th>
+           </tr>
            <tr class="centeredText">
                <th>Mecz nr</th>
                <th>Gospodarz</th>
@@ -26,11 +27,11 @@
                <th>Statystyki</th>
                <th>Wynik</th>
                <th></th>
-               <th sec:authorize="isAuthenticated()">Scout</th>
-               <th sec:authorize="isAuthenticated()">Akcja</th>
-               <th sec:authorize="isAuthenticated()"></th>
-               <th sec:authorize="isAuthenticated()"></th>
-               <th></th>
+               <th>Scout</th>
+               <th>Akcja</th>
+               <th/>
+
+
            </tr>
        </thead>
         <tbody>
@@ -47,12 +48,11 @@
 
                 <td>
                     <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">
-                        <td sec:authorize="isAuthenticated()"><input type="file" name="file" id="fileupload" class="btn btn-secondary" sec:authorize="isAuthenticated()"/></td>
-                        <td sec:authorize="isAuthenticated()"><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
-                        <td sec:authorize="isAuthenticated()"><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
+                        <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
+                        <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
+                        <td><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
                      </form>
                 </td>
-                <td/>
             </tr>
         </tbody>
     </table>

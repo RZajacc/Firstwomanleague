@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layouts/MainLayout :: head(title = 'Mecze')"/>
 
@@ -35,10 +35,11 @@
 
 <div class="container" id="roundTable" th:each="round : ${rounds}">
 
-    <h4 id="roundHeader">Kolejka nr: <span th:text="${round.getRoundNumber()}" /></h4>
-
     <table class="table table-hover tableData" >
        <thead class="thead-light">
+            <tr>
+                <th colspan="6" class="roundNumber"> Kolejka nr: <span th:text="${round.getRoundNumber()}" /></th>
+            </tr>
            <tr class="centeredText">
                <th>Mecz nr</th>
                <th>Gospodarz</th>
