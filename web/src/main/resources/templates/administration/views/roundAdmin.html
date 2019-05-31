@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Mecze')"/>
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+
+<div th:if="${message}" id="uploadMessage">
+    <p th:text="${message}"/>
+</div>
+
+
+<div class="container" id="roundTable" th:each="round : ${rounds}">
+
+    <h4 id="roundHeader">Kolejka nr: <span th:text="${round.getRoundNumber()}" /></h4>
+
+    <table class="table table-hover tableData" >
+       <thead class="thead-light">
+           <tr class="centeredText">
+               <th>Mecz nr</th>
+               <th>Gospodarz</th>
+               <th>Gość</th>
+               <th>Statystyki</th>
+               <th>Wynik</th>
+               <th></th>
+               <th sec:authorize="isAuthenticated()">Scout</th>
+               <th sec:authorize="isAuthenticated()">Akcja</th>
+               <th sec:authorize="isAuthenticated()"></th>
+               <th sec:authorize="isAuthenticated()"></th>
+               <th></th>
+           </tr>
+       </thead>
+        <tbody>
+            <tr th:each="match : ${round.getMatchList()}" class="centeredText">
+                <td th:text="${match.getMatchNumber()}"></td>
+                <td th:text="${match.getHomeTeam()}"></td>
+                <td th:text="${match.getAwayTeam()}"></td>
+
+                <td>
+                    <a th:href="@{'/round/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
+                </td>
+
+                <td th:text="${match.matchResult.homeTeamSetsWon} + ':' + ${match.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
+
+                <td>
+                    <form method="POST" action="/round" enctype="multipart/form-data">
+                        <td sec:authorize="isAuthenticated()"><input type="file" name="file" id="fileupload" class="btn btn-secondary" sec:authorize="isAuthenticated()"/></td>
+                        <td sec:authorize="isAuthenticated()"><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
+                        <td sec:authorize="isAuthenticated()"><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
+                     </form>
+                </td>
+                <td/>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ul>
+    <li>
+
+    </li>
+</ul>
+
+
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+</body>
+</html>

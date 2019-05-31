@@ -1,7 +1,14 @@
 // Panel administracyjny
-        //1. Nowe strony do edycji ligi/kolejki/drużyny/zawodniczek
-        //3. Faza rozgrywek?
-        //4. Inny layout niż pozostałe strony i ikona powrotu?
+        //1. Faza rozgrywek?
+        //3. Przemyśl dwa rozwiązania, ekran dodawania zawodniczki i z listy wybór zespołu czy z widoku zespołu
+             dodanie zawodniczki bezpośrednio do niego
+        //4. Osobny widok do edycji w panelu tych samych widoków z głównej? Czyli np round w adminie z dodawaniem wszystkiego
+             również meczów, a na zwykłym widoku masz form do sortowania
+
+// Edycja elementów
+        //1. Dodaj możliwość edytowania informacji o meczu
+        //2. Dodaj możliwość edytowania informacji zespołu
+        //3. Dodaj możliwość edytowania informacji o zawodniku
 
 // Cleanup
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach

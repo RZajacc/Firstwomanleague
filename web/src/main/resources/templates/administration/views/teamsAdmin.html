@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Zespoly')"/>
+
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+
+<div class="container" id="teamTable">
+    <table class="table table-hover tableData" >
+        <thead class="thead-light">
+            <tr>
+                <th>Nazwa zespołu</th>
+                <th>Pierwszy trener</th>
+                <th>Drugi trener</th>
+                <th>Strona www</th>
+                <th>Facebook</th>
+                <th>Więcej</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="team : ${teams}">
+            <td th:text="${team.getTeamName()}"></td>
+            <td th:text="${team.getFirstCoach()}"></td>
+            <td th:text="${team.getSecondCoach()}"></td>
+            <td>
+                <a th:href="${team.getWebPage()}"><span th:text="${team.getWebPage()}"/></a>
+            </td>
+            <td>
+                <a th:href="${team.getFacebook()}"><span th:text="${team.getFacebook()}"/></a>
+            </td>
+            <td>
+                <a th:href="@{'/teams/currentteam/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+
+</body>
+</html>

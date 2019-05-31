@@ -190,3 +190,8 @@ body {
     margin-top: 25px;
     font-weight: bold;
 }
+
+#logoutInput {
+    background : none;
+    border: none;
+}
