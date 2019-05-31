@@ -31,4 +31,8 @@ public class TeamService {
     public Team getTeamByTag(String tag) {
         return teamRepository.findByTeamTag(tag);
     }
+
+    public Team getTeamByTeamName(String teamName){
+        return teamRepository.findByTeamName(teamName);
+    }
 }

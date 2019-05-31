@@ -22,4 +22,8 @@ public class RoundService {
     public List<Round> findAllRounds() {
         return roundRepository.findAll();
     }
+
+    public Round findRoundByRoundNumber(int roundNumber){
+        return roundRepository.findByRoundNumber(roundNumber);
+    }
 }

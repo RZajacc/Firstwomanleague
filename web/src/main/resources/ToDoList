@@ -12,6 +12,10 @@
              żeby był szybko, potem ze scouta update?
         //5. Możliwość wyboru czy wyświetlać wszystkie czy tylko bieżącą? -> schemat z rankingu spróbuj, jak nie to tylko zmień sposób
              wyświetlania
+        //6. Przetestuj ile zależności i gdzie faktycznie musi być bo niektóre się dublują np. sec extras
+        //7. Dodaj rzeczywiste kolejki i prawdziwe scouty
+        //8. Uzupełnij plik readme
+        //9. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej

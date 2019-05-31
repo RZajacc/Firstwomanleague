@@ -185,3 +185,8 @@ body {
     width: 20%;
     margin: auto;
 }
+
+.newElementForm {
+    margin-top: 25px;
+    font-weight: bold;
+}
