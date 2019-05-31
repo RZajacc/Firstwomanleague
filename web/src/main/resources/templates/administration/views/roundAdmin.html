@@ -40,13 +40,13 @@
                 <td th:text="${match.getAwayTeam()}"></td>
 
                 <td>
-                    <a th:href="@{'/round/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
+                    <a th:href="@{'/admin/round-admin/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
 
                 <td th:text="${match.matchResult.homeTeamSetsWon} + ':' + ${match.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
 
                 <td>
-                    <form method="POST" action="/round" enctype="multipart/form-data">
+                    <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">
                         <td sec:authorize="isAuthenticated()"><input type="file" name="file" id="fileupload" class="btn btn-secondary" sec:authorize="isAuthenticated()"/></td>
                         <td sec:authorize="isAuthenticated()"><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
                         <td sec:authorize="isAuthenticated()"><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>

@@ -8,11 +8,6 @@
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
 
-<div th:if="${message}" id="uploadMessage">
-    <p th:text="${message}"/>
-</div>
-
-
 <div class="container" id="roundTable" th:each="round : ${rounds}">
 
     <h4 id="roundHeader">Kolejka nr: <span th:text="${round.getRoundNumber()}" /></h4>
@@ -25,12 +20,6 @@
                <th>Gość</th>
                <th>Statystyki</th>
                <th>Wynik</th>
-               <th></th>
-               <th sec:authorize="isAuthenticated()">Scout</th>
-               <th sec:authorize="isAuthenticated()">Akcja</th>
-               <th sec:authorize="isAuthenticated()"></th>
-               <th sec:authorize="isAuthenticated()"></th>
-               <th></th>
            </tr>
        </thead>
         <tbody>
@@ -44,15 +33,6 @@
                 </td>
 
                 <td th:text="${match.matchResult.homeTeamSetsWon} + ':' + ${match.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
-
-                <td>
-                    <form method="POST" action="/round" enctype="multipart/form-data">
-                        <td sec:authorize="isAuthenticated()"><input type="file" name="file" id="fileupload" class="btn btn-secondary" sec:authorize="isAuthenticated()"/></td>
-                        <td sec:authorize="isAuthenticated()"><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
-                        <td sec:authorize="isAuthenticated()"><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
-                     </form>
-                </td>
-                <td/>
             </tr>
         </tbody>
     </table>

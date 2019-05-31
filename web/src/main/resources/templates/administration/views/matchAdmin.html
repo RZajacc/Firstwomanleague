@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layouts/MainLayout :: head(title = 'Informacje o meczu')"/>
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Informacje o meczu')"/>
 
 <body>
 
-<nav th:replace="layouts/MainLayout :: navbar"/>
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
 <div class="container col-md-5" id="matchInfo">
 
@@ -45,11 +45,29 @@
                                 </td>
                                 <th th:text="${currentMatch.matchResult.awayTeamSetsWon}" class="matchScore"/>
                         </tr>
+                        <tr>
+                                <form method="POST" action="/admin/round-admin/{id}">
+                                        <td><button name="save" type="submit" value="true" id="saveStats" style="display: none">Save</button> </td>
+                                        <td><button id="saveButton" type="button" class="btn btn-warning" name="save" value="true" onclick="$('#saveStats').click()">Zapisz statystyki</button></td>
+                                        <td><input th:value="${currentMatch.getId()}" type="text" name="id" style="display: none"/></td>
+                                </form>
+
+                        </tr>
+                        <tr>
+                                <td/>
+                                <td><a th:href="@{'/admin/round-admin/result/' + ${currentMatch.getId()}} " class="btn btn-primary" id="saveResultButton" \>Zapisz wynik meczu</a></td>
+                                <td/>
+                        </tr>
                 </tbody>
 
         </table>
 </div>
 
+
+
+<div th:if="${message}" id="scoutFilePathMessage">
+        <p th:text="${message}"/>
+</div>
 
 <h3 th:text="${homeTeam.getTeamName()} + ' :'" class="centeredText"/>
 <div class = "container" id="homeTeamStats">
@@ -257,7 +275,7 @@
 </div>
 
 
-<footer th:replace="layouts/MainLayout :: footer"/>
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
 
 
 </body>

@@ -20,7 +20,7 @@
         <col width="200">
         <col width="100">
 
-            <form method="POST" action="/round/result/{id}"  th:object="${currentMatch}" name="currentMatch">
+            <form method="POST" action="/admin/round-admin/result/{id}"  th:object="${currentMatch}" name="currentMatch">
 
                 <tr>
                     <td th:text="${currentMatch.teams.get(0).teamName}" class="matchInfo"/>

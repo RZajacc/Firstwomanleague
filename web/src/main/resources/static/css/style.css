@@ -73,15 +73,15 @@ body {
 #homeTeamStats{
     position: relative;
     padding-bottom: 2.5rem;
-    margin-left: 17%;
     margin-top: 1%;
+    margin-left: auto;
     font-size: small;
 }
 
 #awayTeamStats{
     position: relative;
     padding-bottom: 2.5rem;
-    margin-left: 17%;
+    margin-left: auto;
     margin-top: 1%;
     font-size: small;
 }

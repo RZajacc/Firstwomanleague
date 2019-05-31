@@ -1,9 +1,11 @@
 // Panel administracyjny
-        //1. Faza rozgrywek?
-        //3. Przemyśl dwa rozwiązania, ekran dodawania zawodniczki i z listy wybór zespołu czy z widoku zespołu
-             dodanie zawodniczki bezpośrednio do niego
-        //4. Osobny widok do edycji w panelu tych samych widoków z głównej? Czyli np round w adminie z dodawaniem wszystkiego
-             również meczów, a na zwykłym widoku masz form do sortowania
+
+        //1. Kontrollery POST z MainController przenieś do Admina
+        //2. W widokach z Main usuń elementy dodawania rzeczy - scout
+        //3. W round/Main zamiast formularzy które były dodaj wybór kolejki do wyświetlenia
+        //4. To samo z widokiem i kontrolerem meczu
+        //5. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki
+
 
 // Edycja elementów
         //1. Dodaj możliwość edytowania informacji o meczu

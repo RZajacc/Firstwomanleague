@@ -15,8 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Controller
@@ -40,8 +38,6 @@ public class MainController {
         this.teamStatsService = teamStatsService;
         }
 
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "web/src/main/resources/static/scouts/";
 
 
     @GetMapping("/round")
@@ -53,52 +49,6 @@ public class MainController {
 
         return "views/round";
     }
-
-
-    @PostMapping("/round")
-    public String singleFileUpload(@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam(value = "id", required = false) Long id) {
-
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-        } else{
-                try {
-
-                    Optional<Match> match = matchService.getMatchById(id);
-                    if (match.isPresent()) {
-
-                        Match current = match.get();
-
-                        if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
-                            Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
-                        }
-
-                        if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))) {
-                            Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
-                        }
-
-                        Path path = Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(),
-                                current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber() + "M" +
-                                        current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
-
-                        Files.write(path, file.getBytes());
-
-
-                        redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
-                                current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
-                                "-" + current.getAwayTeam() + ".dvw");
-
-                        current.setScoutPath(path.toString());
-                        matchService.addMatch(current);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
-
-        return "redirect:round/";
-    }
-
 
     @GetMapping("/round/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
@@ -134,50 +84,6 @@ public class MainController {
 
         return "redirect:/";
     }
-
-    @PostMapping("/round/{id}")
-    public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws Exception {
-
-        Optional<Match> selectedMatch = matchService.getMatchById(id);
-        if (selectedMatch.isPresent()) {
-            Match currentMatch = selectedMatch.get();
-            model.addAttribute("currentMatch", currentMatch);
-            if (currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
-                scoutFileProcess.processScoutFile();
-                scoutFileProcess.saveStatsToDatabase();
-                System.out.println("Current match result" + currentMatch.getMatchResult());
-                redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
-            } else {
-                redirectAttributes.addFlashAttribute("message", "There is no scout file available for this match!");
-            }
-        }
-
-    return "redirect:/round/" + id;
-    }
-
-    @GetMapping("/round/result/{id}")
-    public String matchResultInfo(@PathVariable Long id, Model model) {
-
-        Optional<Match> match = matchService.getMatchById(id);
-        if (match.isPresent()) {
-            Match current = match.get();
-            model.addAttribute("currentMatch", current);
-        }
-
-
-        return "views/matchresult";
-    }
-
-    @PostMapping("/round/result/{id}")
-    public String updateMatchResult(@ModelAttribute("currentMatch") Match match){
-
-        ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService);
-        processMatchResult.addMatchResult(match);
-
-        return "redirect:/round/" + match.getId();
-    }
-
 
     @GetMapping("/table")
     public String leagueTable(Model model) {
