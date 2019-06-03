@@ -1,9 +1,6 @@
 // Panel administracyjny
 
-        //1. Mecz dodaj w rundzie - zmien odniesienia w controllerze
-        //2. Zespół dodaj w rundzie - zmien odniesienia w controllerze
-        //3. Dodawanie zawodniczek do zespołu - w oknie zespołu, spróbuj jako form dodać nową linię w tabeli
-        //4. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki
+        //1. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki (form group?)
 
 
 // Edycja elementów

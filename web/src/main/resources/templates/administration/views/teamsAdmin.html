@@ -9,6 +9,9 @@
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
+<div class="container" id="addTeam">
+    <a th:href="@{'/admin/teams-admin/createteam/'} " class="btn btn-warning">Dodaj zespół</a>
+</div>
 
 <div class="container" id="teamTable">
     <table class="table table-hover tableData" >

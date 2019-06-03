@@ -59,7 +59,7 @@ body {
 }
 
 #teamTable {
-    margin-top: 5%;
+    margin-top: 2%;
     position: relative;
     padding-bottom: 2.5rem;
 }
@@ -211,4 +211,17 @@ body {
 #logoutInput {
     background : none;
     border: none;
+}
+
+#addMatch {
+    width: 200px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: auto;
+}
+
+#addTeam {
+    width: 200px;
+    margin-top: 2%;
+    margin-left: auto;
 }

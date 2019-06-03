@@ -181,7 +181,7 @@ public class AdminPanelController {
     }
 
 
-    @GetMapping("/creatematch")
+    @GetMapping("/round-admin/creatematch")
     public String createTeam(Model model, @ModelAttribute("newMatch") Match match) {
 
 
@@ -195,10 +195,10 @@ public class AdminPanelController {
         return "administration/createElements/createMatch";
     }
 
-    @PostMapping("/creatematch")
+    @PostMapping("/round-admin/creatematch")
     public String processMatch(@ModelAttribute("currentMatch") Match match, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
 
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
         createNewElement.addNewMatch(match);
         System.out.println("Selected team is : " + homeTeam);
 
@@ -212,8 +212,25 @@ public class AdminPanelController {
         return "administration/views/teamsAdmin";
     }
 
+    @GetMapping("/teams-admin/createteam")
+    public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {
+
+        return "administration/createElements/createTeam";
+    }
+
+    @PostMapping("/teams-admin/createteam")
+    public String processTeam(@ModelAttribute("newTeam") Team team) {
+
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        createNewElement.addNewTeam(team);
+
+        return "redirect:/admin/teams-admin/";
+    }
+
+
+
     @GetMapping("/teams-admin/currentteam-admin/{id}")
-    public String currentTeam(@PathVariable Long id, Model model){
+    public String currentTeam(@PathVariable Long id, @ModelAttribute("newPlayer")Player player, Model model){
 
         Optional<Team> team = teamService.getTeamById(id);
 
@@ -226,21 +243,23 @@ public class AdminPanelController {
         return "redirect:/admin/";
     }
 
+    @PostMapping("/teams-admin/currentteam-admin/{id}")
+    public String addPlayerToTeam(@RequestParam Long id, @ModelAttribute("newPlayer")Player player, Model model){
+
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        Optional<Team> team = teamService.getTeamById(id);
+
+        if (team.isPresent()) {
+            Team currentTeam = team.get();
+            createNewElement.addNewPlayer(player, currentTeam);
+        }
 
 
-    @GetMapping("/createteam")
-    public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {
-
-        return "administration/createElements/createTeam";
+        return "redirect:/admin/teams-admin/currentteam-admin/" + id;
     }
 
-    @PostMapping("/createteam")
-    public String processTeam(@ModelAttribute("newTeam") Team team) {
 
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService);
-        createNewElement.addNewTeam(team);
 
-        return "redirect:/teams";
-    }
+
 
 }
