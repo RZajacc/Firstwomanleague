@@ -50,6 +50,7 @@
                 <th>Wzrost</th>
                 <th>Pozycja</th>
                 <th>Akcja</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -65,13 +66,14 @@
 
             <tr th:object="${newPlayer}">
                 <form method="POST" action="/admin/teams-admin/currentteam-admin/{id}">
-                    <td><input type="text" th:field="*{number}"></td>
-                    <td><input type="text" th:field="*{firstName}"></td>
-                    <td><input type="text" th:field="*{lastName}"></td>
-                    <td><input type="text" th:field="*{age}"></td>
-                    <td><input type="text" th:field="*{height}"></td>
-                    <td><input type="text" th:field="*{position}"></td>
-                    <td><input type="submit" value="Submit" class="btn btn-info"/></td>
+
+                    <td><input type="text" class="form-control centeredInput" th:field="*{number}" id="playerNumberInput"></td>
+                    <td><input type="text" class="form-control centeredInput" th:field="*{firstName}"></td>
+                    <td><input type="text" class="form-control centeredInput" th:field="*{lastName}" ></td>
+                    <td><input type="text" class="form-control centeredInput" th:field="*{age}"></td>
+                    <td><input type="text" class="form-control centeredInput" th:field="*{height}"></td>
+                    <td><input type="text" class="form-control centeredInput" th:field="*{position}"></td>
+                    <td><input type="submit" value="Dodaj" class="btn btn-info"/></td>
                     <td><input th:value="${selectedTeam.id}" type="text" name="id" style="display: none"/></td>
                 </form>
 

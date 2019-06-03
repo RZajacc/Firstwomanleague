@@ -5,6 +5,8 @@
 
 <body>
 
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
 <form method="POST" action="/admin/round-admin/creatematch" class="newElementForm" th:object="${newMatch}">
 
     <div class="form-group text-center">
@@ -49,7 +51,7 @@
     </div>
 </form>
 
-
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
 
 </body>
 </html>

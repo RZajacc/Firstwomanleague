@@ -6,6 +6,8 @@
 
 <body>
 
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
 <form method="POST" action="/admin/teams-admin/createteam" class="newElementForm" th:object="${newTeam}">
 
     <div class="form-group text-center">
@@ -41,6 +43,8 @@
         Invalid username and password.
     </div>
 </form>
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
 
 </body>
 </html>

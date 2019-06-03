@@ -1,7 +1,3 @@
-// Panel administracyjny
-
-        //1. Popracuj nad widokami dodawania zespołu, meczu, zawodniczki (form group?)
-
 
 // Edycja elementów
         //1. Dodaj możliwość edytowania informacji o meczu
@@ -18,6 +14,7 @@
         //6. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
         //7. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
         //8. Pomyśl jak rozwiącać fazę playoff
+
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej

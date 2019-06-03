@@ -225,3 +225,11 @@ body {
     margin-top: 2%;
     margin-left: auto;
 }
+
+.centeredInput {
+    text-align: center;
+}
+
+#playerNumberInput {
+    width: 50px;
+}
