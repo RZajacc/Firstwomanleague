@@ -33,10 +33,10 @@
             <td th:text="${team.getFirstCoach()}"></td>
             <td th:text="${team.getSecondCoach()}"></td>
             <td>
-                <a th:href="${team.getWebPage()}"><span th:text="${team.getWebPage()}"/></a>
+                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Tutaj</span></a>
             </td>
             <td>
-                <a th:href="${team.getFacebook()}"><span th:text="${team.getFacebook()}"/></a>
+                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Tutaj</span></a>
             </td>
             <td>
                 <a th:href="@{'/admin/teams-admin/currentteam-admin/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>

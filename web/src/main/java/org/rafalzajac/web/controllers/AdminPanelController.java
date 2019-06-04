@@ -321,7 +321,7 @@ public class AdminPanelController {
             teamToEdit.setSecondCoach(editTeam.getSecondCoach());
             teamToEdit.setWebPage(editTeam.getWebPage());
             teamToEdit.setFacebook(editTeam.getFacebook());
-
+            System.out.println("the Team IS ............................" + editTeam.getWebPage());
             teamService.addTeam(teamToEdit);
         }
 
