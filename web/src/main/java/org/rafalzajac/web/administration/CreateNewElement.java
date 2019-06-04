@@ -72,8 +72,7 @@ public class CreateNewElement {
 
         //Saving player
         playerService.addPlayer(player);
-
-
-
     }
+
+
 }

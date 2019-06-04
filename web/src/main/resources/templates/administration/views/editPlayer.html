@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Edytuj zawodnika')"/>
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+<form method="POST" action="/admin/teams-admin/currentteam-admin/editplayer/{id}" id="editPlayerForm" th:object="${editPlayer}">
+
+    <div class="form-group text-center">
+        <label for="number">Numer na koszulce : </label>
+        <input type="text" th:field="*{number}" class="form-control centeredInput" id="number">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="firstName">Imię : </label>
+        <input type="text" th:field="*{firstName}" class="form-control centeredInput" id="firstName">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="lastName">Nazwisko : </label>
+        <input type="text" th:field="*{lastName}" class="form-control centeredInput" id="lastName">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="age">Wiek : </label>
+        <input type="text" th:field="*{age}" class="form-control centeredInput" id="age">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="height">Wzrost : </label>
+        <input type="text" th:field="*{height}" class="form-control centeredInput" id="height">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="position">Pozycja : </label>
+        <input type="text" th:field="*{position}" class="form-control centeredInput" id="position">
+    </div>
+
+    <div class="form-group text-center">
+        <td><input th:field="*{id}" th:value="${editPlayer.id}" style="display: none"/></td>
+        <input th:value="${editPlayer.team.id}" name="teamId" style="display: none">
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-warning" >Zapisz</button>
+    </div>
+
+</form>
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+</body>
+</html>

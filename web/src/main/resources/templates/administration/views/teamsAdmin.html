@@ -22,7 +22,8 @@
                 <th>Drugi trener</th>
                 <th>Strona www</th>
                 <th>Facebook</th>
-                <th>Więcej</th>
+                <th colspan="2" class="centeredText">Akcja</th>
+
 
             </tr>
         </thead>
@@ -39,6 +40,9 @@
             </td>
             <td>
                 <a th:href="@{'/admin/teams-admin/currentteam-admin/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>
+            </td>
+            <td>
+                <a th:href="@{'/admin/teams-admin/currentteam-admin/editteam' + ${team.getId()}}" class="btn btn-warning">Edytuj</a>
             </td>
         </tr>
         </tbody>

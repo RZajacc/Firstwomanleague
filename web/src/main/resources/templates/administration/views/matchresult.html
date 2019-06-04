@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:replace="layouts/MainLayout :: head(title = 'Wynik')"/>
+    <head th:replace="layouts/AdministrationLayout :: head(title = 'Wynik')"/>
 </head>
 <body>
 
-<nav th:replace="layouts/MainLayout :: navbar"/>
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
 <div class="container col-md-2" id="matchResult">
 
@@ -84,7 +84,7 @@
 
 
 
-<footer th:replace="layouts/MainLayout :: footer"/>
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
 
 </body>
 </html>

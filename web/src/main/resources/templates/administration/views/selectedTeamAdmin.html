@@ -49,19 +49,26 @@
                 <th>Wiek</th>
                 <th>Wzrost</th>
                 <th>Pozycja</th>
-                <th>Akcja</th>
-                <th></th>
+                <th colspan="2" class="centeredText">Akcja</th>
+                <th/>
+                <th/>
             </tr>
         </thead>
 
         <tbody>
             <tr th:each="player : ${selectedTeam.getPlayerList()}">
+                <form method="POST" action="/admin/deletePlayer">
                 <td th:text="${player.number}"></td>
                 <td th:text="${player.firstName}"></td>
                 <td th:text="${player.lastName}"></td>
                 <td th:text="${player.age != 0} ? ${player.age} : '' "></td>
                 <td th:text="${player.height != 0} ? ${player.height} : '' "></td>
                 <td th:text="${player.position}"></td>
+                <td><input type="submit" value="Usuń" class="btn btn-info"/></td>
+                <td><a th:href="@{'/admin/teams-admin/currentteam-admin/editplayer/' + ${player.id}}" class="btn btn-primary">Edytuj</a></td>
+                <td><input th:value="${player.id}" type="text" name="playerId" style="display: none"/></td>
+                <td><input th:value="${selectedTeam.id}" type="text" name="teamId" style="display: none"></td>
+                </form>
             </tr>
 
             <tr th:object="${newPlayer}">
@@ -75,6 +82,8 @@
                     <td><input type="text" class="form-control centeredInput" th:field="*{position}"></td>
                     <td><input type="submit" value="Dodaj" class="btn btn-info"/></td>
                     <td><input th:value="${selectedTeam.id}" type="text" name="id" style="display: none"/></td>
+                    <td/>
+                    <td/>
                 </form>
 
             </tr>

@@ -258,6 +258,39 @@ public class AdminPanelController {
         return "redirect:/admin/teams-admin/currentteam-admin/" + id;
     }
 
+    @PostMapping("/deletePlayer")
+    public String deletePlayer(@RequestParam("playerId")Long plyerId, @RequestParam("teamId") Long teamId) {
+
+        playerService.deletePlayerById(plyerId);
+
+        return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
+    }
+
+    @GetMapping("/teams-admin/currentteam-admin/editplayer/{id}")
+    public  String editPlayer (@PathVariable Long id, Model model) {
+
+        Optional<Player> player = playerService.findPlayerById(id);
+        if (player.isPresent()) {
+            Player editPlayer = player.get();
+            model.addAttribute("editPlayer", editPlayer);
+        }
+
+        return "administration/views/editPlayer";
+    }
+
+    @PostMapping("/teams-admin/currentteam-admin/editplayer/{id}")
+    public String processEdit(@ModelAttribute("editPlayer") Player editPlayer, @RequestParam("teamId")Long teamId) {
+
+        Optional<Team> team = teamService.getTeamById(teamId);
+        if (team.isPresent()) {
+            Team playerTeam = team.get();
+            editPlayer.setTeam(playerTeam);
+            playerService.addPlayer(editPlayer);
+        }
+
+        return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
+    }
+
 
 
 

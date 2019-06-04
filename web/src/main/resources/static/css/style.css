@@ -233,3 +233,7 @@ body {
 #playerNumberInput {
     width: 50px;
 }
+
+#editPlayerForm {
+    margin-top: 3%;
+}

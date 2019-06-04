@@ -1,8 +1,10 @@
 
 // Edycja elementów
-        //1. Dodaj możliwość edytowania informacji o meczu
-        //2. Dodaj możliwość edytowania informacji zespołu
-        //3. Dodaj możliwość edytowania informacji o zawodniku
+        //1. Dodaj button z linkiem do edycji zespołu na zespołach
+        //2. Dodaj widok edycji zespołu
+        //3. Dodaj controllery get i post do edycji zespołu wzorem z zawodnika
+        //4. Pozycje z rozwijanej listy a nie text
+
 
 // Cleanup
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
@@ -14,6 +16,8 @@
         //6. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
         //7. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
         //8. Pomyśl jak rozwiącać fazę playoff
+        //9. Styluj inputy
+        //10. Przy usuwaniu liczbowych wartości zawodnika (np. Wzrost apka się sypie, popraw to)
 
 
 // Test
