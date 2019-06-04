@@ -281,17 +281,53 @@ public class AdminPanelController {
     @PostMapping("/teams-admin/currentteam-admin/editplayer/{id}")
     public String processEdit(@ModelAttribute("editPlayer") Player editPlayer, @RequestParam("teamId")Long teamId) {
 
-        Optional<Team> team = teamService.getTeamById(teamId);
-        if (team.isPresent()) {
-            Team playerTeam = team.get();
-            editPlayer.setTeam(playerTeam);
-            playerService.addPlayer(editPlayer);
+
+        Optional<Player> player = playerService.findPlayerById(editPlayer.getId());
+        if (player.isPresent()) {
+            Player playerToEdit = player.get();
+            playerToEdit.setNumber(editPlayer.getNumber());
+            playerToEdit.setFirstName(editPlayer.getFirstName());
+            playerToEdit.setLastName(editPlayer.getLastName());
+            playerToEdit.setAge(editPlayer.getAge());
+            playerToEdit.setHeight(editPlayer.getHeight());
+            playerToEdit.setPosition(editPlayer.getPosition());
+            playerService.addPlayer(playerToEdit);
         }
 
         return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
     }
 
+    @GetMapping("teams-admin/currentteam-admin/editteam/{id}")
+    public String editTeams(@PathVariable Long id, Model model){
 
+        Optional<Team> team = teamService.getTeamById(id);
+        if (team.isPresent()) {
+            Team editTeam = team.get();
+            model.addAttribute("editTeam", editTeam);
+        }
+
+        return "administration/views/editTeam";
+    }
+
+    @PostMapping("teams-admin/currentteam-admin/editteam/{id}")
+    public String editTeamsProcess(@ModelAttribute("editTeam") Team editTeam){
+
+        Optional<Team> team = teamService.getTeamById(editTeam.getId());
+        if (team.isPresent()) {
+            Team teamToEdit = team.get();
+            teamToEdit.setTeamName(editTeam.getTeamName());
+            teamToEdit.setTeamTag(editTeam.getTeamTag());
+            teamToEdit.setFirstCoach(editTeam.getFirstCoach());
+            teamToEdit.setSecondCoach(editTeam.getSecondCoach());
+            teamToEdit.setWebPage(editTeam.getWebPage());
+            teamToEdit.setFacebook(editTeam.getFacebook());
+
+            teamService.addTeam(teamToEdit);
+        }
+
+
+        return "redirect:/admin/teams-admin";
+    }
 
 
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Edytuj zawodnika')"/>
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+<form method="POST" action="/admin/teams-admin/currentteam-admin/editteam/{id}" id="editTeamForm" th:object="${editTeam}">
+
+    <div class="form-group text-center">
+        <label for="teamName">Nazwa zespołu : </label>
+        <input type="text" th:field="*{teamName}" class="form-control centeredInput" id="teamName">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="teamTag">Tag zespołu : </label>
+        <input type="text" th:field="*{teamTag}" class="form-control centeredInput" id="teamTag">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="firstCoach">Pierwszy trener : </label>
+        <input type="text" th:field="*{firstCoach}" class="form-control centeredInput" id="firstCoach">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="secondCoach">Drugi trener : </label>
+        <input type="text" th:field="*{secondCoach}" class="form-control centeredInput" id="secondCoach">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="webpage">Adres strony www : </label>
+        <input type="text" th:field="*{webPage}" class="form-control centeredInput" id="webpage">
+    </div>
+
+    <div class="form-group text-center">
+        <label for="facebook">Adres fanpage'a : </label>
+        <input type="text" th:field="*{facebook}" class="form-control centeredInput" id="facebook">
+    </div>
+
+    <div class="form-group text-center">
+        <td><input th:field="*{id}" th:value="${editTeam.id}" style="display: none"/></td>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-warning" >Zapisz</button>
+    </div>
+
+</form>
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+</body>
+</html>
