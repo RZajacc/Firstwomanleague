@@ -28,11 +28,11 @@
             <td th:text="${team.getTeamName()}"></td>
             <td th:text="${team.getFirstCoach()}"></td>
             <td th:text="${team.getSecondCoach()}"></td>
-            <td>
-                <a th:href="${team.getWebPage()}"><span th:text="${team.getWebPage()}"/></a>
+            <td class="centeredText">
+                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
             </td>
-            <td>
-                <a th:href="${team.getFacebook()}"><span th:text="${team.getFacebook()}"/></a>
+            <td class="centeredText">
+                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
             </td>
             <td>
                 <a th:href="@{'/teams/currentteam/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>

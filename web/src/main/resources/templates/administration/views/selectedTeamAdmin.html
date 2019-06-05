@@ -79,7 +79,16 @@
                     <td><input type="text" class="form-control centeredInput" th:field="*{lastName}" ></td>
                     <td><input type="text" class="form-control centeredInput" th:field="*{age}"></td>
                     <td><input type="text" class="form-control centeredInput" th:field="*{height}"></td>
-                    <td><input type="text" class="form-control centeredInput" th:field="*{position}"></td>
+                    <td>
+                        <select class="form-control" name="position">
+                            <option value="">Wybierz</option>
+                            <option value="Rozgrywająca">Rozgrywająca</option>
+                            <option value="Przyjmująca">Przyjmująca</option>
+                            <option value="Atakująca">Atakująca</option>
+                            <option value="Środkowa">Środkowa</option>
+                            <option value="Libero">Libero</option>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Dodaj" class="btn btn-info"/></td>
                     <td><input th:value="${selectedTeam.id}" type="text" name="id" style="display: none"/></td>
                     <td/>

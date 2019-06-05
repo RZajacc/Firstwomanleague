@@ -241,3 +241,7 @@ body {
 #editTeamForm {
     margin-top: 3%;
 }
+
+#position {
+    text-align-last: center;
+}

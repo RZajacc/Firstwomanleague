@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +53,6 @@ public class AdminPanelController {
     public String league(Model model) {
 
         List<Round> rounds = roundService.findAllRounds();
-        List<Match> matchList = matchService.findAllMatches();
         model.addAttribute("rounds", rounds);
 
         return "administration/views/roundAdmin";
@@ -236,6 +236,7 @@ public class AdminPanelController {
 
         if (team.isPresent()) {
             Team currentTeam = team.get();
+            currentTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
             model.addAttribute("selectedTeam", currentTeam);
             return "administration/views/selectedTeamAdmin";
         }

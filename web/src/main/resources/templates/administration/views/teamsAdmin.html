@@ -16,7 +16,7 @@
 <div class="container" id="teamTable">
     <table class="table table-hover tableData" >
         <thead class="thead-light">
-            <tr>
+            <tr class="centeredText">
                 <th>Nazwa zespołu</th>
                 <th>Pierwszy trener</th>
                 <th>Drugi trener</th>
@@ -32,11 +32,11 @@
             <td th:text="${team.getTeamName()}"></td>
             <td th:text="${team.getFirstCoach()}"></td>
             <td th:text="${team.getSecondCoach()}"></td>
-            <td>
-                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Tutaj</span></a>
+            <td class="centeredText">
+                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
             </td>
-            <td>
-                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Tutaj</span></a>
+            <td class="centeredText">
+                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
             </td>
             <td>
                 <a th:href="@{'/admin/teams-admin/currentteam-admin/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>

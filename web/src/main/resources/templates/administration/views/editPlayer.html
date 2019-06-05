@@ -36,7 +36,14 @@
 
     <div class="form-group text-center">
         <label for="position">Pozycja : </label>
-        <input type="text" th:field="*{position}" class="form-control centeredInput" id="position">
+        <select class="form-control centeredText" name="position" id="position">
+            <option value="">Wybierz</option>
+            <option value="Rozgrywająca">Rozgrywająca</option>
+            <option value="Przyjmująca">Przyjmująca</option>
+            <option value="Atakująca">Atakująca</option>
+            <option value="Środkowa">Środkowa</option>
+            <option value="Libero">Libero</option>
+        </select>
     </div>
 
     <div class="form-group text-center">

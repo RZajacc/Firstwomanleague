@@ -1,11 +1,5 @@
 
-// Edycja elementów
-        //1. Pozycje z rozwijanej listy a nie text
-        //2. Strona home na zespoły
-        //3. Guziczki z linkami center
-
-
-// Cleanup
+// Cleanup (Niektóre wprowadź niektóre przemyśl)
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
         //2. Możliwość generowania od nowa z wszystkich scoutów rankingu?
         //3. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki

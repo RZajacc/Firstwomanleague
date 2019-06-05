@@ -140,6 +140,7 @@ public class MainController {
 
             if (team.isPresent()) {
                 Team currentTeam = team.get();
+                currentTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
                 model.addAttribute("selectedTeam", currentTeam);
                 return "views/selectedTeam";
             }
