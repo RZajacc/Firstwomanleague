@@ -29,20 +29,20 @@
         </thead>
         <tbody>
         <tr th:each="team : ${teams}">
-            <td th:text="${team.getTeamName()}"></td>
-            <td th:text="${team.getFirstCoach()}"></td>
-            <td th:text="${team.getSecondCoach()}"></td>
+            <td th:text="${team.teamName}"></td>
+            <td th:text="${team.firstCoach}"></td>
+            <td th:text="${team.secondCoach}"></td>
             <td class="centeredText">
-                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
+                <a th:href="'http://' + ${team.webPage}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
             </td>
             <td class="centeredText">
-                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
+                <a th:href="'http://' + ${team.facebook}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
             </td>
             <td>
-                <a th:href="@{'/admin/teams-admin/currentteam-admin/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>
+                <a th:href="@{'/admin/teams-admin/currentteam-admin/' + ${team.id}}" class="btn btn-primary">Szczegóły</a>
             </td>
             <td>
-                <a th:href="@{'/admin/teams-admin/currentteam-admin/editteam/' + ${team.getId()}}" class="btn btn-info">Edytuj</a>
+                <a th:href="@{'/admin/teams-admin/currentteam-admin/editteam/' + ${team.id}}" class="btn btn-info">Edytuj</a>
             </td>
         </tr>
         </tbody>

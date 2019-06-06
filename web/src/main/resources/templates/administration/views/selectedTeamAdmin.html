@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>Zespół: </th>
-                <td th:text="${selectedTeam.getTeamName()}"/>
+                <td th:text="${selectedTeam.teamName}"/>
             </tr>
         </thead>
 
@@ -25,11 +25,11 @@
             </tr>
             <tr>
                 <th>I Trener: </th>
-                <td th:text="${selectedTeam.getFirstCoach()}"/>
+                <td th:text="${selectedTeam.firstCoach}"/>
             </tr>
             <tr>
                 <th>II Trener: </th>
-                <td th:text="${selectedTeam.getSecondCoach()}"/>
+                <td th:text="${selectedTeam.secondCoach}"/>
             </tr>
 
         </tbody>
@@ -56,7 +56,7 @@
         </thead>
 
         <tbody>
-            <tr th:each="player : ${selectedTeam.getPlayerList()}">
+            <tr th:each="player : ${selectedTeam.playerList}">
                 <form method="POST" action="/admin/deletePlayer">
                 <td th:text="${player.number}"></td>
                 <td th:text="${player.firstName}"></td>

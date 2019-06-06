@@ -12,7 +12,7 @@
 
 <div class="container" id="teamTable">
     <table class="table table-hover tableData" >
-        <thead class="thead-light">
+        <thead class="thead-light centeredText">
             <tr>
                 <th>Nazwa zespołu</th>
                 <th>Pierwszy trener</th>
@@ -25,17 +25,17 @@
         </thead>
         <tbody>
         <tr th:each="team : ${teams}">
-            <td th:text="${team.getTeamName()}"></td>
-            <td th:text="${team.getFirstCoach()}"></td>
-            <td th:text="${team.getSecondCoach()}"></td>
+            <td th:text="${team.teamName}"></td>
+            <td th:text="${team.firstCoach}"></td>
+            <td th:text="${team.secondCoach}"></td>
             <td class="centeredText">
-                <a th:href="'http://' + ${team.getWebPage()}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
+                <a th:href="'http://' + ${team.webPage}"><span th:if="${team.webPage != null and team.webPage != ''}">Link</span></a>
             </td>
             <td class="centeredText">
-                <a th:href="'http://' + ${team.getFacebook()}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
+                <a th:href="'http://' + ${team.facebook}"><span th:if="${team.facebook != null and team.facebook != ''}" class="centeredText">Link</span></a>
             </td>
-            <td>
-                <a th:href="@{'/teams/currentteam/' + ${team.getId()}}" class="btn btn-primary">Szczegóły</a>
+            <td class="centeredText">
+                <a th:href="@{'/teams/currentteam/' + ${team.id}}" class="btn btn-primary">Szczegóły</a>
             </td>
         </tr>
         </tbody>

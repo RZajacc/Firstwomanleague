@@ -1,18 +1,19 @@
 
 // Cleanup (Niektóre wprowadź niektóre przemyśl)
         //1. Pozmieniaj thymeleafowe odwołania na te bez getterów we wszystkih widokach
-        //2. Możliwość generowania od nowa z wszystkich scoutów rankingu?
-        //3. Pomyśl jak wycofać wynik meczu, może dołóż możliwość wygenerowania ze scouta? -> wynik najpierw z ręki
-             żeby był szybko, potem ze scouta update?
-        //4. Przetestuj ile zależności i gdzie faktycznie musi być bo niektóre się dublują np. sec extras
-        //5. Uzupełnij plik readme
-        //6. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
-        //7. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
-        //8. Pomyśl jak rozwiącać fazę playoff
-        //9. Styluj inputy
-        //10. Przy usuwaniu liczbowych wartości zawodnika (np. Wzrost apka się sypie, popraw to)
-
+        //2. Przetestuj ile zależności i gdzie faktycznie musi być bo niektóre się dublują np. sec extras
+        //3. Uzupełnij plik readme
+        //4. W round ustal szerokość kolumn, rozjeżdza się w zależności od długości nazwy zespołu
+        //5. Styluj inputy - niektóre mają center niektóre do lewej
+        //6. Przy usuwaniu liczbowych wartości zawodnika (np. Wzrost apka się sypie, popraw to)
+        //7. Przy typach optional zmień obiekty -> dopisz do typu który podajesz jako optional a nie twórz nowy
 
 // Test
         //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej
 
+// Na później
+        //1. Możliwość generowania od nowa z wszystkich scoutów rankingu (opcja do panelu admina)?
+        //2. Pomyśl jak wycofać wynik meczu
+        //3. Dodawanie newsów na stronę home
+        //4. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
+        //5. Pomyśl jak rozwiącać fazę playoff

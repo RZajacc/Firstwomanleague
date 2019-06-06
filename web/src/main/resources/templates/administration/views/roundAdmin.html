@@ -24,7 +24,7 @@
     <table class="table table-hover tableData" >
        <thead class="thead-light">
            <tr>
-               <th colspan="11" class="roundNumber"> Kolejka nr: <span th:text="${round.getRoundNumber()}" /></th>
+               <th colspan="11" class="roundNumber"> Kolejka nr: <span th:text="${round.roundNumber}" /></th>
            </tr>
            <tr class="centeredText">
                <th>Mecz nr</th>
@@ -41,10 +41,10 @@
            </tr>
        </thead>
         <tbody>
-            <tr th:each="match : ${round.getMatchList()}" class="centeredText">
-                <td th:text="${match.getMatchNumber()}"></td>
-                <td th:text="${match.getHomeTeam()}"></td>
-                <td th:text="${match.getAwayTeam()}"></td>
+            <tr th:each="match : ${round.matchList}" class="centeredText">
+                <td th:text="${match.matchNumber}"></td>
+                <td th:text="${match.homeTeam}"></td>
+                <td th:text="${match.awayTeam}"></td>
 
                 <td>
                     <a th:href="@{'/admin/round-admin/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
@@ -56,7 +56,7 @@
                     <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">
                         <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
                         <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
-                        <td><input th:value="${match.getId()}" type="text" name="id" style="display: none"/></td>
+                        <td><input th:value="${match.id}" type="text" name="id" style="display: none"/></td>
                      </form>
                 </td>
             </tr>

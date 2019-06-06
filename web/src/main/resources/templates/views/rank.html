@@ -64,18 +64,18 @@
             <tbody>
             <tr  th:each="player : ${allPlayers}" class="centeredText">
                 <td th:text="${playerStat.count} + '.'" class="indexNumber"/>
-                <td th:text="${player.getLastName()}" class="leftAlignedText"/>
-                <td th:text="${player.getFirstName()}" class="leftAlignedText"/>
-                <td th:text="${player.getTeam().getTeamName()}"/>
-                <td th:text="${player.getPlayerStats().getPointsTotal() != 0} ? ${player.getPlayerStats().getPointsTotal()} : '-'"/>
-                <td th:text="${player.getPlayerStats().getServeAce()!= 0} ? ${player.getPlayerStats().getServeAce()} : '-'"/>
-                <td th:text="${player.getPlayerStats().getAttackAttempts()!= 0} ? ${player.getPlayerStats().getAttackAttempts()} : '-'"/>
-                <td th:text="${player.getPlayerStats().getAttackFinished()!= 0} ? ${player.getPlayerStats().getAttackFinished()} : '-'"/>
-                <td th:text="${player.getPlayerStats().getAttackFinishedPercent()!= 0} ? ${player.getPlayerStats().getAttackFinishedPercent() + '%'} : '-'"/>
-                <td th:text="${player.getPlayerStats().getReceptionAttempts()!= 0} ? ${player.getPlayerStats().getReceptionAttempts()} : '-'"/>
-                <td th:text="${player.getPlayerStats().getReceptionPositivePercent()!= 0} ? ${player.getPlayerStats().getReceptionPositivePercent() + '%'} : '-'"/>
-                <td th:text="${player.getPlayerStats().getReceptionPerfectPercent()!= 0} ? ${player.getPlayerStats().getReceptionPerfectPercent() + '%'} : '-'"/>
-                <td th:text="${player.getPlayerStats().getBlockScore()!= 0} ? ${player.getPlayerStats().getBlockScore()} : '-'"/>
+                <td th:text="${player.lastName}" class="leftAlignedText"/>
+                <td th:text="${player.firstName}" class="leftAlignedText"/>
+                <td th:text="${player.team.teamName}"/>
+                <td th:text="${player.playerStats.pointsTotal != 0} ? ${player.playerStats.pointsTotal} : '-'"/>
+                <td th:text="${player.playerStats.serveAce!= 0} ? ${player.playerStats.serveAce} : '-'"/>
+                <td th:text="${player.playerStats.attackAttempts!= 0} ? ${player.playerStats.attackAttempts} : '-'"/>
+                <td th:text="${player.playerStats.attackFinished!= 0} ? ${player.playerStats.attackFinished} : '-'"/>
+                <td th:text="${player.playerStats.attackFinishedPercent!= 0} ? ${player.playerStats.attackFinishedPercent + '%'} : '-'"/>
+                <td th:text="${player.playerStats.receptionAttempts!= 0} ? ${player.playerStats.receptionAttempts} : '-'"/>
+                <td th:text="${player.playerStats.receptionPositivePercent!= 0} ? ${player.playerStats.receptionPositivePercent + '%'} : '-'"/>
+                <td th:text="${player.playerStats.receptionPerfectPercent!= 0} ? ${player.playerStats.receptionPerfectPercent + '%'} : '-'"/>
+                <td th:text="${player.playerStats.blockScore!= 0} ? ${player.playerStats.blockScore} : '-'"/>
             </tr>
             </tbody>
 
