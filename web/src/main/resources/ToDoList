@@ -1,14 +1,11 @@
 
 // Cleanup (Niektóre wprowadź niektóre przemyśl)
 
-        //1. Przy usuwaniu liczbowych wartości zawodnika (np. Wzrost apka się sypie, popraw to)
-        //2. Przy typach optional zmień obiekty -> dopisz do typu który podajesz jako optional a nie twórz nowy
-        //3. Zmień czcionki
-        //4. Uzupełnij plik readme
+        //1. Zmień czcionki
+        //2. Uzupełnij plik readme
 
 // Test
-        //1. Zrób baze danych mySql i dodawaj nowe rzeczy, sprawdź jak to działa dłużej
-        //2. Deploy na amazona
+        //1. Deploy na amazona
 
 // Na później
         //1. Możliwość generowania od nowa z wszystkich scoutów rankingu (opcja do panelu admina)?
@@ -17,4 +14,5 @@
         //4. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
         //5. Pomyśl jak rozwiącać fazę playoff
         //6. Dodawanie newsów na stronę
+        //7. Validation -> Szczególnie przy liczbowych wartościach w formach
 

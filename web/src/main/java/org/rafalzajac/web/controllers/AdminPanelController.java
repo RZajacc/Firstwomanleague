@@ -9,10 +9,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -282,8 +285,12 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/currentteam-admin/editplayer/{id}")
-    public String processEdit(@ModelAttribute("editPlayer") Player editPlayer, @RequestParam("teamId")Long teamId) {
+    public String processEdit(@Valid @ModelAttribute("editPlayer")Player editPlayer, @RequestParam("teamId")Long teamId, BindingResult bindingResult) {
 
+        System.out.println("EDIT PLAYER ID :" + editPlayer.getId());
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin/teams-admin/currentteam-admin/editplayer/" + editPlayer.getId();
+        }
 
         Optional<Player> player = playerService.findPlayerById(editPlayer.getId());
         if (player.isPresent()) {
@@ -324,7 +331,6 @@ public class AdminPanelController {
             teamToEdit.setSecondCoach(editTeam.getSecondCoach());
             teamToEdit.setWebPage(editTeam.getWebPage());
             teamToEdit.setFacebook(editTeam.getFacebook());
-            System.out.println("the Team IS ............................" + editTeam.getWebPage());
             teamService.addTeam(teamToEdit);
         }
 

@@ -38,7 +38,6 @@ public class MainController {
     public String league(Model model) {
 
         List<Round> rounds = roundService.findAllRounds();
-        List<Match> matchList = matchService.findAllMatches();
         model.addAttribute("rounds", rounds);
 
         return "views/round";
@@ -52,7 +51,6 @@ public class MainController {
         } else {
             model.addAttribute("rounds", roundService.findRoundByRoundNumber((Integer.parseInt(text))));
         }
-
 
         return "views/round";
     }
