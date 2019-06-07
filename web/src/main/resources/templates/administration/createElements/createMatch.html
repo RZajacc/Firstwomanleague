@@ -30,11 +30,11 @@
 
     <div class="form-group text-center">
         <label for="matchNumber">Numer meczu: </label>
-        <input type="text" class="form-control" id="matchNumber" th:field="*{matchNumber}" placeholder="np. 42">
+        <input type="text" class="form-control centeredInput" id="matchNumber" th:field="*{matchNumber}" placeholder="np. 42">
     </div>
     <div class="form-group text-center">
         <label for="selectRound">Nr kolejki : </label>
-        <select th:field="*{round.roundNumber}" class="form-control" name="selectRound" id="selectRound">
+        <select th:field="*{round.roundNumber}" class="form-control centerSelectInput" name="selectRound" id="selectRound">
             <option th:each="round : ${roundSelect}"
                     th:text="${round.roundNumber}"
                     th:value="${round.roundNumber}">
