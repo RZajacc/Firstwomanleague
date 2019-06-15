@@ -7,7 +7,7 @@
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
-<form method="POST" action="/admin/teams-admin/currentteam-admin/editplayer/{id}" id="editPlayerForm" th:object="${editPlayer}">
+<form method="POST" action="/admin/teams-admin/currentteam-admin/editplayer/{id}" id="editPlayerForm" class="mainFont" th:object="${editPlayer}">
 
     <div class="form-group text-center">
         <label for="number">Numer na koszulce : </label>

@@ -7,7 +7,7 @@
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
-<form method="POST" action="/admin/teams-admin/currentteam-admin/editteam/{id}" id="editTeamForm" th:object="${editTeam}">
+<form method="POST" action="/admin/teams-admin/currentteam-admin/editteam/{id}" id="editTeamForm" class="mainFont" th:object="${editTeam}">
 
     <div class="form-group text-center">
         <label for="teamName">Nazwa zespołu : </label>

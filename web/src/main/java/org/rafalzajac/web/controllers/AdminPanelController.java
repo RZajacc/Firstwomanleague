@@ -5,16 +5,12 @@ import org.rafalzajac.service.*;
 import org.rafalzajac.web.administration.CreateNewElement;
 import org.rafalzajac.web.fileProcessing.ProcessMatchResult;
 import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,7 +1,9 @@
-body {
-    margin-bottom: 5%;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    /*font-family: "Arial";*/
+table {
+    font-family: Baskerville, Baskerville Old Face, Hoefler Text, Garamond, Times New Roman, serif;
+}
+
+.mainFont {
+    font-family: Baskerville, Baskerville Old Face, Hoefler Text, Garamond, Times New Roman, serif;
 }
 
 .navbar {
@@ -191,6 +193,7 @@ body {
 #loginForm {
     margin-top: 25px;
     font-weight: bold;
+    font-size: medium;
 }
 
 .topText {
