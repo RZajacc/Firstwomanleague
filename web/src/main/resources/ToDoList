@@ -1,8 +1,6 @@
 
-// Cleanup (Niektóre wprowadź niektóre przemyśl)
-        //1. Uzupełnij plik readme
 
-// Test
+// Deploy
         //1. Zmień bazę danych na mySql
         //2. Dodaj w app properties dane do bazy
         //3. Deploy na amazona
