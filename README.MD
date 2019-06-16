@@ -1,4 +1,4 @@
-# First Woman League
+#First Woman League
 This is an application which should mimic functionality of league applications
 made for extraleague like plusliga.pl, or lsk.plps.pl. It should provide user
 with information about teams participating in the league, players, team scores and
