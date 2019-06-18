@@ -67,10 +67,10 @@ public class AdminPanelController {
         } else{
             try {
 
-                Optional<Match> match = matchService.getMatchById(id);
+                Optional<Game> match = matchService.getMatchById(id);
                 if (match.isPresent()) {
 
-                    Match current = match.get();
+                    Game current = match.get();
 
                     if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
                         Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
@@ -106,10 +106,10 @@ public class AdminPanelController {
     @GetMapping("/round-admin/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
 
-        Optional<Match> match = matchService.getMatchById(id);
+        Optional<Game> match = matchService.getMatchById(id);
 
         if(match.isPresent()) {
-            Match currentMatch = match.get();
+            Game currentMatch = match.get();
             model.addAttribute("currentMatch", currentMatch);
 
 
@@ -141,18 +141,18 @@ public class AdminPanelController {
     @PostMapping("/round-admin/{id}")
     public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws Exception {
 
-        Optional<Match> selectedMatch = matchService.getMatchById(id);
+        Optional<Game> selectedMatch = matchService.getMatchById(id);
         if (selectedMatch.isPresent()) {
-            Match currentMatch = selectedMatch.get();
+            Game currentMatch = selectedMatch.get();
             model.addAttribute("currentMatch", currentMatch);
             if (currentMatch.getScoutPath() != null) {
                 ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
                 scoutFileProcess.processScoutFile();
                 scoutFileProcess.saveStatsToDatabase();
-                System.out.println("Current match result" + currentMatch.getMatchResult());
+                System.out.println("Current game result" + currentMatch.getMatchResult());
                 redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
             } else {
-                redirectAttributes.addFlashAttribute("message", "There is no scout file available for this match!");
+                redirectAttributes.addFlashAttribute("message", "There is no scout file available for this game!");
             }
         }
 
@@ -162,9 +162,9 @@ public class AdminPanelController {
     @GetMapping("/round-admin/result/{id}")
     public String matchResultInfo(@PathVariable Long id, Model model) {
 
-        Optional<Match> match = matchService.getMatchById(id);
+        Optional<Game> match = matchService.getMatchById(id);
         if (match.isPresent()) {
-            Match current = match.get();
+            Game current = match.get();
             model.addAttribute("currentMatch", current);
         }
 
@@ -173,17 +173,17 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/result/{id}")
-    public String updateMatchResult(@ModelAttribute("currentMatch") Match match){
+    public String updateMatchResult(@ModelAttribute("currentMatch") Game game){
 
         ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService);
-        processMatchResult.addMatchResult(match);
+        processMatchResult.addMatchResult(game);
 
-        return "redirect:/admin/round-admin/" + match.getId();
+        return "redirect:/admin/round-admin/" + game.getId();
     }
 
 
     @GetMapping("/round-admin/creatematch")
-    public String createTeam(Model model, @ModelAttribute("newMatch") Match match) {
+    public String createTeam(Model model, @ModelAttribute("newMatch") Game game) {
 
 
         List<Round> rounds = roundService.findAllRounds();
@@ -197,10 +197,10 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/creatematch")
-    public String processMatch(@ModelAttribute("currentMatch") Match match, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
+    public String processMatch(@ModelAttribute("currentMatch") Game game, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
 
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
-        createNewElement.addNewMatch(match);
+        createNewElement.addNewMatch(game);
         System.out.println("Selected team is : " + homeTeam);
 
         return "redirect:/admin/round-admin";

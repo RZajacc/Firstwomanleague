@@ -16,7 +16,7 @@ import java.util.List;
 public class Round {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private int roundNumber;
@@ -25,7 +25,7 @@ public class Round {
     League league;
 
     @OneToMany(mappedBy = "round")
-    private List<Match> matchList;
+    private List<Game> matchList;
 
     public Round(int roundNumber) {
         this.roundNumber = roundNumber;

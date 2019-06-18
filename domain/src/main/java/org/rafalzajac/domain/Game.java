@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class Match {
+public class Game {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String homeTeam;
@@ -24,14 +23,6 @@ public class Match {
     private int matchNumber;
     private String scoutPath;
 
-    //Match data
-//    private String matchDate;
-//    private String matchResult;
-//    private String set1Result;
-//    private String set2Result;
-//    private String set3Result;
-//    private String set4Result;
-//    private String set5Result;
 
     @ManyToOne
     Round round;
@@ -42,20 +33,20 @@ public class Match {
     @OneToOne
     private MatchResult matchResult;
 
-    public Match(String homeTeam, String awayTeam) {
+    public Game(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         teams = new LinkedList<>();
     }
 
-    public Match(String homeTeam, String awayTeam, Round round) {
+    public Game(String homeTeam, String awayTeam, Round round) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.round = round;
         teams = new LinkedList<>();
     }
 
-    public Match(String homeTeam, String awayTeam, int matchNumber, Round round, MatchResult matchResult) {
+    public Game(String homeTeam, String awayTeam, int matchNumber, Round round, MatchResult matchResult) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchNumber = matchNumber;

@@ -26,24 +26,24 @@ public class CreateNewElement {
         this.playerService = playerService;
     }
 
-    public void addNewMatch(Match match) {
+    public void addNewMatch(Game game) {
 
-        //Setting match result
+        //Setting game result
         MatchResult newMatchResult = new MatchResult();
         matchResultService.saveMatchResult(newMatchResult);
-        match.setMatchResult(newMatchResult);
+        game.setMatchResult(newMatchResult);
 
         //Setting round
-        match.setRound(roundService.findRoundByRoundNumber(match.getRound().getRoundNumber()));
+        game.setRound(roundService.findRoundByRoundNumber(game.getRound().getRoundNumber()));
 
-        //Adding current match as played by both teams
-        Team hTeam = teamService.getTeamByTeamName(match.getHomeTeam());
-        Team aTeam = teamService.getTeamByTeamName(match.getAwayTeam());
-        hTeam.getMatchList().add(match);
-        aTeam.getMatchList().add(match);
+        //Adding current game as played by both teams
+        Team hTeam = teamService.getTeamByTeamName(game.getHomeTeam());
+        Team aTeam = teamService.getTeamByTeamName(game.getAwayTeam());
+        hTeam.getMatchList().add(game);
+        aTeam.getMatchList().add(game);
 
-        //Saving match and updating teams
-        matchService.addMatch(match);
+        //Saving game and updating teams
+        matchService.addMatch(game);
         teamService.addTeam(hTeam);
         teamService.addTeam(aTeam);
     }

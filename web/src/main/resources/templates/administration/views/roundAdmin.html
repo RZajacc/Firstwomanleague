@@ -41,22 +41,22 @@
            </tr>
        </thead>
         <tbody>
-            <tr th:each="match : ${round.matchList}" class="centeredText">
-                <td th:text="${match.matchNumber}"></td>
-                <td th:text="${match.homeTeam}"></td>
-                <td th:text="${match.awayTeam}"></td>
+            <tr th:each="game : ${round.matchList}" class="centeredText">
+                <td th:text="${game.matchNumber}"></td>
+                <td th:text="${game.homeTeam}"></td>
+                <td th:text="${game.awayTeam}"></td>
 
                 <td>
-                    <a th:href="@{'/admin/round-admin/' + ${match.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
+                    <a th:href="@{'/admin/round-admin/' + ${game.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
 
-                <td th:text="${match.matchResult.homeTeamSetsWon} + ':' + ${match.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
+                <td th:text="${game.matchResult.homeTeamSetsWon} + ':' + ${game.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
 
                 <td>
                     <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">
                         <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
                         <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
-                        <td><input th:value="${match.id}" type="text" name="id" style="display: none"/></td>
+                        <td><input th:value="${game.id}" type="text" name="id" style="display: none"/></td>
                      </form>
                 </td>
             </tr>

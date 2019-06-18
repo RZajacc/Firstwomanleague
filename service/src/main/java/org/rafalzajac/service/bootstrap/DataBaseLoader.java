@@ -49,14 +49,14 @@ public class DataBaseLoader implements CommandLineRunner {
         MatchResult result6 = new MatchResult();
 
 
-        //Creating match instances
-        Match match1 = new Match("MKS Dabrowa", "PWSZ Tarnow", 1, round1, result1);
-        Match match2 = new Match("Joker Swiecie", "MKS Dabrowa",2,  round1, result2);
-        Match match3 = new Match("MKS Dabrowa", "Energetyk Poznan", 3, round1, result3);
+        //Creating game instances
+        Game match1 = new Game("MKS Dabrowa", "PWSZ Tarnow", 1, round1, result1);
+        Game match2 = new Game("Joker Swiecie", "MKS Dabrowa",2,  round1, result2);
+        Game match3 = new Game("MKS Dabrowa", "Energetyk Poznan", 3, round1, result3);
 
-        Match match4 = new Match("Joker Swiecie", "PWSZ Tarnow", 4, round2, result4);
-        Match match5 = new Match("Energetyk Poznan", "Joker Swiecie",5,  round2, result5);
-        Match match6 = new Match("PWSZ Tarnow", "Energetyk Poznan", 6, round2, result6);
+        Game match4 = new Game("Joker Swiecie", "PWSZ Tarnow", 4, round2, result4);
+        Game match5 = new Game("Energetyk Poznan", "Joker Swiecie",5,  round2, result5);
+        Game match6 = new Game("PWSZ Tarnow", "Energetyk Poznan", 6, round2, result6);
 
         TeamStats team1Stats = new TeamStats();
         TeamStats team2Stats = new TeamStats();
@@ -127,7 +127,7 @@ public class DataBaseLoader implements CommandLineRunner {
         roundService.addRound(round2);
 
 
-        //Adding match result
+        //Adding game result
         matchResultService.saveMatchResult(result1);
         matchResultService.saveMatchResult(result2);
         matchResultService.saveMatchResult(result3);

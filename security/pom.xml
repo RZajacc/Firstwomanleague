@@ -6,12 +6,12 @@
     <parent>
         <groupId>org.rafalzajac</groupId>
         <artifactId>firstwomanleague</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <groupId>org.rafalzajac</groupId>
     <artifactId>security</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
 
     <dependencies>

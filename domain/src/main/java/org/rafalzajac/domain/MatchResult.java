@@ -3,10 +3,8 @@ package org.rafalzajac.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -14,7 +12,8 @@ import javax.persistence.OneToOne;
 @Getter @Setter
 public class MatchResult {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
@@ -36,5 +35,5 @@ public class MatchResult {
 
 
     @OneToOne
-    private Match match;
+    private Game game;
 }

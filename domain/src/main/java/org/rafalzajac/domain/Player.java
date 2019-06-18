@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Player {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private int number;

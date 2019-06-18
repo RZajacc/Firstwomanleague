@@ -58,10 +58,10 @@ public class MainController {
     @GetMapping("/round/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
 
-        Optional<Match> match = matchService.getMatchById(id);
+        Optional<Game> match = matchService.getMatchById(id);
 
         if(match.isPresent()) {
-            Match currentMatch = match.get();
+            Game currentMatch = match.get();
             model.addAttribute("currentMatch", currentMatch);
 
 

@@ -2,7 +2,6 @@ package org.rafalzajac.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String teamTag;
@@ -28,7 +27,7 @@ public class Team {
     private String facebook;
 
     @ManyToMany
-    private List<Match> matchList;
+    private List<Game> matchList;
 
     @OneToMany(mappedBy = "team")
     private List<Player> playerList;

@@ -1,9 +1,7 @@
 
 
 // Deploy
-        //1. Zmień bazę danych na mySql
-        //2. Dodaj w app properties dane do bazy
-        //3. Deploy na amazona
+        //1. Deploy na amazona
 
 // Na później
         //1. Możliwość generowania od nowa z wszystkich scoutów rankingu (opcja do panelu admina)?

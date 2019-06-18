@@ -15,7 +15,7 @@ import java.util.List;
 public class League {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String leagueName;

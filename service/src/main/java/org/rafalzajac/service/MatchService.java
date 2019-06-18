@@ -1,6 +1,6 @@
 package org.rafalzajac.service;
 
-import org.rafalzajac.domain.Match;
+import org.rafalzajac.domain.Game;
 import org.rafalzajac.repository.MatchRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,15 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public Match addMatch(Match match) {
-        return matchRepository.save(match);
+    public Game addMatch(Game game) {
+        return matchRepository.save(game);
     }
 
-    public Optional<Match> getMatchById (Long id) {
+    public Optional<Game> getMatchById (Long id) {
         return matchRepository.findById(id);
     }
 
-    public List<Match> findAllMatches() {
+    public List<Game> findAllMatches() {
         return matchRepository.findAll();
     }
 }
