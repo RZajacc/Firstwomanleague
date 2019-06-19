@@ -1,6 +1,8 @@
 package org.rafalzajac.web.fileProcessing;
 
 
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.*;
@@ -9,9 +11,12 @@ import org.rafalzajac.service.PlayerStatsService;
 import org.rafalzajac.service.TeamService;
 import org.rafalzajac.service.TeamStatsService;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +27,7 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class ScoutFileProcess {
 
-    private Path scoutFilePath;
+    private String scoutFilePath;
     private Team homeTeam;
     private Team awayTeam;
     private Player player;
@@ -33,18 +38,30 @@ public class ScoutFileProcess {
     private TeamService teamService;
     private PlayerStatsService playerStatsService;
     private TeamStatsService teamStatsService;
+    private AmazonClient amazonClient;
 
-    public ScoutFileProcess(Path scoutFilePath, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
+    public ScoutFileProcess(String scoutFilePath, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
         this.scoutFilePath = scoutFilePath;
         this.teamService = teamService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
         this.teamStatsService = teamStatsService;
+        this.amazonClient = amazonClient;
     }
 
     public void processScoutFile() throws Exception {
 
-    List<String> lines = Files.readAllLines(scoutFilePath, Charset.forName("ISO-8859-1"));
+        S3Object obj = amazonClient.getObjectFromServer(scoutFilePath);
+        S3ObjectInputStream inputStream = obj.getObjectContent();
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        List<String> lines = new ArrayList<>();
+        String inputLine = null;
+
+        while ((inputLine = br.readLine()) != null) {
+            lines.add(inputLine);
+        }
+
+   // List<String> lines = Files.readAllLines(inputStream, Charset.forName("ISO-8859-1"));
 
         lines.forEach((line) -> {
 

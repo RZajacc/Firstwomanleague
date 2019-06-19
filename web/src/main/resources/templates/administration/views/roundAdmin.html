@@ -34,7 +34,7 @@
                <th>Wynik</th>
                <th></th>
                <th>Scout</th>
-               <th>Akcja</th>
+               <th colspan="3">Akcja</th>
                <th/>
 
 
@@ -57,8 +57,16 @@
                         <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>
                         <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>
                         <td><input th:value="${game.id}" type="text" name="id" style="display: none"/></td>
+                </form>
+                </td>
+
+                <td>
+                    <form method="POST" action="/admin/round-admin/deletematch">
+                        <td><input type="submit" value="Usuń" id="deleteMath"  class="btn btn-danger"/></td>
+                         <td><input th:value="${game.id}" type="text" name="gameId" style="display: none"/></td>
                      </form>
                 </td>
+
             </tr>
         </tbody>
     </table>

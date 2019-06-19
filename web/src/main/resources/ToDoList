@@ -1,7 +1,10 @@
 
 
 // Deploy
-        //1. Deploy na amazona
+        //1. Mecze plik scout vs to co dodajesz na stronie
+        //2. Usuwanie wyniku meczu w momencie dodania
+        //3. W momencie zapisania nowych statystyk usunięcie starych
+
 
 // Na później
         //1. Możliwość generowania od nowa z wszystkich scoutów rankingu (opcja do panelu admina)?

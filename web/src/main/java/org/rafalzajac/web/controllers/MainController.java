@@ -2,6 +2,7 @@ package org.rafalzajac.web.controllers;
 
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
+import org.rafalzajac.web.fileProcessing.AmazonClient;
 import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
 import org.rafalzajac.web.fileProcessing.SortData;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,9 @@ public class MainController {
         private PlayerService playerService;
         private PlayerStatsService playerStatsService;
         private TeamStatsService teamStatsService;
+        private AmazonClient amazonClient;
 
-        public MainController(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService) {
+        public MainController(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
         this.leagueService = leagueService;
         this.roundService = roundService;
         this.matchService = matchService;
@@ -30,6 +32,7 @@ public class MainController {
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
         this.teamStatsService = teamStatsService;
+        this.amazonClient = amazonClient;
         }
 
 
@@ -67,7 +70,7 @@ public class MainController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());

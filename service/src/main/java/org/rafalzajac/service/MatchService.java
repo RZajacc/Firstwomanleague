@@ -27,4 +27,8 @@ public class MatchService {
     public List<Game> findAllMatches() {
         return matchRepository.findAll();
     }
+
+    public void deleteMatchById(Long id) {
+        matchRepository.deleteById(id);
+    }
 }

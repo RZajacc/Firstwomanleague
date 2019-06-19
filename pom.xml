@@ -14,7 +14,7 @@
 
     <groupId>org.rafalzajac</groupId>
     <artifactId>firstwomanleague</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <name>Firstwomanleague</name>
     <description>Demo project for Spring Boot</description>
 

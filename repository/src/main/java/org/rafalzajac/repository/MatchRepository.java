@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface MatchRepository extends JpaRepository<Game, Long> {
 
     Optional<Game> findById(Long id);
+    void deleteById(Long id);
 
 }

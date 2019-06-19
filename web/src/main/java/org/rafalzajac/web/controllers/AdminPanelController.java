@@ -1,8 +1,11 @@
 package org.rafalzajac.web.controllers;
 
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.S3Object;
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
 import org.rafalzajac.web.administration.CreateNewElement;
+import org.rafalzajac.web.fileProcessing.AmazonClient;
 import org.rafalzajac.web.fileProcessing.ProcessMatchResult;
 import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
 import org.springframework.stereotype.Controller;
@@ -32,10 +35,13 @@ public class AdminPanelController {
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
 
+    //Amazon S3 bucket
+    private AmazonClient amazonClient;
+
     //Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "web/src/main/resources/static/scouts/";
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
+    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient) {
         this.matchService = matchService;
         this.roundService = roundService;
         this.matchResultService = matchResultService;
@@ -43,6 +49,7 @@ public class AdminPanelController {
         this.teamStatsService = teamStatsService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
+        this.amazonClient = amazonClient;
     }
 
     @GetMapping("/")
@@ -62,6 +69,7 @@ public class AdminPanelController {
     @PostMapping("/round-admin")
     public String singleFileUpload(@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam(value = "id", required = false) Long id) {
 
+
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
         } else{
@@ -70,32 +78,39 @@ public class AdminPanelController {
                 Optional<Game> match = matchService.getMatchById(id);
                 if (match.isPresent()) {
 
+
                     Game current = match.get();
 
-                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
-                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
-                    }
+                    String fileName = "R" + current.getRound().getRoundNumber() + "M" +
+                            current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw";
+                    current.setScoutPath(fileName);
+                    amazonClient.uploadFile(file, fileName);
 
-                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))) {
-                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
-                    }
-
-                    Path path = Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(),
-                            current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber() + "M" +
-                                    current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
-
-                    Files.write(path, file.getBytes());
+//                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
+//                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
+//                    }
+//
+//                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))) {
+//                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
+//                    }
+//
+//                    Path path = Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(),
+//                            current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber() + "M" +
+//                                    current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
+//
+//                    Files.write(path, file.getBytes());
 
 
                     redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
                             current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
                             "-" + current.getAwayTeam() + ".dvw");
 
-                    current.setScoutPath(path.toString());
+                    //current.setScoutPath(path.toString());
+
                     matchService.addMatch(current);
                 }
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -115,7 +130,7 @@ public class AdminPanelController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
@@ -146,7 +161,7 @@ public class AdminPanelController {
             Game currentMatch = selectedMatch.get();
             model.addAttribute("currentMatch", currentMatch);
             if (currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(Paths.get(currentMatch.getScoutPath()), teamService, playerService, playerStatsService, teamStatsService);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
                 scoutFileProcess.saveStatsToDatabase();
                 System.out.println("Current game result" + currentMatch.getMatchResult());
@@ -157,6 +172,12 @@ public class AdminPanelController {
         }
 
         return "redirect:/admin/round-admin/" + id;
+    }
+
+    @PostMapping("/round-admin/deletematch")
+    public String deleteMatch(@RequestParam("gameId") Long gameId) {
+        matchService.deleteMatchById(gameId);
+        return "redirect:/admin/round-admin/";
     }
 
     @GetMapping("/round-admin/result/{id}")
@@ -261,9 +282,9 @@ public class AdminPanelController {
     }
 
     @PostMapping("/deletePlayer")
-    public String deletePlayer(@RequestParam("playerId")Long plyerId, @RequestParam("teamId") Long teamId) {
+    public String deletePlayer(@RequestParam("playerId")Long playerId, @RequestParam("teamId") Long teamId) {
 
-        playerService.deletePlayerById(plyerId);
+        playerService.deletePlayerById(playerId);
 
         return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
     }
