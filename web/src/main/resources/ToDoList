@@ -1,17 +1,14 @@
 
 
 // Deploy
-        //1. Mecze plik scout vs to co dodajesz na stronie
-        //2. Usuwanie wyniku meczu w momencie dodania
-        //3. W momencie zapisania nowych statystyk usunięcie starych
+
+        //1. Usuwanie wyniku meczu w momencie dodania
 
 
 // Na później
-        //1. Możliwość generowania od nowa z wszystkich scoutów rankingu (opcja do panelu admina)?
-        //2. Pomyśl jak wycofać wynik meczu
-        //3. Dodawanie newsów na stronę home
-        //4. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek
-        //5. Pomyśl jak rozwiącać fazę playoff
-        //6. Dodawanie newsów na stronę
-        //7. Validation -> Szczególnie przy liczbowych wartościach w formach
+
+        //1. Dodawanie newsów na stronę home
+        //2. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek (commandLineRunner)
+        //3. Pomyśl jak rozwiącać fazę playoff
+        //4. Validation -> Szczególnie przy liczbowych wartościach w formach
 

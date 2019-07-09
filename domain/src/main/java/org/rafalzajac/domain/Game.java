@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
 public class Game {
@@ -22,6 +21,7 @@ public class Game {
     private String awayTeam;
     private int matchNumber;
     private String scoutPath;
+    private Boolean statsSaved;
 
 
     @ManyToOne
@@ -33,10 +33,15 @@ public class Game {
     @OneToOne
     private MatchResult matchResult;
 
+    public Game() {
+        statsSaved = false;
+    }
+
     public Game(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         teams = new LinkedList<>();
+        statsSaved = false;
     }
 
     public Game(String homeTeam, String awayTeam, Round round) {
@@ -44,6 +49,7 @@ public class Game {
         this.awayTeam = awayTeam;
         this.round = round;
         teams = new LinkedList<>();
+        statsSaved = false;
     }
 
     public Game(String homeTeam, String awayTeam, int matchNumber, Round round, MatchResult matchResult) {
@@ -53,5 +59,6 @@ public class Game {
         this.round = round;
         this.matchResult = matchResult;
         teams = new LinkedList<>();
+        statsSaved = false;
     }
 }

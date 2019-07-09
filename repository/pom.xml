@@ -6,19 +6,19 @@
     <parent>
         <groupId>org.rafalzajac</groupId>
         <artifactId>firstwomanleague</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>0.0.8-SNAPSHOT</version>
     </parent>
 
     <groupId>org.rafalzajac</groupId>
     <artifactId>repository</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
 
 
     <dependencies>
         <dependency>
             <groupId>org.rafalzajac</groupId>
             <artifactId>domain</artifactId>
-            <version>0.0.7-SNAPSHOT</version>
+            <version>0.0.8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

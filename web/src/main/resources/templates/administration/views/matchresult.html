@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <head th:replace="layouts/AdministrationLayout :: head(title = 'Wynik')"/>
-</head>
+
+<head th:replace="layouts/AdministrationLayout :: head(title = 'Wynik')"/>
+
 <body>
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
@@ -23,9 +23,9 @@
             <form method="POST" action="/admin/round-admin/result/{id}"  th:object="${currentMatch}" name="currentMatch">
 
                 <tr>
-                    <td th:text="${currentMatch.teams.get(0).teamName}" class="matchInfo"/>
+                    <td th:text="${currentMatch.homeTeam}" class="matchInfo"/>
                     <th class="matchInfo">- Drużyny -</th>
-                    <td th:text="${currentMatch.teams.get(1).teamName}" class="matchInfo"/>
+                    <td th:text="${currentMatch.awayTeam}" class="matchInfo"/>
                 </tr>
                 <tr>
                     <td ><input type="text" th:field="*{matchResult.homeTeamSetsWon}" class="matchInfo"></td>

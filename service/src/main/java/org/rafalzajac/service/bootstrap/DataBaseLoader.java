@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 
+
 @Component
 public class DataBaseLoader implements CommandLineRunner {
 
@@ -33,6 +34,7 @@ public class DataBaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
 
         //Creating league instance
         League FirstWoman = new League("1LK", "2018-2019");
@@ -64,7 +66,7 @@ public class DataBaseLoader implements CommandLineRunner {
         TeamStats team4Stats = new TeamStats();
 
         //Creating team instances
-        Team team1 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowsk", "Ireneusz Borzęcki", team1Stats);
+        Team team1 = new Team("MKS", "MKS Dabrowa Gornicza", "Adam Grabowski", "Ireneusz Borzecki", team1Stats);
         Team team2 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", team2Stats);
         Team team3 = new Team("JOK", "Joker Swiecie", "Michal Wojtowicz", "Milosz Szwaba", team3Stats);
         Team team4 = new Team("ENE", "Energetyk Poznan", "Michal Patyk", team4Stats);

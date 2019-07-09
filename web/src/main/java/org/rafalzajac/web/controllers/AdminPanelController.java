@@ -1,7 +1,7 @@
 package org.rafalzajac.web.controllers;
 
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.S3Object;
+
+import lombok.extern.slf4j.Slf4j;
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
 import org.rafalzajac.web.administration.CreateNewElement;
@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class AdminPanelController {
 
     private TeamService teamService;
@@ -38,8 +35,6 @@ public class AdminPanelController {
     //Amazon S3 bucket
     private AmazonClient amazonClient;
 
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "web/src/main/resources/static/scouts/";
 
     public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient) {
         this.matchService = matchService;
@@ -86,32 +81,17 @@ public class AdminPanelController {
                     current.setScoutPath(fileName);
                     amazonClient.uploadFile(file, fileName);
 
-//                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()))) {
-//                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName()));
-//                    }
-//
-//                    if (!Files.exists(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()))) {
-//                        Files.createDirectory(Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(), current.getRound().getLeague().getSeason()));
-//                    }
-//
-//                    Path path = Paths.get(UPLOADED_FOLDER, current.getRound().getLeague().getLeagueName(),
-//                            current.getRound().getLeague().getSeason(), "R" + current.getRound().getRoundNumber() + "M" +
-//                                    current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw");
-//
-//                    Files.write(path, file.getBytes());
-
 
                     redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
                             current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
                             "-" + current.getAwayTeam() + ".dvw");
 
-                    //current.setScoutPath(path.toString());
 
                     matchService.addMatch(current);
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+               log.info("Exception occured", e);
             }
         }
 
@@ -133,10 +113,15 @@ public class AdminPanelController {
                 ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
-                model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
-                model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
+                Team hTeam = teamService.getTeamByTeamName(currentMatch.getHomeTeam());
+                if (hTeam.getTeamTag().equals(scoutFileProcess.getHomeTeam().getTeamTag())) {
+                    model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
+                    model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
+                } else {
+                    model.addAttribute("awayTeam", scoutFileProcess.getHomeTeam());
+                    model.addAttribute("homeTeam", scoutFileProcess.getAwayTeam());
+                }
             } else {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess();
                 Team hTeam = currentMatch.getTeams().get(0);
                 hTeam.setTeamStats(new TeamStats());
                 hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
@@ -163,9 +148,17 @@ public class AdminPanelController {
             if (currentMatch.getScoutPath() != null) {
                 ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
-                scoutFileProcess.saveStatsToDatabase();
+                if(!currentMatch.getStatsSaved()){
+                    scoutFileProcess.saveStatsToDatabase();
+                    currentMatch.setStatsSaved(true);
+                    matchService.addMatch(currentMatch);
+                    redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
+                } else {
+                    redirectAttributes.addFlashAttribute("message", "Stats already saved!");
+                }
+
                 System.out.println("Current game result" + currentMatch.getMatchResult());
-                redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
+
             } else {
                 redirectAttributes.addFlashAttribute("message", "There is no scout file available for this game!");
             }
@@ -196,7 +189,10 @@ public class AdminPanelController {
     @PostMapping("/round-admin/result/{id}")
     public String updateMatchResult(@ModelAttribute("currentMatch") Game game){
 
-        ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService);
+//        ModelMapper modelMapper = new ModelMapper();
+//        Game game = modelMapper.map(gameDTO, Game.class);
+
+        ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, teamStatsService);
         processMatchResult.addMatchResult(game);
 
         return "redirect:/admin/round-admin/" + game.getId();
@@ -204,7 +200,7 @@ public class AdminPanelController {
 
 
     @GetMapping("/round-admin/creatematch")
-    public String createTeam(Model model, @ModelAttribute("newMatch") Game game) {
+    public String createMatch(Model model, @ModelAttribute("newMatch") Game game) {
 
 
         List<Round> rounds = roundService.findAllRounds();
@@ -218,7 +214,7 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/creatematch")
-    public String processMatch(@ModelAttribute("currentMatch") Game game, Model model, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
+    public String processMatch(@ModelAttribute("currentMatch") Game game, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
 
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
         createNewElement.addNewMatch(game);

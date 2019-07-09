@@ -58,8 +58,6 @@ public class TeamStats {
     private float teamPointsRatio = 0;
 
 
-
-
     @OneToOne
     private Team team;
 
