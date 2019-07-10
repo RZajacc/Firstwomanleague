@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 
-@Component
+//@Component
 public class DataBaseLoader implements CommandLineRunner {
 
     private LeagueService leagueService;

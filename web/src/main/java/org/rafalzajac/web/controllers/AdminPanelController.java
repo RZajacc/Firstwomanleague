@@ -2,17 +2,18 @@ package org.rafalzajac.web.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.rafalzajac.domain.*;
+import org.rafalzajac.dto_objects.GameDTO;
+import org.rafalzajac.dto_objects.PlayerDTO;
+import org.rafalzajac.dto_objects.TeamDTO;
 import org.rafalzajac.service.*;
 import org.rafalzajac.web.administration.CreateNewElement;
-import org.rafalzajac.web.file_processing.AmazonClient;
 import org.rafalzajac.web.file_processing.ProcessMatchResult;
-import org.rafalzajac.web.file_processing.ScoutFileProcess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.Comparator;
@@ -31,12 +32,14 @@ public class AdminPanelController {
     private TeamStatsService teamStatsService;
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
+    private static final String REDIRECT_CURRENT_TEAM = "redirect:/admin/teams-admin/currentteam-admin/";
+    private static final String REDIRECT_ROUND = "redirect:/admin/round-admin/";
+    private static final String FLASH_MESSAGE = "message";
+    private static final String CURRENT_MATCH = "currentMatch";
 
-    //Amazon S3 bucket
-    private AmazonClient amazonClient;
 
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient) {
+    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
         this.matchService = matchService;
         this.roundService = roundService;
         this.matchResultService = matchResultService;
@@ -44,7 +47,6 @@ public class AdminPanelController {
         this.teamStatsService = teamStatsService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
-        this.amazonClient = amazonClient;
     }
 
     @GetMapping("/")
@@ -52,125 +54,12 @@ public class AdminPanelController {
         return "administration/adminPanel";
     }
 
-    @GetMapping("/round-admin")
-    public String league(Model model) {
 
-        List<Round> rounds = roundService.findAllRounds();
-        model.addAttribute("rounds", rounds);
-
-        return "administration/views/roundAdmin";
-    }
-
-    @PostMapping("/round-admin")
-    public String singleFileUpload(@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @RequestParam(value = "id", required = false) Long id) {
-
-
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Wybierz odpowiedni plik");
-        } else{
-            try {
-
-                Optional<Game> match = matchService.getMatchById(id);
-                if (match.isPresent()) {
-
-
-                    Game current = match.get();
-
-                    String fileName = "R" + current.getRound().getRoundNumber() + "M" +
-                            current.getMatchNumber() + "_" + current.getHomeTeam() + "-" + current.getAwayTeam() + ".dvw";
-                    current.setScoutPath(fileName);
-                    amazonClient.uploadFile(file, fileName);
-
-
-                    redirectAttributes.addFlashAttribute("message", "Pomyslnie dodano plik o nazwie :" +
-                            current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
-                            "-" + current.getAwayTeam() + ".dvw");
-
-
-                    matchService.addMatch(current);
-                }
-
-            } catch (Exception e) {
-               log.info("Exception occured", e);
-            }
-        }
-
-        return "redirect:/admin/round-admin/";
-    }
-
-    @GetMapping("/round-admin/{id}")
-    public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
-
-        Optional<Game> match = matchService.getMatchById(id);
-
-        if(match.isPresent()) {
-            Game currentMatch = match.get();
-            model.addAttribute("currentMatch", currentMatch);
-
-
-            //Now for file data
-            if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
-                scoutFileProcess.processScoutFile();
-
-                Team hTeam = teamService.getTeamByTeamName(currentMatch.getHomeTeam());
-                if (hTeam.getTeamTag().equals(scoutFileProcess.getHomeTeam().getTeamTag())) {
-                    model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
-                    model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
-                } else {
-                    model.addAttribute("awayTeam", scoutFileProcess.getHomeTeam());
-                    model.addAttribute("homeTeam", scoutFileProcess.getAwayTeam());
-                }
-            } else {
-                Team hTeam = currentMatch.getTeams().get(0);
-                hTeam.setTeamStats(new TeamStats());
-                hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
-                Team aTeam = currentMatch.getTeams().get(1);
-                aTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
-                aTeam.setTeamStats(new TeamStats());
-                model.addAttribute("homeTeam", hTeam);
-                model.addAttribute("awayTeam", aTeam);
-            }
-
-            return "administration/views/matchAdmin";
-        }
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/round-admin/{id}")
-    public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws Exception {
-
-        Optional<Game> selectedMatch = matchService.getMatchById(id);
-        if (selectedMatch.isPresent()) {
-            Game currentMatch = selectedMatch.get();
-            model.addAttribute("currentMatch", currentMatch);
-            if (currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
-                scoutFileProcess.processScoutFile();
-                if(!currentMatch.getStatsSaved()){
-                    scoutFileProcess.saveStatsToDatabase();
-                    currentMatch.setStatsSaved(true);
-                    matchService.addMatch(currentMatch);
-                    redirectAttributes.addFlashAttribute("message", "Dane zapisane prawidlowo!");
-                } else {
-                    redirectAttributes.addFlashAttribute("message", "Statystyki sa juz zapisane!");
-                }
-
-                System.out.println("Current game result" + currentMatch.getMatchResult());
-
-            } else {
-                redirectAttributes.addFlashAttribute("message", "Plik scouta nie został jeszcze dodany!");
-            }
-        }
-
-        return "redirect:/admin/round-admin/" + id;
-    }
 
     @PostMapping("/round-admin/deletematch")
     public String deleteMatch(@RequestParam("gameId") Long gameId) {
         matchService.deleteMatchById(gameId);
-        return "redirect:/admin/round-admin/";
+        return REDIRECT_ROUND;
     }
 
     @GetMapping("/round-admin/result/{id}")
@@ -179,7 +68,7 @@ public class AdminPanelController {
         Optional<Game> match = matchService.getMatchById(id);
         if (match.isPresent()) {
             Game current = match.get();
-            model.addAttribute("currentMatch", current);
+            model.addAttribute(CURRENT_MATCH, current);
         }
 
 
@@ -187,28 +76,29 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/result/{id}")
-    public String updateMatchResult(@ModelAttribute("currentMatch") Game game, RedirectAttributes redirectAttributes){
+    public String updateMatchResult(@ModelAttribute("currentMatch") GameDTO game, RedirectAttributes redirectAttributes){
 
-//        ModelMapper modelMapper = new ModelMapper();
-//        Game game = modelMapper.map(gameDTO, Game.class);
-        Optional<Game> game1 = matchService.getMatchById(game.getId());
+        ModelMapper modelMapper = new ModelMapper();
+        Game gameToUpdate = modelMapper.map(game, Game.class);
+
+        Optional<Game> game1 = matchService.getMatchById(gameToUpdate.getId());
         if (game1.isPresent()) {
             Game verifyResult = game1.get();
             if (verifyResult.getMatchResult().getHomeTeamSetsWon() == 0 && verifyResult.getMatchResult().getAwayTeamSetsWon() == 0){
                 ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, matchResultService);
-                processMatchResult.addMatchResult(game);
+                processMatchResult.addMatchResult(verifyResult);
             }else {
-                redirectAttributes.addFlashAttribute("message", "Nie można zmodyfikować wyniku!");
+                redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Nie można zmodyfikować wyniku!");
             }
         }
 
 
-        return "redirect:/admin/round-admin/" + game.getId();
+        return REDIRECT_ROUND + game.getId();
     }
 
 
     @GetMapping("/round-admin/creatematch")
-    public String createMatch(Model model, @ModelAttribute("newMatch") Game game) {
+    public String createMatch(Model model, @ModelAttribute("newMatch") GameDTO game) {
 
 
         List<Round> rounds = roundService.findAllRounds();
@@ -222,11 +112,12 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/creatematch")
-    public String processMatch(@ModelAttribute("currentMatch") Game game, @RequestParam("homeTeam") String homeTeam, @RequestParam("awayTeam")String awayTeam) {
+    public String processMatch(@ModelAttribute("currentMatch") GameDTO game) {
 
+        ModelMapper modelMapper = new ModelMapper();
+        Game gameToPersist = modelMapper.map(game, Game.class);
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
-        createNewElement.addNewMatch(game);
-        System.out.println("Selected team is : " + homeTeam);
+        createNewElement.addNewMatch(gameToPersist);
 
         return "redirect:/admin/round-admin";
     }
@@ -239,16 +130,19 @@ public class AdminPanelController {
     }
 
     @GetMapping("/teams-admin/createteam")
-    public String createTeam(Model model, @ModelAttribute("newTeam") Team team) {
+    public String createTeam(@ModelAttribute("newTeam") TeamDTO team) {
 
         return "administration/createElements/createTeam";
     }
 
     @PostMapping("/teams-admin/createteam")
-    public String processTeam(@ModelAttribute("newTeam") Team team) {
+    public String processTeam(@ModelAttribute("newTeam") TeamDTO team) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        Team teamToPersist = modelMapper.map(team, Team.class);
 
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
-        createNewElement.addNewTeam(team);
+        createNewElement.addNewTeam(teamToPersist);
 
         return "redirect:/admin/teams-admin/";
     }
@@ -256,7 +150,7 @@ public class AdminPanelController {
 
 
     @GetMapping("/teams-admin/currentteam-admin/{id}")
-    public String currentTeam(@PathVariable Long id, @ModelAttribute("newPlayer")Player player, Model model){
+    public String currentTeam(@PathVariable Long id, @ModelAttribute("newPlayer") PlayerDTO player, Model model){
 
         Optional<Team> team = teamService.getTeamById(id);
 
@@ -271,18 +165,21 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/currentteam-admin/{id}")
-    public String addPlayerToTeam(@RequestParam Long id, @ModelAttribute("newPlayer")Player player, Model model){
+    public String addPlayerToTeam(@RequestParam Long id, @ModelAttribute("newPlayer")PlayerDTO player){
+
+        ModelMapper modelMapper = new ModelMapper();
+        Player playerToPersist = modelMapper.map(player, Player.class);
 
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
         Optional<Team> team = teamService.getTeamById(id);
 
         if (team.isPresent()) {
             Team currentTeam = team.get();
-            createNewElement.addNewPlayer(player, currentTeam);
+            createNewElement.addNewPlayer(playerToPersist, currentTeam);
         }
 
 
-        return "redirect:/admin/teams-admin/currentteam-admin/" + id;
+        return REDIRECT_CURRENT_TEAM + id;
     }
 
     @PostMapping("/deletePlayer")
@@ -290,7 +187,7 @@ public class AdminPanelController {
 
         playerService.deletePlayerById(playerId);
 
-        return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
+        return REDIRECT_CURRENT_TEAM + teamId;
     }
 
     @GetMapping("/teams-admin/currentteam-admin/editplayer/{id}")
@@ -306,14 +203,16 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/currentteam-admin/editplayer/{id}")
-    public String processEdit(@Valid @ModelAttribute("editPlayer")Player editPlayer, @RequestParam("teamId")Long teamId, BindingResult bindingResult) {
+    public String processEdit(@Valid @ModelAttribute("editPlayer")PlayerDTO editPlayer, @RequestParam("teamId")Long teamId, BindingResult bindingResult) {
 
-        System.out.println("EDIT PLAYER ID :" + editPlayer.getId());
+        ModelMapper modelMapper = new ModelMapper();
+        Player playerToPersist = modelMapper.map(editPlayer, Player.class);
+
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin/teams-admin/currentteam-admin/editplayer/" + editPlayer.getId();
+            return "redirect:/admin/teams-admin/currentteam-admin/editplayer/" + playerToPersist.getId();
         }
 
-        Optional<Player> player = playerService.findPlayerById(editPlayer.getId());
+        Optional<Player> player = playerService.findPlayerById(playerToPersist.getId());
         if (player.isPresent()) {
             Player playerToEdit = player.get();
             playerToEdit.setNumber(editPlayer.getNumber());
@@ -325,7 +224,7 @@ public class AdminPanelController {
             playerService.addPlayer(playerToEdit);
         }
 
-        return "redirect:/admin/teams-admin/currentteam-admin/" + teamId;
+        return REDIRECT_CURRENT_TEAM + teamId;
     }
 
     @GetMapping("teams-admin/currentteam-admin/editteam/{id}")
@@ -341,9 +240,12 @@ public class AdminPanelController {
     }
 
     @PostMapping("teams-admin/currentteam-admin/editteam/{id}")
-    public String editTeamsProcess(@ModelAttribute("editTeam") Team editTeam){
+    public String editTeamsProcess(@ModelAttribute("editTeam") TeamDTO editTeam){
 
-        Optional<Team> team = teamService.getTeamById(editTeam.getId());
+        ModelMapper modelMapper = new ModelMapper();
+        Team teamToPersist = modelMapper.map(editTeam, Team.class);
+
+        Optional<Team> team = teamService.getTeamById(teamToPersist.getId());
         if (team.isPresent()) {
             Team teamToEdit = team.get();
             teamToEdit.setTeamName(editTeam.getTeamName());
