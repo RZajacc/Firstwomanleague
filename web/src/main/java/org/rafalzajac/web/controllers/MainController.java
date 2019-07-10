@@ -15,7 +15,7 @@ import java.util.*;
 @Controller
 public class MainController {
 
-        private LeagueService leagueService;
+
         private RoundService roundService;
         private MatchService matchService;
         private TeamService teamService;
@@ -24,8 +24,7 @@ public class MainController {
         private TeamStatsService teamStatsService;
         private AmazonClient amazonClient;
 
-        public MainController(LeagueService leagueService, RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
-        this.leagueService = leagueService;
+        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
         this.roundService = roundService;
         this.matchService = matchService;
         this.teamService = teamService;
@@ -76,7 +75,6 @@ public class MainController {
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());
                 model.addAttribute("awayTeam", scoutFileProcess.getAwayTeam());
             } else {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess();
                 Team hTeam = currentMatch.getTeams().get(0);
                 hTeam.setTeamStats(new TeamStats());
                 hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
