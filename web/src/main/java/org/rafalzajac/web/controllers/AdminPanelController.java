@@ -195,7 +195,7 @@ public class AdminPanelController {
         if (game1.isPresent()) {
             Game verifyResult = game1.get();
             if (verifyResult.getMatchResult().getHomeTeamSetsWon() == 0 && verifyResult.getMatchResult().getAwayTeamSetsWon() == 0){
-                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, teamStatsService, matchResultService);
+                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, matchResultService);
                 processMatchResult.addMatchResult(game);
             }else {
                 redirectAttributes.addFlashAttribute("message", "Nie można zmodyfikować wyniku!");

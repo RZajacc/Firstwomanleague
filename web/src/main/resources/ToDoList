@@ -4,7 +4,6 @@
      //1. Popraw błędy w klasie ProcessMatchResult
      //2. Popraw błędy w klasie ScoutFileProcess
      //3. Popraw błędy klasie AdminPanelController
-     //4. Popraw błędy w klasie MainController
      //5. Popraw błędy w klasie AmazonClient
 
 

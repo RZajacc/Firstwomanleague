@@ -6,7 +6,6 @@ import org.rafalzajac.domain.Team;
 import org.rafalzajac.service.MatchResultService;
 import org.rafalzajac.service.MatchService;
 import org.rafalzajac.service.TeamService;
-import org.rafalzajac.service.TeamStatsService;
 import java.util.Optional;
 
 
@@ -14,14 +13,12 @@ public class ProcessMatchResult {
 
     private TeamService teamService;
     private MatchService matchService;
-    private TeamStatsService teamStatsService;
     private MatchResultService matchResultService;
 
 
-    public ProcessMatchResult(TeamService teamService, MatchService matchService, TeamStatsService teamStatsService, MatchResultService matchResultService) {
+    public ProcessMatchResult(TeamService teamService, MatchService matchService, MatchResultService matchResultService) {
         this.teamService = teamService;
         this.matchService = matchService;
-        this.teamStatsService = teamStatsService;
         this.matchResultService = matchResultService;
     }
 
@@ -49,21 +46,16 @@ public class ProcessMatchResult {
         Team homeTeam = game.getTeams().get(0);
         Team awayTeam = game.getTeams().get(1);
 
-//        TeamStats homeTeam = hTeam.getTeamStats();
-//        TeamStats awayTeam = aTeam.getTeamStats();
 
+        //Setting matches played for both teams
+        homeTeam.getTeamStats().setMatchPlayed(homeTeam.getTeamStats().getMatchPlayed() + 1);
+        awayTeam.getTeamStats().setMatchPlayed(awayTeam.getTeamStats().getMatchPlayed() + 1);
 
-        if(game.getMatchResult().getAwayTeamSetsWon() != 0 || game.getMatchResult().getHomeTeamSetsWon() != 0){
-
-            //Setting matches played for both teams
-            homeTeam.getTeamStats().setMatchPlayed(homeTeam.getTeamStats().getMatchPlayed() + 1);
-            awayTeam.getTeamStats().setMatchPlayed(awayTeam.getTeamStats().getMatchPlayed() + 1);
-
-            //Setting sets won and lost for both teams
-            homeTeam.getTeamStats().setSetsWon(homeTeam.getTeamStats().getSetsWon() + game.getMatchResult().getHomeTeamSetsWon());
-            homeTeam.getTeamStats().setSetsLost(homeTeam.getTeamStats().getSetsLost() + game.getMatchResult().getAwayTeamSetsWon());
-            awayTeam.getTeamStats().setSetsWon(awayTeam.getTeamStats().getSetsWon() + game.getMatchResult().getAwayTeamSetsWon());
-            awayTeam.getTeamStats().setSetsLost(awayTeam.getTeamStats().getSetsLost() + game.getMatchResult().getHomeTeamSetsWon());
+        //Setting sets won and lost for both teams
+        homeTeam.getTeamStats().setSetsWon(homeTeam.getTeamStats().getSetsWon() + game.getMatchResult().getHomeTeamSetsWon());
+        homeTeam.getTeamStats().setSetsLost(homeTeam.getTeamStats().getSetsLost() + game.getMatchResult().getAwayTeamSetsWon());
+        awayTeam.getTeamStats().setSetsWon(awayTeam.getTeamStats().getSetsWon() + game.getMatchResult().getAwayTeamSetsWon());
+        awayTeam.getTeamStats().setSetsLost(awayTeam.getTeamStats().getSetsLost() + game.getMatchResult().getHomeTeamSetsWon());
 
             //Setting sets ratio for home team
             if (homeTeam.getTeamStats().getSetsLost() == 0) {
@@ -116,6 +108,6 @@ public class ProcessMatchResult {
 
             teamService.addTeam(homeTeam);
             teamService.addTeam(awayTeam);
-        }
+
     }
 }
