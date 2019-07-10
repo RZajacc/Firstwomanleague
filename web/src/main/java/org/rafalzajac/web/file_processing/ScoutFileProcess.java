@@ -10,8 +10,8 @@ import org.rafalzajac.service.PlayerService;
 import org.rafalzajac.service.PlayerStatsService;
 import org.rafalzajac.service.TeamService;
 import org.rafalzajac.service.TeamStatsService;
-
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,7 +46,7 @@ public class ScoutFileProcess {
         this.amazonClient = amazonClient;
     }
 
-    public void processScoutFile() throws Exception {
+    public void processScoutFile() throws IOException {
 
         S3Object obj = amazonClient.getObjectFromServer(scoutFilePath);
         S3ObjectInputStream inputStream = obj.getObjectContent();

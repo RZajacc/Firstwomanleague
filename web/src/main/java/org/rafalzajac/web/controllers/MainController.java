@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -23,6 +24,7 @@ public class MainController {
         private PlayerStatsService playerStatsService;
         private TeamStatsService teamStatsService;
         private AmazonClient amazonClient;
+        private static final String SELECTED_ROUNDS = "rounds";
 
         public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
         this.roundService = roundService;
@@ -40,7 +42,7 @@ public class MainController {
     public String league(Model model) {
 
         List<Round> rounds = roundService.findAllRounds();
-        model.addAttribute("rounds", rounds);
+        model.addAttribute(SELECTED_ROUNDS, rounds);
 
         return "views/round";
     }
@@ -49,16 +51,16 @@ public class MainController {
     public String selectRound (Model model, @RequestParam("selectRound") String text ) {
 
         if(text.equals("allRounds")) {
-            model.addAttribute("rounds", roundService.findAllRounds());
+            model.addAttribute(SELECTED_ROUNDS, roundService.findAllRounds());
         } else {
-            model.addAttribute("rounds", roundService.findRoundByRoundNumber((Integer.parseInt(text))));
+            model.addAttribute(SELECTED_ROUNDS, roundService.findRoundByRoundNumber((Integer.parseInt(text))));
         }
 
         return "views/round";
     }
 
     @GetMapping("/round/{id}")
-    public  String matchInfo(@PathVariable Long id, Model model) throws Exception{
+    public  String matchInfo(@PathVariable Long id, Model model) throws IOException {
 
         Optional<Game> match = matchService.getMatchById(id);
 
