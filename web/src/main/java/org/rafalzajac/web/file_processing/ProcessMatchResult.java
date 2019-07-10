@@ -1,4 +1,4 @@
-package org.rafalzajac.web.fileProcessing;
+package org.rafalzajac.web.file_processing;
 
 import org.rafalzajac.domain.Game;
 import org.rafalzajac.domain.MatchResult;

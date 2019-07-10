@@ -1,5 +1,5 @@
 package org.rafalzajac.service;
-import org.rafalzajac.domain.Player;
+
 import org.rafalzajac.domain.PlayerStats;
 import org.rafalzajac.repository.PlayerStatsRepository;
 import org.springframework.stereotype.Service;

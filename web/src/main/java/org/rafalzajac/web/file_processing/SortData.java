@@ -1,4 +1,4 @@
-package org.rafalzajac.web.fileProcessing;
+package org.rafalzajac.web.file_processing;
 
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.Player;

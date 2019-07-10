@@ -2,13 +2,13 @@ package org.rafalzajac.web.controllers;
 
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.*;
-import org.rafalzajac.web.fileProcessing.AmazonClient;
-import org.rafalzajac.web.fileProcessing.ScoutFileProcess;
-import org.rafalzajac.web.fileProcessing.SortData;
+import org.rafalzajac.web.file_processing.AmazonClient;
+import org.rafalzajac.web.file_processing.ScoutFileProcess;
+import org.rafalzajac.web.file_processing.SortData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.nio.file.Paths;
+
 import java.util.*;
 
 
