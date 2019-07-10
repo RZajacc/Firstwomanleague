@@ -66,7 +66,7 @@ public class AdminPanelController {
 
 
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+            redirectAttributes.addFlashAttribute("message", "Wybierz odpowiedni plik");
         } else{
             try {
 
@@ -82,7 +82,7 @@ public class AdminPanelController {
                     amazonClient.uploadFile(file, fileName);
 
 
-                    redirectAttributes.addFlashAttribute("message", "Successfully added. File was named :" +
+                    redirectAttributes.addFlashAttribute("message", "Pomyslnie dodano plik o nazwie :" +
                             current.getRound().getRoundNumber() + "M" + current.getMatchNumber() + "_" + current.getAwayTeam() +
                             "-" + current.getAwayTeam() + ".dvw");
 
@@ -152,15 +152,15 @@ public class AdminPanelController {
                     scoutFileProcess.saveStatsToDatabase();
                     currentMatch.setStatsSaved(true);
                     matchService.addMatch(currentMatch);
-                    redirectAttributes.addFlashAttribute("message", "All statistics saved properly!");
+                    redirectAttributes.addFlashAttribute("message", "Dane zapisane prawidlowo!");
                 } else {
-                    redirectAttributes.addFlashAttribute("message", "Stats already saved!");
+                    redirectAttributes.addFlashAttribute("message", "Statystyki sa juz zapisane!");
                 }
 
                 System.out.println("Current game result" + currentMatch.getMatchResult());
 
             } else {
-                redirectAttributes.addFlashAttribute("message", "There is no scout file available for this game!");
+                redirectAttributes.addFlashAttribute("message", "Plik scouta nie został jeszcze dodany!");
             }
         }
 
@@ -187,13 +187,21 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/result/{id}")
-    public String updateMatchResult(@ModelAttribute("currentMatch") Game game){
+    public String updateMatchResult(@ModelAttribute("currentMatch") Game game, RedirectAttributes redirectAttributes){
 
 //        ModelMapper modelMapper = new ModelMapper();
 //        Game game = modelMapper.map(gameDTO, Game.class);
+        Optional<Game> game1 = matchService.getMatchById(game.getId());
+        if (game1.isPresent()) {
+            Game verifyResult = game1.get();
+            if (verifyResult.getMatchResult().getHomeTeamSetsWon() == 0 && verifyResult.getMatchResult().getAwayTeamSetsWon() == 0){
+                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, teamStatsService, matchResultService);
+                processMatchResult.addMatchResult(game);
+            }else {
+                redirectAttributes.addFlashAttribute("message", "Nie można zmodyfikować wyniku!");
+            }
+        }
 
-        ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, teamStatsService);
-        processMatchResult.addMatchResult(game);
 
         return "redirect:/admin/round-admin/" + game.getId();
     }

@@ -1,14 +1,13 @@
 
+// SonarLint
 
-// Deploy
-
-        //1. Usuwanie wyniku meczu w momencie dodania
-
+     //1. Zidentyfikuj wszystkie słabe miejsca
+     //2. Zrób listę klas do poprawienia
+     //3. Dodaj zespoly z których będziesz korzystać później
 
 // Na później
 
         //1. Dodawanie newsów na stronę home
-        //2. Dodawanie ligi i podaj ilość zespołów i wygeneruj od razu ilość kolejek (commandLineRunner)
-        //3. Pomyśl jak rozwiącać fazę playoff
-        //4. Validation -> Szczególnie przy liczbowych wartościach w formach
+        //2. Pomyśl jak rozwiącać fazę playoff
+
 

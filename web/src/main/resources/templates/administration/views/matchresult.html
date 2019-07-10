@@ -81,7 +81,9 @@
 
     </table>
 </div>
-
+<div th:if="${message}" id="uploadMessage">
+    <p th:text="${message}"/>
+</div>
 
 
 <footer th:replace="layouts/AdministrationLayout :: footer"/>
