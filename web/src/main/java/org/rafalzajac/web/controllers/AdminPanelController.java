@@ -55,12 +55,36 @@ public class AdminPanelController {
     }
 
 
+    @GetMapping("/round-admin/creatematch")
+    public String createMatchView(Model model, @ModelAttribute("newMatch") GameDTO game) {
+
+        List<Round> rounds = roundService.findAllRounds();
+        List<Team> teams = teamService.findAllTeams();
+
+        model.addAttribute("roundSelect", rounds);
+        model.addAttribute("allTeams", teams);
+
+
+        return "administration/createElements/createMatch";
+    }
+
+    @PostMapping("/round-admin/creatematch")
+    public String CreateMatch(@ModelAttribute("currentMatch") GameDTO game) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        Game gameToPersist = modelMapper.map(game, Game.class);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        createNewElement.addNewMatch(gameToPersist);
+
+        return "redirect:/admin/round-admin";
+    }
 
     @PostMapping("/round-admin/deletematch")
     public String deleteMatch(@RequestParam("gameId") Long gameId) {
         matchService.deleteMatchById(gameId);
         return REDIRECT_ROUND;
     }
+
 
     @GetMapping("/round-admin/result/{id}")
     public String matchResultInfo(@PathVariable Long id, Model model) {
@@ -70,7 +94,6 @@ public class AdminPanelController {
             Game current = match.get();
             model.addAttribute(CURRENT_MATCH, current);
         }
-
 
         return "administration/views/matchresult";
     }
@@ -92,51 +115,25 @@ public class AdminPanelController {
             }
         }
 
-
         return REDIRECT_ROUND + game.getId();
     }
 
 
-    @GetMapping("/round-admin/creatematch")
-    public String createMatch(Model model, @ModelAttribute("newMatch") GameDTO game) {
-
-
-        List<Round> rounds = roundService.findAllRounds();
-        List<Team> teams = teamService.findAllTeams();
-
-        model.addAttribute("roundSelect", rounds);
-        model.addAttribute("allTeams", teams);
-
-
-        return "administration/createElements/createMatch";
-    }
-
-    @PostMapping("/round-admin/creatematch")
-    public String processMatch(@ModelAttribute("currentMatch") GameDTO game) {
-
-        ModelMapper modelMapper = new ModelMapper();
-        Game gameToPersist = modelMapper.map(game, Game.class);
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
-        createNewElement.addNewMatch(gameToPersist);
-
-        return "redirect:/admin/round-admin";
-    }
-
     @GetMapping("/teams-admin")
-    public  String teamData(Model model) {
+    public  String teamsView(Model model) {
         List<Team> allTeams = teamService.findAllTeams();
         model.addAttribute("teams", allTeams);
         return "administration/views/teamsAdmin";
     }
 
     @GetMapping("/teams-admin/createteam")
-    public String createTeam(@ModelAttribute("newTeam") TeamDTO team) {
+    public String createTeamView(@ModelAttribute("newTeam") TeamDTO team) {
 
         return "administration/createElements/createTeam";
     }
 
     @PostMapping("/teams-admin/createteam")
-    public String processTeam(@ModelAttribute("newTeam") TeamDTO team) {
+    public String createTeam(@ModelAttribute("newTeam") TeamDTO team) {
 
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
@@ -146,7 +143,6 @@ public class AdminPanelController {
 
         return "redirect:/admin/teams-admin/";
     }
-
 
 
     @GetMapping("/teams-admin/currentteam-admin/{id}")
@@ -162,6 +158,40 @@ public class AdminPanelController {
         }
 
         return "redirect:/admin/";
+    }
+
+    @GetMapping("teams-admin/currentteam-admin/editteam/{id}")
+    public String editTeamView(@PathVariable Long id, Model model){
+
+        Optional<Team> team = teamService.getTeamById(id);
+        if (team.isPresent()) {
+            Team editTeam = team.get();
+            model.addAttribute("editTeam", editTeam);
+        }
+
+        return "administration/views/editTeam";
+    }
+
+    @PostMapping("teams-admin/currentteam-admin/editteam/{id}")
+    public String editTeam(@ModelAttribute("editTeam") TeamDTO editTeam){
+
+        ModelMapper modelMapper = new ModelMapper();
+        Team teamToPersist = modelMapper.map(editTeam, Team.class);
+
+        Optional<Team> team = teamService.getTeamById(teamToPersist.getId());
+        if (team.isPresent()) {
+            Team teamToEdit = team.get();
+            teamToEdit.setTeamName(editTeam.getTeamName());
+            teamToEdit.setTeamTag(editTeam.getTeamTag());
+            teamToEdit.setFirstCoach(editTeam.getFirstCoach());
+            teamToEdit.setSecondCoach(editTeam.getSecondCoach());
+            teamToEdit.setWebPage(editTeam.getWebPage());
+            teamToEdit.setFacebook(editTeam.getFacebook());
+            teamService.addTeam(teamToEdit);
+        }
+
+
+        return "redirect:/admin/teams-admin";
     }
 
     @PostMapping("/teams-admin/currentteam-admin/{id}")
@@ -191,7 +221,7 @@ public class AdminPanelController {
     }
 
     @GetMapping("/teams-admin/currentteam-admin/editplayer/{id}")
-    public  String editPlayer (@PathVariable Long id, Model model) {
+    public  String editPlayerView (@PathVariable Long id, Model model) {
 
         Optional<Player> player = playerService.findPlayerById(id);
         if (player.isPresent()) {
@@ -203,7 +233,7 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/currentteam-admin/editplayer/{id}")
-    public String processEdit(@Valid @ModelAttribute("editPlayer")PlayerDTO editPlayer, @RequestParam("teamId")Long teamId, BindingResult bindingResult) {
+    public String editPlayer(@Valid @ModelAttribute("editPlayer")PlayerDTO editPlayer, @RequestParam("teamId")Long teamId, BindingResult bindingResult) {
 
         ModelMapper modelMapper = new ModelMapper();
         Player playerToPersist = modelMapper.map(editPlayer, Player.class);
@@ -226,41 +256,5 @@ public class AdminPanelController {
 
         return REDIRECT_CURRENT_TEAM + teamId;
     }
-
-    @GetMapping("teams-admin/currentteam-admin/editteam/{id}")
-    public String editTeams(@PathVariable Long id, Model model){
-
-        Optional<Team> team = teamService.getTeamById(id);
-        if (team.isPresent()) {
-            Team editTeam = team.get();
-            model.addAttribute("editTeam", editTeam);
-        }
-
-        return "administration/views/editTeam";
-    }
-
-    @PostMapping("teams-admin/currentteam-admin/editteam/{id}")
-    public String editTeamsProcess(@ModelAttribute("editTeam") TeamDTO editTeam){
-
-        ModelMapper modelMapper = new ModelMapper();
-        Team teamToPersist = modelMapper.map(editTeam, Team.class);
-
-        Optional<Team> team = teamService.getTeamById(teamToPersist.getId());
-        if (team.isPresent()) {
-            Team teamToEdit = team.get();
-            teamToEdit.setTeamName(editTeam.getTeamName());
-            teamToEdit.setTeamTag(editTeam.getTeamTag());
-            teamToEdit.setFirstCoach(editTeam.getFirstCoach());
-            teamToEdit.setSecondCoach(editTeam.getSecondCoach());
-            teamToEdit.setWebPage(editTeam.getWebPage());
-            teamToEdit.setFacebook(editTeam.getFacebook());
-            teamService.addTeam(teamToEdit);
-        }
-
-
-        return "redirect:/admin/teams-admin";
-    }
-
-
 
 }

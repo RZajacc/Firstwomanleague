@@ -1,6 +1,5 @@
 package org.rafalzajac.web.file_processing;
 
-
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import lombok.Data;
@@ -20,6 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 @Data
 @NoArgsConstructor
 public class ScoutFileProcess {
@@ -37,6 +37,15 @@ public class ScoutFileProcess {
     private TeamStatsService teamStatsService;
     private AmazonClient amazonClient;
 
+    // Data volley symbols describing events
+    private static final String WINNING_SYMBOL = "#";
+    private static final String POSITIVE_SYMBOL = "+";
+    private static final String NEUTRAL_SYMBOL = "!";
+    private static final String NEGATIVE_SYMBOL = "-";
+    private static final String SLASH_SYMBOL = "/";
+    private static final String LOSING_SYMBOL = "=";
+
+
     public ScoutFileProcess(String scoutFilePath, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
         this.scoutFilePath = scoutFilePath;
         this.teamService = teamService;
@@ -46,34 +55,34 @@ public class ScoutFileProcess {
         this.amazonClient = amazonClient;
     }
 
+
     public void processScoutFile() throws IOException {
 
         S3Object obj = amazonClient.getObjectFromServer(scoutFilePath);
         S3ObjectInputStream inputStream = obj.getObjectContent();
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        List<String> lines = new ArrayList<>();
-        String inputLine = null;
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        List<String> scoutFileData = new ArrayList<>();
+        String inputLine;
 
-        while ((inputLine = br.readLine()) != null) {
-            lines.add(inputLine);
+        while ((inputLine = bufferedReader.readLine()) != null) {
+            scoutFileData.add(inputLine);
         }
 
-   // List<String> lines = Files.readAllLines(inputStream, Charset.forName("ISO-8859-1"));
 
-        lines.forEach((line) -> {
+        scoutFileData.forEach(line -> {
 
-            String teamPattern = "(^[A-Z]{3,4})(;)([^;]{2,})(;)([0-9])(;)([^;]{0,})(;)([^;]{0,})(;)";
-            String playerPattern = "(^[0-9])(;)([0-9]?[0-9])(;)([0-9]?[0-9])(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([^;]{0,})(;)([^;]{0,})(;)([^;]{0,})(;)";
-            String gameEventsPattern = "([a*])([0-9]+[0-9])([A-Z])([A-Z])([#+!-=/])";
+            String teamInfoPattern = "(^[A-Z]{3,4})(;)([^;]{2,})(;)([0-9])(;)([^;]{0,})(;)([^;]{0,})(;)";
+            String playerInfoPattern = "(^[0-9])(;)([0-9]?[0-9])(;)([0-9]?[0-9])(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([0-9*]{0,1})(;)([^;]{0,})(;)([^;]{0,})(;)([^;]{0,})(;)";
+            String gamePattern = "([a*])([0-9]+[0-9])([A-Z])([A-Z])([#+!-=/])";
 
-            Pattern statPattern = Pattern.compile(gameEventsPattern);
-            Pattern team = Pattern.compile(teamPattern);
-            Pattern player = Pattern.compile(playerPattern);
+            Pattern gameEventsPattern = Pattern.compile(gamePattern);
+            Pattern teamPattern = Pattern.compile(teamInfoPattern);
+            Pattern playerPattern = Pattern.compile(playerInfoPattern);
 
 
-            Matcher matcher1 = team.matcher(line);
-            Matcher matcher2 = player.matcher(line);
-            Matcher matcher3 = statPattern.matcher(line);
+            Matcher matcher1 = teamPattern.matcher(line);
+            Matcher matcher2 = playerPattern.matcher(line);
+            Matcher matcher3 = gameEventsPattern.matcher(line);
 
             if(matcher1.find()){
                 teamData.add(matcher1.group(1) + matcher1.group(2) + matcher1.group(3) + matcher1.group(4)
@@ -99,7 +108,7 @@ public class ScoutFileProcess {
             createAllPlayers();
             collectAllStats();
 
-            //Sorting players by number - sometimes its messed up
+            //Sorting players by number
             homeTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
             awayTeam.getPlayerList().sort(Comparator.comparingInt(Player::getNumber));
     }
@@ -107,14 +116,13 @@ public class ScoutFileProcess {
 
     public void createTeams() {
 
-            // Zespoły tworzę ręcznie bo zawsze są dwa i informacje sa zawsze w tym samym miejscu
+            // Data necessary for creating teams
             String[] data = teamData.get(0).split(";");
             String[] data1 = teamData.get(1).split(";");
 
-        System.out.println("data length" + data.length);
-        System.out.println("data length" + data1.length);
-
+            // Teams stats are needed later to populate with data from match.
             TeamStats hTeamStats = new TeamStats();
+            // Length is different depending if team has one or two coaches
             if (data.length == 3) {
                 homeTeam = new Team(data[0], data[1], data[2], hTeamStats);
             } else {
@@ -133,39 +141,41 @@ public class ScoutFileProcess {
 
     public void createAllPlayers() {
 
-        playerData.forEach((str)-> {
+        playerData.forEach(str-> {
 
-            String [] teamData = str.split(";");
+            String [] teamInfoData = str.split(";");
+
+            // Player stats are necessary for populating it later with data from scout file
             PlayerStats playerStats = new PlayerStats();
 
-            // W przypadk zawodnikóa "0" identyfikuje zespół gospodarza, "1" gościa
-            if(teamData[0].equals("0")){
-                createEachPlayer(homeTeam, teamData, playerStats);
+            // In scout file "0" means home team player and "1" describes away team player
+            if(teamInfoData[0].equals("0")){
+                createEachPlayer(homeTeam, teamInfoData, playerStats);
             }else {
-                createEachPlayer(awayTeam, teamData, playerStats);
+                createEachPlayer(awayTeam, teamInfoData, playerStats);
             }
         });
     }
 
 
     public void createEachPlayer(Team team, String[] teamData, PlayerStats playerStats){
-        Player player = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[10], teamData[9], team, playerStats);
-        player.getPlayerStats().setStartingRotS1(teamData[3]);
-        player.getPlayerStats().setStartingRotS2(teamData[4]);
-        player.getPlayerStats().setStartingRotS3(teamData[5]);
-        player.getPlayerStats().setStartingRotS4(teamData[6]);
-        player.getPlayerStats().setStartingRotS5(teamData[7]);
-        team.addPlayer(player);
+        Player playerToCreate = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[10], teamData[9], team, playerStats);
+        playerToCreate.getPlayerStats().setStartingRotS1(teamData[3]);
+        playerToCreate.getPlayerStats().setStartingRotS2(teamData[4]);
+        playerToCreate.getPlayerStats().setStartingRotS3(teamData[5]);
+        playerToCreate.getPlayerStats().setStartingRotS4(teamData[6]);
+        playerToCreate.getPlayerStats().setStartingRotS5(teamData[7]);
+        team.addPlayer(playerToCreate);
     }
 
 
     public void collectAllStats() {
 
-        matchData.forEach((str) -> {
+        matchData.forEach(str -> {
 
             String[] eventData = str.split(";");
 
-            // "*" w pliku scouta oznacza drużynę gospodarza, "a" gościa
+            // For events "*" means home team player, and "a" away team player
             if (eventData[0].equals("*")) {
                 collectStatsForTeam(homeTeam, eventData);
             } else {
@@ -177,294 +187,273 @@ public class ScoutFileProcess {
 
     public void collectStatsForTeam (Team team, String[] eventData){
 
-        for (Player player : team.getPlayerList()) {
+        for (Player playerToUpdate : team.getPlayerList()) {
 
-            if (player.getNumber() == Integer.parseInt(eventData[1])) {
+            if (playerToUpdate.getNumber() == Integer.parseInt(eventData[1])) {
 
-                // Parametr pierwsze "S" - Serve oznacza zagrywkę, drugi ocenia akcję jakościowo i ma wartość[#,+,!,/,-,=]
-                // "#" - jest zagraniem punktowym(poza przyjęciem), "=" - zawsze błędnym, pozostałe zależą od tego czego dotyczą
-                if (eventData[2].equals("S") && eventData[4].equals("#")){
-                    player.getPlayerStats().setServeAce((player.getPlayerStats().getServeAce())+1);
-                    player.getPlayerStats().setServePositive((player.getPlayerStats().getServePositive())+1);
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-                    player.getPlayerStats().setPointsTotal((player.getPlayerStats().getPointsTotal())+1);
+                // Method checks which event type is currently analyzed and based on that delegates processing to appropriate method
+                evaluateScoutFileEvents(playerToUpdate, team, eventData);
 
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServeAce((team.getTeamStats().getServeAce())+1 );
-                    team.getTeamStats().setServePositive((team.getTeamStats().getServePositive())+1 );
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-                    team.getTeamStats().setPointsTotal((team.getTeamStats().getPointsTotal())+1 );
+                // Calculating player's points ratio(Won/lost)
+                playerToUpdate.getPlayerStats().setPointsRatio(playerToUpdate.getPlayerStats().getPointsTotal() - playerToUpdate.getPlayerStats().getServeErrors() - playerToUpdate.getPlayerStats().getReceptionErrors() - playerToUpdate.getPlayerStats().getAttackErrors() - playerToUpdate.getPlayerStats().getAttackBlocked());
 
-                } else if (eventData[2].equals("S") && eventData[4].equals("+")){
-                    player.getPlayerStats().setServePositive((player.getPlayerStats().getServePositive())+1);
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServePositive((team.getTeamStats().getServePositive())+1 );
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-
-                } else if (eventData[2].equals("S") && eventData[4].equals("!")){
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-
-                } else if (eventData[2].equals("S") && eventData[4].equals("-")){
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-
-                } else if (eventData[2].equals("S") && eventData[4].equals("/")){
-                    player.getPlayerStats().setServePositive((player.getPlayerStats().getServePositive())+1);
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServePositive((team.getTeamStats().getServePositive())+1 );
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-
-                } else if (eventData[2].equals("S") && eventData[4].equals("=")){
-                    player.getPlayerStats().setServeErrors((player.getPlayerStats().getServeErrors())+1);
-                    player.getPlayerStats().setServeAttempts((player.getPlayerStats().getServeAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServeErrors((team.getTeamStats().getServeErrors())+1 );
-                    team.getTeamStats().setServeAttempts((team.getTeamStats().getServeAttempts())+1 );
-                }
-
-                // Parametr pierwsze "R" - Reception oznacza przyjęcie, drugi ocenia akcję jakościowo i ma wartość[#,+,!,/,-,=]
-                if (eventData[2].equals("R") && eventData[4].equals("#")){
-                    player.getPlayerStats().setReceptionPerfect((player.getPlayerStats().getReceptionPerfect())+1);
-                    player.getPlayerStats().setReceptionPositive((player.getPlayerStats().getReceptionPositive())+1);
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionPerfect((team.getTeamStats().getReceptionPerfect())+1);
-                    team.getTeamStats().setReceptionPositive((team.getTeamStats().getReceptionPositive())+1);
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-
-                } else if (eventData[2].equals("R") && eventData[4].equals("+")){
-                    player.getPlayerStats().setReceptionPositive((player.getPlayerStats().getReceptionPositive())+1);
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionPositive((team.getTeamStats().getReceptionPositive())+1);
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-
-                } else if (eventData[2].equals("R") && eventData[4].equals("!")){
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-
-                } else if (eventData[2].equals("R") && eventData[4].equals("-")){
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-
-                } else if (eventData[2].equals("R") && eventData[4].equals("/")){
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-
-                } else if (eventData[2].equals("R") && eventData[4].equals("=")){
-                    player.getPlayerStats().setReceptionErrors((player.getPlayerStats().getReceptionErrors())+1);
-                    player.getPlayerStats().setReceptionAttempts((player.getPlayerStats().getReceptionAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionErrors((team.getTeamStats().getReceptionErrors())+1);
-                    team.getTeamStats().setReceptionAttempts((team.getTeamStats().getReceptionAttempts())+1);
-                }
-
-                // Parametr pierwsze "A" - Attack oznacza atak, drugi ocenia akcję jakościowo i ma wartość[#,+,!,/,-,=]
-                if (eventData[2].equals("A") && eventData[4].equals("#")){
-                    player.getPlayerStats().setAttackFinished((player.getPlayerStats().getAttackFinished())+1);
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-                    player.getPlayerStats().setPointsTotal((player.getPlayerStats().getPointsTotal())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackFinished((team.getTeamStats().getAttackFinished())+1);
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-                    team.getTeamStats().setPointsTotal((team.getTeamStats().getPointsTotal())+1);
-
-                } else if (eventData[2].equals("A") && eventData[4].equals("+")){
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-
-                } else if (eventData[2].equals("A") && eventData[4].equals("!")){
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-
-                } else if (eventData[2].equals("A") && eventData[4].equals("-")){
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-
-                } else if (eventData[2].equals("A") && eventData[4].equals("/")){
-                    player.getPlayerStats().setAttackBlocked((player.getPlayerStats().getAttackBlocked())+1);
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackBlocked((team.getTeamStats().getAttackBlocked())+1);
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-
-                } else if (eventData[2].equals("A") && eventData[4].equals("=")){
-                    player.getPlayerStats().setAttackErrors((player.getPlayerStats().getAttackErrors())+1);
-                    player.getPlayerStats().setAttackAttempts((player.getPlayerStats().getAttackAttempts())+1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackErrors((team.getTeamStats().getAttackErrors())+1);
-                    team.getTeamStats().setAttackAttempts((team.getTeamStats().getAttackAttempts())+1);
-                }
-
-                // Parametr pierwsze "B" - Block oznacza blok
-                if (eventData[2].equals("B") && eventData[4].equals("#")) {
-                    player.getPlayerStats().setBlockScore((player.getPlayerStats().getBlockScore()) + 1);
-                    player.getPlayerStats().setPointsTotal((player.getPlayerStats().getPointsTotal()) + 1);
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setBlockScore((team.getTeamStats().getBlockScore()) + 1);
-                    team.getTeamStats().setPointsTotal((team.getTeamStats().getPointsTotal()) + 1);
-                }
-
-                // Obliczanie procentowej skutecznosci zagrywki
-                if(player.getPlayerStats().getServeAttempts() != 0 ) {
-                    player.getPlayerStats().setServePositivePercent(Math.round( (int)(( (float)(player.getPlayerStats().getServePositive())/(player.getPlayerStats().getServeAttempts())) * 100)));
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setServePositivePercent(Math.round( (int)(( (float)(team.getTeamStats().getServePositive())/(team.getTeamStats().getServeAttempts())) * 100)));
-                }
-                // Obliczanie procentowej skutecznosci przyjęcia
-                if(player.getPlayerStats().getReceptionAttempts() != 0 ) {
-                    player.getPlayerStats().setReceptionPositivePercent(Math.round( (int)(( (float)( player.getPlayerStats().getReceptionPositive() )/(player.getPlayerStats().getReceptionAttempts())) * 100)));
-                    player.getPlayerStats().setReceptionPerfectPercent(Math.round( (int)(( (float)(player.getPlayerStats().getReceptionPerfect())/(player.getPlayerStats().getReceptionAttempts())) * 100)));
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setReceptionPositivePercent(Math.round( (int)(( (float)( team.getTeamStats().getReceptionPositive() )/(team.getTeamStats().getReceptionAttempts())) * 100)));
-                    team.getTeamStats().setReceptionPerfectPercent(Math.round( (int)(( (float)(team.getTeamStats().getReceptionPerfect())/(team.getTeamStats().getReceptionAttempts())) * 100)));
-
-                }
-                // Obliczanie procentowej skutecznosci ataku
-                if(player.getPlayerStats().getAttackAttempts() != 0 ) {
-                    player.getPlayerStats().setAttackFinishedPercent(Math.round( (int)(( (float)( player.getPlayerStats().getAttackFinished() )/(player.getPlayerStats().getAttackAttempts())) * 100)));
-
-                    // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
-                    team.getTeamStats().setAttackFinishedPercent(Math.round( (int)(( (float)( team.getTeamStats().getAttackFinished() )/(team.getTeamStats().getAttackAttempts())) * 100)));
-
-                }
-
-                // Obliczanie ratio punktów (Zdobyte - stracone)
-                player.getPlayerStats().setPointsRatio(player.getPlayerStats().getPointsTotal() - player.getPlayerStats().getServeErrors() - player.getPlayerStats().getReceptionErrors() - player.getPlayerStats().getAttackErrors() - player.getPlayerStats().getAttackBlocked());
-
-                // To samo robię do statystyk drużyny aby potem wyświetlić łączną wartość
+                // Same evaluation for whole team
                 team.getTeamStats().setPointsRatio(team.getTeamStats().getPointsTotal() - team.getTeamStats().getServeErrors() - team.getTeamStats().getReceptionErrors() - team.getTeamStats().getAttackErrors() - team.getTeamStats().getAttackBlocked());
 
             }
         }
     }
 
+    public void evaluateScoutFileEvents (Player playerToUpdate, Team teamtoUpdate, String[] eventData) {
+
+        if (eventData[2].equals("S"))
+            evaluateServeEvent(playerToUpdate, teamtoUpdate, eventData);
+        if (eventData[2].equals("R"))
+            evaluateReceptionEvent(playerToUpdate, teamtoUpdate, eventData);
+        if (eventData[2].equals("A"))
+            evaluateAttackEvent(playerToUpdate, teamtoUpdate, eventData);
+        if (eventData[2].equals("B"))
+            evaluateBlockEvent(playerToUpdate, teamtoUpdate, eventData);
+
+    }
+
+    public void evaluateServeEvent(Player playerToUpdate, Team teamToUpdate, String[] eventData) {
+
+        String eventCategory = eventData[4];
+
+        switch (eventCategory) {
+            case WINNING_SYMBOL:
+                playerToUpdate.getPlayerStats().setServeAce((playerToUpdate.getPlayerStats().getServeAce()) + 1);
+                playerToUpdate.getPlayerStats().setServePositive((playerToUpdate.getPlayerStats().getServePositive()) + 1);
+                playerToUpdate.getPlayerStats().setServeAttempts((playerToUpdate.getPlayerStats().getServeAttempts()) + 1);
+                playerToUpdate.getPlayerStats().setPointsTotal((playerToUpdate.getPlayerStats().getPointsTotal()) + 1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setServeAce((teamToUpdate.getTeamStats().getServeAce()) + 1);
+                teamToUpdate.getTeamStats().setServePositive((teamToUpdate.getTeamStats().getServePositive()) + 1);
+                teamToUpdate.getTeamStats().setServeAttempts((teamToUpdate.getTeamStats().getServeAttempts()) + 1);
+                teamToUpdate.getTeamStats().setPointsTotal((teamToUpdate.getTeamStats().getPointsTotal()) + 1);
+                break;
+            case POSITIVE_SYMBOL:
+            case SLASH_SYMBOL:
+                playerToUpdate.getPlayerStats().setServePositive((playerToUpdate.getPlayerStats().getServePositive()) + 1);
+                playerToUpdate.getPlayerStats().setServeAttempts((playerToUpdate.getPlayerStats().getServeAttempts()) + 1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setServePositive((teamToUpdate.getTeamStats().getServePositive()) + 1);
+                teamToUpdate.getTeamStats().setServeAttempts((teamToUpdate.getTeamStats().getServeAttempts()) + 1);
+                break;
+            case NEUTRAL_SYMBOL:
+            case NEGATIVE_SYMBOL:
+                playerToUpdate.getPlayerStats().setServeAttempts((playerToUpdate.getPlayerStats().getServeAttempts()) + 1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setServeAttempts((teamToUpdate.getTeamStats().getServeAttempts()) + 1);
+                break;
+            case LOSING_SYMBOL:
+                playerToUpdate.getPlayerStats().setServeErrors((playerToUpdate.getPlayerStats().getServeErrors())+1);
+                playerToUpdate.getPlayerStats().setServeAttempts((playerToUpdate.getPlayerStats().getServeAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setServeErrors((teamToUpdate.getTeamStats().getServeErrors())+1 );
+                teamToUpdate.getTeamStats().setServeAttempts((teamToUpdate.getTeamStats().getServeAttempts())+1 );
+                break;
+            default:
+                break;
+        }
+
+        if(playerToUpdate.getPlayerStats().getServeAttempts() != 0 ) {
+            playerToUpdate.getPlayerStats().setServePositivePercent( (int)(( (float)(playerToUpdate.getPlayerStats().getServePositive())/(playerToUpdate.getPlayerStats().getServeAttempts())) * 100));
+
+            // Same evaluation for whole team
+            teamToUpdate.getTeamStats().setServePositivePercent( (int)(( (float)(teamToUpdate.getTeamStats().getServePositive())/(teamToUpdate.getTeamStats().getServeAttempts())) * 100));
+        }
+    }
+
+    public void evaluateReceptionEvent(Player playerToUpdate, Team teamToUpdate, String[] eventData) {
+
+        String eventCategory = eventData[4];
+
+        switch (eventCategory) {
+            case WINNING_SYMBOL:
+                playerToUpdate.getPlayerStats().setReceptionPerfect((playerToUpdate.getPlayerStats().getReceptionPerfect())+1);
+                playerToUpdate.getPlayerStats().setReceptionPositive((playerToUpdate.getPlayerStats().getReceptionPositive())+1);
+                playerToUpdate.getPlayerStats().setReceptionAttempts((playerToUpdate.getPlayerStats().getReceptionAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setReceptionPerfect((teamToUpdate.getTeamStats().getReceptionPerfect())+1);
+                teamToUpdate.getTeamStats().setReceptionPositive((teamToUpdate.getTeamStats().getReceptionPositive())+1);
+                teamToUpdate.getTeamStats().setReceptionAttempts((teamToUpdate.getTeamStats().getReceptionAttempts())+1);
+                break;
+            case POSITIVE_SYMBOL:
+                playerToUpdate.getPlayerStats().setReceptionPositive((playerToUpdate.getPlayerStats().getReceptionPositive())+1);
+                playerToUpdate.getPlayerStats().setReceptionAttempts((playerToUpdate.getPlayerStats().getReceptionAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setReceptionPositive((teamToUpdate.getTeamStats().getReceptionPositive())+1);
+                teamToUpdate.getTeamStats().setReceptionAttempts((teamToUpdate.getTeamStats().getReceptionAttempts())+1);
+                break;
+            case NEUTRAL_SYMBOL:
+            case NEGATIVE_SYMBOL:
+            case SLASH_SYMBOL:
+                playerToUpdate.getPlayerStats().setReceptionAttempts((playerToUpdate.getPlayerStats().getReceptionAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setReceptionAttempts((teamToUpdate.getTeamStats().getReceptionAttempts())+1);
+                break;
+            case LOSING_SYMBOL:
+                playerToUpdate.getPlayerStats().setReceptionErrors((playerToUpdate.getPlayerStats().getReceptionErrors())+1);
+                playerToUpdate.getPlayerStats().setReceptionAttempts((playerToUpdate.getPlayerStats().getReceptionAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setReceptionErrors((teamToUpdate.getTeamStats().getReceptionErrors())+1);
+                teamToUpdate.getTeamStats().setReceptionAttempts((teamToUpdate.getTeamStats().getReceptionAttempts())+1);
+                break;
+            default:
+                break;
+        }
+
+        if(playerToUpdate.getPlayerStats().getReceptionAttempts() != 0 ) {
+            playerToUpdate.getPlayerStats().setReceptionPositivePercent( (int)(( (float)( playerToUpdate.getPlayerStats().getReceptionPositive() )/(playerToUpdate.getPlayerStats().getReceptionAttempts())) * 100));
+            playerToUpdate.getPlayerStats().setReceptionPerfectPercent( (int)(( (float)(playerToUpdate.getPlayerStats().getReceptionPerfect())/(playerToUpdate.getPlayerStats().getReceptionAttempts())) * 100));
+
+            // Same evaluation for whole team
+            teamToUpdate.getTeamStats().setReceptionPositivePercent((int)(( (float)( teamToUpdate.getTeamStats().getReceptionPositive() )/(teamToUpdate.getTeamStats().getReceptionAttempts())) * 100));
+            teamToUpdate.getTeamStats().setReceptionPerfectPercent( (int)(( (float)(teamToUpdate.getTeamStats().getReceptionPerfect())/(teamToUpdate.getTeamStats().getReceptionAttempts())) * 100));
+
+        }
+
+    }
+
+    public void evaluateAttackEvent(Player playerToUpdate, Team teamToUpdate, String[] eventData) {
+
+        String eventCategory = eventData[4];
+
+        switch (eventCategory) {
+            case WINNING_SYMBOL:
+                playerToUpdate.getPlayerStats().setAttackFinished((playerToUpdate.getPlayerStats().getAttackFinished())+1);
+                playerToUpdate.getPlayerStats().setAttackAttempts((playerToUpdate.getPlayerStats().getAttackAttempts())+1);
+                playerToUpdate.getPlayerStats().setPointsTotal((playerToUpdate.getPlayerStats().getPointsTotal())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setAttackFinished((teamToUpdate.getTeamStats().getAttackFinished())+1);
+                teamToUpdate.getTeamStats().setAttackAttempts((teamToUpdate.getTeamStats().getAttackAttempts())+1);
+                teamToUpdate.getTeamStats().setPointsTotal((teamToUpdate.getTeamStats().getPointsTotal())+1);
+                break;
+            case POSITIVE_SYMBOL:
+            case NEUTRAL_SYMBOL:
+            case NEGATIVE_SYMBOL:
+                playerToUpdate.getPlayerStats().setAttackAttempts((playerToUpdate.getPlayerStats().getAttackAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setAttackAttempts((teamToUpdate.getTeamStats().getAttackAttempts())+1);
+                break;
+            case SLASH_SYMBOL:
+                playerToUpdate.getPlayerStats().setAttackBlocked((playerToUpdate.getPlayerStats().getAttackBlocked())+1);
+                playerToUpdate.getPlayerStats().setAttackAttempts((playerToUpdate.getPlayerStats().getAttackAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setAttackBlocked((teamToUpdate.getTeamStats().getAttackBlocked())+1);
+                teamToUpdate.getTeamStats().setAttackAttempts((teamToUpdate.getTeamStats().getAttackAttempts())+1);
+                break;
+            case LOSING_SYMBOL:
+                playerToUpdate.getPlayerStats().setAttackErrors((playerToUpdate.getPlayerStats().getAttackErrors())+1);
+                playerToUpdate.getPlayerStats().setAttackAttempts((playerToUpdate.getPlayerStats().getAttackAttempts())+1);
+
+                // Same evaluation for whole team
+                teamToUpdate.getTeamStats().setAttackErrors((teamToUpdate.getTeamStats().getAttackErrors())+1);
+                teamToUpdate.getTeamStats().setAttackAttempts((teamToUpdate.getTeamStats().getAttackAttempts())+1);
+                break;
+            default:
+                break;
+        }
+
+        if(playerToUpdate.getPlayerStats().getAttackAttempts() != 0 ) {
+            playerToUpdate.getPlayerStats().setAttackFinishedPercent((int)(( (float)( playerToUpdate.getPlayerStats().getAttackFinished() )/(playerToUpdate.getPlayerStats().getAttackAttempts())) * 100));
+
+            // Same evaluation for whole team
+            teamToUpdate.getTeamStats().setAttackFinishedPercent((int)(( (float)( teamToUpdate.getTeamStats().getAttackFinished() )/(teamToUpdate.getTeamStats().getAttackAttempts())) * 100));
+
+        }
+    }
+
+    public void evaluateBlockEvent(Player playerToUpdate, Team teamToUpdate, String[] eventData) {
+
+
+        if (eventData[4].equals(WINNING_SYMBOL)) {
+            playerToUpdate.getPlayerStats().setBlockScore((playerToUpdate.getPlayerStats().getBlockScore()) + 1);
+            playerToUpdate.getPlayerStats().setPointsTotal((playerToUpdate.getPlayerStats().getPointsTotal()) + 1);
+
+            // Same evaluation for whole team
+            teamToUpdate.getTeamStats().setBlockScore((teamToUpdate.getTeamStats().getBlockScore()) + 1);
+            teamToUpdate.getTeamStats().setPointsTotal((teamToUpdate.getTeamStats().getPointsTotal()) + 1);
+        }
+
+    }
+
+
+
     public void saveStatsToDatabase() {
 
         Team t1 = teamService.getTeamByTag(homeTeam.getTeamTag());
         Team t2 = teamService.getTeamByTag(awayTeam.getTeamTag());
 
-
-
-        if (t1 != null) {
-            t1.getPlayerList().forEach((player) -> {
+            // Looping through players created from scout file and comparing with list in data base. If player numbers match
+            // then their data is updated
+            t1.getPlayerList().forEach(playerToUpdate -> {
                 for (Player player1 : homeTeam.getPlayerList()) {
-                    if (player.getNumber() == player1.getNumber()){
+                    if (playerToUpdate.getNumber() == player1.getNumber()){
 
-                        PlayerStats stats = player.getPlayerStats();
+                        PlayerStats stats = playerToUpdate.getPlayerStats();
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
                         stats.setAttackAttempts(stats.getAttackAttempts() + player1.getPlayerStats().getAttackAttempts());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
-                        stats.setAttackFinishedPercent(Math.round( (int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100)));
+                        stats.setAttackFinishedPercent((int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100));
 
                         stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
                         stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
                         stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());
 
-                        stats.setReceptionPositivePercent(Math.round( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100)));
-                        stats.setReceptionPerfectPercent(Math.round( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100)));
+                        stats.setReceptionPositivePercent( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100));
+                        stats.setReceptionPerfectPercent( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100));
 
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
 
                         playerStatsService.savePlayerStats(stats);
-                        player.setPlayerStats(stats);
-                        playerService.addPlayer(player);
+                        playerToUpdate.setPlayerStats(stats);
+                        playerService.addPlayer(playerToUpdate);
                     }
                 }
             });
-        } else {
-            TeamStats teamStats = homeTeam.getTeamStats();
-            teamStatsService.saveTeamStats(teamStats);
-            homeTeam.setTeamStats(teamStats);
-            teamService.addTeam(homeTeam);
 
-            homeTeam.getPlayerList().forEach((player) -> {
-
-            PlayerStats stats = player.getPlayerStats();
-            playerStatsService.savePlayerStats(stats);
-            player.setPlayerStats(stats);
-            playerService.addPlayer(player);
-        });
-
-        }
-
-        if (t2 != null) {
-            t2.getPlayerList().forEach((player) -> {
+            // Looping through players created from scout file and comparing with list in data base. If player numbers match
+            // then their data is updated
+            t2.getPlayerList().forEach(playerToUpdate -> {
                 for (Player player1 : awayTeam.getPlayerList()) {
-                    if (player.getNumber() == player1.getNumber()){
+                    if (playerToUpdate.getNumber() == player1.getNumber()){
 
-                        PlayerStats stats = player.getPlayerStats();
+                        PlayerStats stats = playerToUpdate.getPlayerStats();
                         stats.setPointsTotal(stats.getPointsTotal() + player1.getPlayerStats().getPointsTotal());
                         stats.setServeAce(stats.getServeAce() + player1.getPlayerStats().getServeAce());
                         stats.setAttackAttempts(stats.getAttackAttempts() + player1.getPlayerStats().getAttackAttempts());
                         stats.setAttackFinished(stats.getAttackFinished() + player1.getPlayerStats().getAttackFinished());
-                        stats.setAttackFinishedPercent(Math.round( (int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100)));
+                        stats.setAttackFinishedPercent((int)(( (float)( stats.getAttackFinished() )/(stats.getAttackAttempts())) * 100));
 
                         stats.setReceptionPositive(stats.getReceptionPositive() + player1.getPlayerStats().getReceptionPositive());
                         stats.setReceptionPerfect(stats.getReceptionPerfect() + player1.getPlayerStats().getReceptionPerfect());
                         stats.setReceptionAttempts(stats.getReceptionAttempts() + player1.getPlayerStats().getReceptionAttempts());
 
-                        stats.setReceptionPositivePercent(Math.round( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100)));
-                        stats.setReceptionPerfectPercent(Math.round( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100)));
+                        stats.setReceptionPositivePercent( (int)(( (float)( stats.getReceptionPositive() )/(stats.getReceptionAttempts())) * 100));
+                        stats.setReceptionPerfectPercent( (int)(( (float)( stats.getReceptionPerfect() )/(stats.getReceptionAttempts())) * 100));
 
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
 
                         playerStatsService.savePlayerStats(stats);
-                        player.setPlayerStats(stats);
-                        playerService.addPlayer(player);
+                        playerToUpdate.setPlayerStats(stats);
+                        playerService.addPlayer(playerToUpdate);
                     }
                 }
             });
-        } else {
-            TeamStats teamStats2 = awayTeam.getTeamStats();
-            teamStatsService.saveTeamStats(teamStats2);
-            awayTeam.setTeamStats(teamStats2);
-            teamService.addTeam(awayTeam);
-
-            awayTeam.getPlayerList().forEach((player) -> {
-
-            PlayerStats stats = player.getPlayerStats();
-            playerStatsService.savePlayerStats(stats);
-            player.setPlayerStats(stats);
-            playerService.addPlayer(player);
-        });
         }
-
-
-
     }
-
-
-}

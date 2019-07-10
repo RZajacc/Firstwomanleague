@@ -67,7 +67,7 @@ public class DataBaseLoader implements CommandLineRunner {
         Team team6 = new Team("ENE", "Energetyk Poznan", "Michal Patyk", "Dominik Hajduk", team6Stats);
         Team team7 = new Team("SOL", "7R Solna Wieliczka", "Ryszard Litwin", "Marcin Nowakowski", team7Stats);
         Team team8 = new Team("GLI", "KS AZS Politechniki Slaskiej Gliwice", "Krzysztof Czapla", "Wojciech Czapla", team8Stats);
-        Team team9 = new Team("TOR", "Budowlani Torun", "Miroslaw Zawieracz", team9Stats);
+        Team team9 = new Team("BUD", "Budowlani Torun", "Miroslaw Zawieracz", team9Stats);
         Team team10 = new Team("KRO", "Karpaty PWSZ MOSiR Krosno Glass", "Dominik Stanislawczyk", "Tomasz Podulka", team10Stats);
         Team team11 = new Team("MIE", "UKS Szostka Mielec", "Roman Murdza", "Krystian Pachlinski", team11Stats);
         Team team12 = new Team("WLO", "WTS KDBS Bank Wloclawek", "Marek Zacharek", "Kazimierz Mendala", team12Stats);

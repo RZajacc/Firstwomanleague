@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +17,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin")
 @Slf4j
-public class FileUploadAndProcessController {
+public class AdminFileUploadAndProcessController {
 
     private RoundService roundService;
     private MatchService matchService;
@@ -33,7 +32,7 @@ public class FileUploadAndProcessController {
     private static final String HOME_TEAM = "homeTeam";
     private static final String AWAY_TEAM = "awayTeam";
 
-    public FileUploadAndProcessController(RoundService roundService, MatchService matchService, AmazonClient amazonClient, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
+    public AdminFileUploadAndProcessController(RoundService roundService, MatchService matchService, AmazonClient amazonClient, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
         this.roundService = roundService;
         this.matchService = matchService;
         this.amazonClient = amazonClient;
