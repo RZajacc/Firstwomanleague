@@ -1,14 +1,17 @@
 package org.rafalzajac.web.file_processing;
 
+import lombok.extern.slf4j.Slf4j;
 import org.rafalzajac.domain.Game;
 import org.rafalzajac.domain.MatchResult;
 import org.rafalzajac.domain.Team;
 import org.rafalzajac.service.MatchResultService;
 import org.rafalzajac.service.MatchService;
 import org.rafalzajac.service.TeamService;
+import org.rafalzajac.service.TeamStatsService;
+
 import java.util.Optional;
 
-
+@Slf4j
 public class ProcessMatchResult {
 
     private TeamService teamService;
@@ -104,7 +107,6 @@ public class ProcessMatchResult {
 
                 homeTeam.getTeamStats().setMatchLost(homeTeam.getTeamStats().getMatchLost() + 1);
             }
-
 
             teamService.addTeam(homeTeam);
             teamService.addTeam(awayTeam);

@@ -69,7 +69,7 @@ public class AdminPanelController {
     }
 
     @PostMapping("/round-admin/creatematch")
-    public String CreateMatch(@ModelAttribute("currentMatch") GameDTO game) {
+    public String createMatch(@ModelAttribute("currentMatch") GameDTO game) {
 
         ModelMapper modelMapper = new ModelMapper();
         Game gameToPersist = modelMapper.map(game, Game.class);
@@ -104,12 +104,12 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Game gameToUpdate = modelMapper.map(game, Game.class);
 
-        Optional<Game> game1 = matchService.getMatchById(gameToUpdate.getId());
+        Optional<Game> game1 = matchService.getMatchById(game.getId());
         if (game1.isPresent()) {
             Game verifyResult = game1.get();
             if (verifyResult.getMatchResult().getHomeTeamSetsWon() == 0 && verifyResult.getMatchResult().getAwayTeamSetsWon() == 0){
                 ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, matchResultService);
-                processMatchResult.addMatchResult(verifyResult);
+                processMatchResult.addMatchResult(gameToUpdate);
             }else {
                 redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Nie można zmodyfikować wyniku!");
             }
@@ -133,11 +133,11 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/createteam")
-    public String createTeam(@ModelAttribute("newTeam") TeamDTO team) {
+    public String createTeam(@ModelAttribute("newTeam") TeamDTO team, Model model) {
 
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
-
+        model.addAttribute("newTeam", new Team());
         CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
         createNewElement.addNewTeam(teamToPersist);
 

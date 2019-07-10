@@ -2,6 +2,7 @@ package org.rafalzajac.dto_objects;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.rafalzajac.domain.MatchResult;
 import org.rafalzajac.domain.Round;
 
 
@@ -13,6 +14,7 @@ public class GameDTO {
     private String homeTeam;
     private String awayTeam;
     private int matchNumber;
-    Round round;
+    private Round round;
+    private MatchResult matchResult;
 
 }
