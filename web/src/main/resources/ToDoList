@@ -1,10 +1,9 @@
 
 // SonarLint
 
-     //1. Popraw błędy w klasie ProcessMatchResult
-     //2. Popraw błędy w klasie ScoutFileProcess
-     //3. Popraw błędy klasie AdminPanelController
-     //5. Popraw błędy w klasie AmazonClient
+     //1. Popraw błędy w klasie ScoutFileProcess
+     //2. Popraw błędy klasie AdminPanelController
+     //3. Popraw błędy w klasie AmazonClient
 
 
 // Na później

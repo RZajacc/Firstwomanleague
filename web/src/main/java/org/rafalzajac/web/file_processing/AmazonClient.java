@@ -3,23 +3,24 @@ package org.rafalzajac.web.file_processing;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-
-
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Service
+@Slf4j
 public class AmazonClient {
 
     private AmazonS3 s3client;
@@ -43,11 +44,15 @@ public class AmazonClient {
         this.s3client = AmazonS3ClientBuilder.standard().withCredentials(credentialsProvider).withRegion(region).build();
     }
 
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+    private File convertMultiPartToFile(MultipartFile file) throws IOException  {
+
+            File convFile = new File(file.getOriginalFilename());
+
+            try (FileOutputStream fos = new FileOutputStream(convFile)) {
+                fos.write(file.getBytes());
+            }
+
+
         return convFile;
     }
 
@@ -63,16 +68,16 @@ public class AmazonClient {
             File file = convertMultiPartToFile(multipartFile);
             fileUrl = "https':'//" + bucketName + "." + endpointUrl + "/" + fileName;
             uploadFileTos3bucket(fileName, file);
-            file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Files.delete(Paths.get(file.toURI()));
+        } catch (IOException e) {
+            log.info("IO File exception", e);
         }
+
         return fileUrl;
     }
 
     public S3Object getObjectFromServer(String fileName){
-        S3Object object = s3client.getObject(bucketName, "ScoutFiles/" + fileName);
-        return object;
+        return s3client.getObject(bucketName, "ScoutFiles/" + fileName);
     }
 
 }
