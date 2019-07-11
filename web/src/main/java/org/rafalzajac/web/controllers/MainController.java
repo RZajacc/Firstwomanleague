@@ -16,7 +16,7 @@ import java.util.*;
 @Controller
 public class MainController {
 
-
+        private NewsService newsService;
         private RoundService roundService;
         private MatchService matchService;
         private TeamService teamService;
@@ -26,7 +26,7 @@ public class MainController {
         private AmazonClient amazonClient;
         private static final String SELECTED_ROUNDS = "rounds";
 
-        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient) {
+        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient, NewsService newsService) {
         this.roundService = roundService;
         this.matchService = matchService;
         this.teamService = teamService;
@@ -34,6 +34,7 @@ public class MainController {
         this.playerStatsService = playerStatsService;
         this.teamStatsService = teamStatsService;
         this.amazonClient = amazonClient;
+        this.newsService = newsService;
         }
 
 
@@ -43,7 +44,9 @@ public class MainController {
         News news = new News();
         news.setTitle("MKS Dabrowa jednak gra!");
         news.setShortDescription("1 liga kobiet");
-        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc.Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc.Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
+        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
+
+        newsService.saveNewsToDatabase(news);
 
         model.addAttribute("news", news);
 
