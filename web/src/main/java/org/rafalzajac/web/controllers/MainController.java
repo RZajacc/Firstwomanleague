@@ -37,6 +37,31 @@ public class MainController {
         }
 
 
+    @GetMapping("/")
+    public String homePage(Model model) {
+
+        News news = new News();
+        news.setTitle("MKS Dabrowa jednak gra!");
+        news.setShortDescription("1 liga kobiet");
+        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc.Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc.Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
+
+        model.addAttribute("news", news);
+
+        return "home";
+    }
+
+    @GetMapping("/news-page")
+    public String newsPage(Model model) {
+
+        News news = new News();
+        news.setTitle("MKS Dabrowa jednak gra!");
+        news.setShortDescription("1 liga kobiet");
+        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
+
+        model.addAttribute("news", news);
+
+        return "views/newsPage";
+    }
 
     @GetMapping("/round")
     public String league(Model model) {

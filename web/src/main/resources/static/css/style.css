@@ -249,3 +249,20 @@ table {
 .centerSelectInput {
     text-align-last: center;
 }
+
+#newsContainer{
+    margin-top: 3%;
+    position: relative;
+    padding-bottom: 3rem;
+}
+
+.card {
+    margin: 15px;
+    min-width: 20rem;
+    max-width: 20rem;
+}
+
+#newsContentPage {
+   margin-top: 5%;
+   width: 90%;
+}

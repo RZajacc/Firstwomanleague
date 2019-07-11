@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Artykul')"/>
+
+<body>
+
+<nav th:replace="layouts/MainLayout :: navbar"/>
+
+<div class="container">
+    <div class="jumbotron" th:object="${news}" id="newsContentPage">
+        <h3 class="display-4" th:text="${news.title}" style="font-weight: bold"/>
+        <p style="font-size: small" th:text="${'Dodano : ' + news.dateOfCreation}"></p>
+        <hr class="my-4">
+        <p th:text="${news.content}"/>
+    </div>
+</div>
+
+
+
+
+
+<footer th:replace="layouts/MainLayout :: footer"/>
+
+</body>
+</html>
