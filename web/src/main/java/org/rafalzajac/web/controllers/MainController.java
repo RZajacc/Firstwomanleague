@@ -41,7 +41,10 @@ public class MainController {
     @GetMapping("/")
     public String homePage(Model model) {
 
-        model.addAttribute("newsList", newsService.findAllNews());
+        List<News> newsList = newsService.findAllNews();
+        newsList.sort(Comparator.comparing(News::getCreationDate).reversed());
+
+        model.addAttribute("newsList", newsList);
 
         return "home";
     }

@@ -212,6 +212,22 @@ table {
     font-weight: bold;
 }
 
+#containerForAddingNews {
+    margin-top: 3%;
+}
+
+.newsInputContainer {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+
+.newsInput{
+    display:block;
+    width: auto;
+    font-size: large;
+}
+
 #logoutInput {
     background : none;
     border: none;

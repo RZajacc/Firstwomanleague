@@ -9,15 +9,22 @@
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
 
+
+<div class="container" id="containerForAddingNews">
+
+
 <form method="POST" action="/admin/create-article" class="newElementForm mainFont" th:object="${newArticle}">
 
-    <div class="form-group text-center">
-        <label for="newsTitle">Tytul artykulu : </label>
+    <div class="form-group text-center newsInputContainer">
+        <label for="newsTitle" class="newsInput">Tytuł artykułu : </label>
+        <br/>
         <input type="text" class="form-control centeredInput" name="title" id="newsTitle">
+        <br/>
     </div>
-    <div class="form-group text-center">
-        <label for="content">Tresc artykulu :</label>
-        <textarea class="form-control centeredInput" rows="5" name="content" id="content" ></textarea>
+    <div class="form-group text-center newsInput">
+        <label for="content" class="newsInput">Treść artykułu :</label>
+        <br/>
+        <textarea class="form-control centeredInput" rows="15" name="content" id="content" ></textarea>
     </div>
 
     <div class="text-center" style="margin-top: 15px">
@@ -25,6 +32,8 @@
     </div>
 
 </form>
+
+</div>
 
 <footer th:replace="layouts/AdministrationLayout :: footer"/>
 
