@@ -28,4 +28,8 @@ public class NewsService {
     public List<News> findAllNews() {
         return newsRepository.findAll();
     }
+
+    public void deleteArticleById(Long id) {
+        newsRepository.deleteById(id);
+    }
 }

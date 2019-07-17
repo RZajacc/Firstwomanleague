@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Edytuj artykul')"/>
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+
+
+<div class="container" id="containerForAddingNews">
+
+
+<form method="POST" action="/admin/edit-article" class="newElementForm mainFont" th:object="${newsToEdit}">
+
+    <div class="form-group text-center newsInputContainer">
+        <label for="newsTitle" class="newsInput">Tytuł artykułu : </label>
+        <br/>
+        <input type="text" class="form-control" name="title" id="newsTitle" th:field="*{title}">
+        <br/>
+    </div>
+    <div class="form-group text-center newsInput">
+        <label for="content" class="newsInput">Treść artykułu :</label>
+        <br/>
+        <textarea class="form-control" rows="15" name="content" id="content" th:field="*{content}"></textarea>
+    </div>
+
+    <div class="text-center" style="margin-top: 15px">
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        <input th:value="${newsToEdit.id}" type="text" name="newsToEditId" style="display: none"/>
+    </div>
+
+</form>
+
+</div>
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+</body>
+</html>

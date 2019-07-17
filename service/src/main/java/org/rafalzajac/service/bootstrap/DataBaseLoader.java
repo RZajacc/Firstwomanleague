@@ -59,19 +59,19 @@ public class DataBaseLoader implements CommandLineRunner {
 
 
         //Creating team instances
-        Team team1 = new Team("JOK", "Joker Mekro Energoremont Swiecie", "Marcin Wojtowicz", "Milosz Szwaba", team1Stats);
-        Team team2 = new Team("WIS", "Wisla Warszawa", "Piotr Hilko", "Mikolaj Mariaskin", team2Stats);
-        Team team3 = new Team("MKS", "MKS Dabrowa Gornicza", "Adam Grabowski", "Ireneusz Borzecki", team3Stats);
-        Team team4 = new Team("PWSZ", "PWSZ Tarnow", "Michal Betleja", "Michal Madejski", team4Stats);
+        Team team1 = new Team("JOK", "Joker Mekro Energoremont Świecie", "Marcin Wojtowicz", "Miłosz Szwaba", team1Stats);
+        Team team2 = new Team("WIS", "Wisła Warszawa", "Piotr Hilko", "Mikołaj Mariaskin", team2Stats);
+        Team team3 = new Team("MKS", "MKS Dąbrowa Górnicza", "Adam Grabowski", "Ireneusz Borzęcki", team3Stats);
+        Team team4 = new Team("PWSZ", "PWSZ Tarnów", "Michał Betleja", "Michał Madejski", team4Stats);
         Team team5 = new Team("UNI", "AZS Uni Opole", "Nicola Vettori", "Akis Efstathopoulos", team5Stats);
-        Team team6 = new Team("ENE", "Energetyk Poznan", "Michal Patyk", "Dominik Hajduk", team6Stats);
+        Team team6 = new Team("ENE", "Energetyk Poznań", "Michał Patyk", "Dominik Hajduk", team6Stats);
         Team team7 = new Team("SOL", "7R Solna Wieliczka", "Ryszard Litwin", "Marcin Nowakowski", team7Stats);
-        Team team8 = new Team("GLI", "KS AZS Politechniki Slaskiej Gliwice", "Krzysztof Czapla", "Wojciech Czapla", team8Stats);
-        Team team9 = new Team("BUD", "Budowlani Torun", "Miroslaw Zawieracz", team9Stats);
-        Team team10 = new Team("KRO", "Karpaty PWSZ MOSiR Krosno Glass", "Dominik Stanislawczyk", "Tomasz Podulka", team10Stats);
-        Team team11 = new Team("MIE", "UKS Szostka Mielec", "Roman Murdza", "Krystian Pachlinski", team11Stats);
-        Team team12 = new Team("WLO", "WTS KDBS Bank Wloclawek", "Marek Zacharek", "Kazimierz Mendala", team12Stats);
-        Team team13 = new Team("MAZ", "BlueSoft Mazovia Warszawa", "Robert Kupisz", "Kamil Trzcinski", team13Stats);
+        Team team8 = new Team("GLI", "KS AZS Politechniki Śląskiej Gliwice", "Krzysztof Czapla", "Wojciech Czapla", team8Stats);
+        Team team9 = new Team("BUD", "Budowlani Toruń", "Mirosław Zawieracz", team9Stats);
+        Team team10 = new Team("KRO", "Karpaty PWSZ MOSiR Krosno Glass", "Dominik Stanisławczyk", "Tomasz Podulka", team10Stats);
+        Team team11 = new Team("MIE", "UKS Szóstka Mielec", "Roman Murdza", "Krystian Pachliński", team11Stats);
+        Team team12 = new Team("WLO", "WTS KDBS Bank Włoclawek", "Marek Zacharek", "Kazimierz Mendala", team12Stats);
+        Team team13 = new Team("MAZ", "BlueSoft Mazovia Warszawa", "Robert Kupisz", "Kamil Trzciński", team13Stats);
         Team team14 = new Team("SMS", "SMS PZPS Szczyrk", "Waldemar Kawka", "Ireneusz Waleczek", team14Stats);
 
 

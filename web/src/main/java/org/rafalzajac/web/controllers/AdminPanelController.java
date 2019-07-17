@@ -53,13 +53,17 @@ public class AdminPanelController {
     }
 
     @GetMapping("/")
-    public String adminPanelNewsPage() {
+    public String adminPanelNewsPage(Model model) {
+        List<News> newsList = newsService.findAllNews();
+        newsList.sort(Comparator.comparing(News::getCreationDate).reversed());
+
+        model.addAttribute("newsList", newsList);
+
         return "administration/adminPanel";
     }
 
     @GetMapping ("/create-article")
     public String createArticle (@ModelAttribute("newArticle") NewsDTO news) {
-
 
         return "administration/createElements/createArticle";
     }
@@ -71,6 +75,42 @@ public class AdminPanelController {
         News newsToPersist = modelMapper.map(news, News.class);
 
         newsService.saveNewsToDatabase(newsToPersist);
+
+        return "redirect:/admin/";
+    }
+
+    @PostMapping("/delete-article")
+    public String deleteArticle(@RequestParam("newsId") Long newsId) {
+
+        newsService.deleteArticleById(newsId);
+
+        return "redirect:/admin/";
+    }
+
+    @GetMapping("/edit-article/{id}")
+    public String editArticle(@PathVariable Long id, Model model) {
+
+        Optional<News> temp = newsService.findNewsById(id);
+        if (temp.isPresent()) {
+            News newsToEdit = temp.get();
+            model.addAttribute("newsToEdit", newsToEdit);
+        }
+
+
+        return "administration/createElements/editArticle";
+    }
+
+    @PostMapping("/edit-article")
+    public String processEditArticle(@RequestParam("newsToEditId") Long id, @ModelAttribute("newsData") NewsDTO news){
+
+
+        Optional<News> temp = newsService.findNewsById(id);
+        if (temp.isPresent()){
+            News newsToUpdate = temp.get();
+            newsToUpdate.setTitle(news.getTitle());
+            newsToUpdate.setContent(news.getContent());
+            newsService.saveNewsToDatabase(newsToUpdate);
+        }
 
         return "redirect:/admin/";
     }

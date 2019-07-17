@@ -1,9 +1,4 @@
 
-// addingNews
-
-        //1. Na stronie admina newsy jako lista z tytułami i edycja/usuwanie?
-
-
 // embeddingClassesToModel
         //1. Przejrzyj mapowania klas, byś może gdzieś uda się zastosować embaddable (statystyki?)
         //2. Jeżeli koncepcja jest słuszna to zniknie kilka repozytoriów i zmiany w metodach
