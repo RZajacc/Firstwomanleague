@@ -7,33 +7,32 @@
 
 <nav th:replace="layouts/MainLayout :: navbar"/>
 
-    <div class="container" id="newsContainer">
+<div class="container" id="newsContainer">
 
-        <div class="row">
+    <div class="row" id="test">
 
-            <div class="card-deck text-center" th:object="${news}">
+        <div class="card-deck text-center col-md-4 mt-4" th:each="news : ${newsList}">
 
-                <div class="card">
+            <div class="card" >
 
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${news.title}"/>
-                        <hr/>
-                        <p class="card-text" th:text="${news.shortDescription}" style="text-align: justify"/>
-                        <a th:href="@{/news-page}" class="btn btn-primary">Zobacz więcej</a>
-                    </div>
-
-                    <div class="card-footer">
-                        <small class="text-muted" th:text="${'Dodano : ' + news.dateOfCreation}">Last updated 3 mins ago</small>
-                    </div>
-
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${news.title}"/>
+                    <hr/>
+                    <p class="card-text" th:text="${news.shortDescription}" style="text-align: justify"/>
+                    <a th:href="@{'/news-page/' + ${news.id} }" class="btn btn-primary">Zobacz więcej</a>
                 </div>
 
-             </div>
+                <div class="card-footer">
+                    <small class="text-muted" th:text="${'Dodano : ' + news.createdAt}">Last updated 3 mins ago</small>
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
+</div>
 
 <footer th:replace="layouts/MainLayout :: footer"/>
 

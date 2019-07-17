@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/MainLayout :: head(title = 'Utwórz artykul')"/>
+
+<body>
+
+<nav th:replace="layouts/AdministrationLayout :: navbar"/>
+
+
+<form method="POST" action="/admin/create-article" class="newElementForm mainFont" th:object="${newArticle}">
+
+    <div class="form-group text-center">
+        <label for="newsTitle">Tytul artykulu : </label>
+        <input type="text" class="form-control centeredInput" name="title" id="newsTitle">
+    </div>
+    <div class="form-group text-center">
+        <label for="content">Tresc artykulu :</label>
+        <textarea class="form-control centeredInput" rows="5" name="content" id="content" ></textarea>
+    </div>
+
+    <div class="text-center" style="margin-top: 15px">
+        <button type="submit" class="btn btn-primary">Utwórz</button>
+    </div>
+
+</form>
+
+<footer th:replace="layouts/AdministrationLayout :: footer"/>
+
+</body>
+</html>

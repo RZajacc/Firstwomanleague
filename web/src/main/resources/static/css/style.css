@@ -257,10 +257,9 @@ table {
 }
 
 .card {
-    margin: 15px;
-    min-width: 20rem;
-    max-width: 20rem;
+    width: 20rem;
 }
+
 
 #newsContentPage {
    margin-top: 5%;

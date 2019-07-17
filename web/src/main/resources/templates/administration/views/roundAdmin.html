@@ -13,12 +13,11 @@
 </div>
 
 <div class="container" id="addMatch">
-    <a th:href="@{'/admin/round-admin/creatematch/'} " class="btn btn-warning">Dodaj mecz</a>
+    <a th:href="@{/admin/round-admin/creatematch/} " class="btn btn-warning">Dodaj mecz</a>
 </div>
 
 
 <div class="container" id="roundTable" th:each="round : ${rounds}">
-
 
 
     <table class="table table-hover tableData" >
@@ -71,12 +70,6 @@
         </tbody>
     </table>
 </div>
-
-<ul>
-    <li>
-
-    </li>
-</ul>
 
 
 

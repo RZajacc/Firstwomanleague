@@ -1,10 +1,12 @@
 
 // addingNews
 
-        //2. Utwórz stronę jego dodawania
-        //3. Usuwanie newsa
-        //4. Mecze na liście powinny być wg numeru
-        //5. Na stronie admina newsy jako lista z tytułami i edycja/dodawanie/usuwanie?
-        //6. Sprawdz matody service, niektóre w dodawaniu do bazy zwracają obiekt nie wiadomo po co
+        //1. Mecze na liście powinny być wg numeru
+        //2. Na stronie admina newsy jako lista z tytułami i edycja/dodawanie/usuwanie?
+        //3. Sprawdz matody service, niektóre w dodawaniu do bazy zwracają obiekt nie wiadomo po co
+        //4. Utwórz obiekt DTO dla newsa
+        //5. Przejrzyj mapowania klas, byś może gdzieś uda się zastosować embaddable (statystyki?)
+        //6. Zmień rozmiar pól do wprowadzania artykułu. Wszystko szersze i wyższe
+        //7. Sprawdź czy wszędzie są polskie znaki
 
 

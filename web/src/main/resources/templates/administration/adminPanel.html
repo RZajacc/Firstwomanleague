@@ -7,6 +7,64 @@
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
+<div class="container" id="addMatch">
+    <a th:href="@{/admin/create-article} " class="btn btn-warning">Dodaj artykul</a>
+</div>
+
+
+<!--<div class="container" id="roundTable" th:each="round : ${rounds}">-->
+
+
+<!--    <table class="table table-hover tableData" >-->
+<!--        <thead class="thead-light">-->
+<!--        <tr>-->
+<!--            <th colspan="11" class="roundNumber"> Kolejka nr: <span th:text="${round.roundNumber}" /></th>-->
+<!--        </tr>-->
+<!--        <tr class="centeredText">-->
+<!--            <th>Mecz nr</th>-->
+<!--            <th>Gospodarz</th>-->
+<!--            <th>Gość</th>-->
+<!--            <th>Statystyki</th>-->
+<!--            <th>Wynik</th>-->
+<!--            <th></th>-->
+<!--            <th>Scout</th>-->
+<!--            <th colspan="3">Akcja</th>-->
+<!--            <th/>-->
+
+
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="game : ${round.matchList}" class="centeredText">-->
+<!--            <td th:text="${game.matchNumber}"></td>-->
+<!--            <td th:text="${game.homeTeam}"></td>-->
+<!--            <td th:text="${game.awayTeam}"></td>-->
+
+<!--            <td>-->
+<!--                <a th:href="@{'/admin/round-admin/' + ${game.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>-->
+<!--            </td>-->
+
+<!--            <td th:text="${game.matchResult.homeTeamSetsWon} + ':' + ${game.matchResult.awayTeamSetsWon}" id="inRoundResult"/>-->
+
+<!--            <td>-->
+<!--                <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">-->
+<!--            <td><input type="file" name="file" id="fileupload" class="btn btn-secondary"/></td>-->
+<!--            <td><input type="submit" value="Submit" id="submitFile"  class="btn btn-info"/></td>-->
+<!--            <td><input th:value="${game.id}" type="text" name="id" style="display: none"/></td>-->
+<!--            </form>-->
+<!--            </td>-->
+
+<!--            <td>-->
+<!--                <form method="POST" action="/admin/round-admin/deletematch">-->
+<!--            <td><input type="submit" value="Usuń" id="deleteMath"  class="btn btn-danger"/></td>-->
+<!--            <td><input th:value="${game.id}" type="text" name="gameId" style="display: none"/></td>-->
+<!--            </form>-->
+<!--            </td>-->
+
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
 
 
 

@@ -2,10 +2,7 @@ package org.rafalzajac.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,19 +10,22 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class News {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
     private String shortDescription;
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
-    private String dateOfCreation;
+    private String createdAt;
+    private LocalDateTime creationDate;
 
 
     public News() {
-        LocalDateTime now = LocalDateTime.now();
+        creationDate = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        dateOfCreation = now.format(formatter);
+        createdAt = creationDate.format(formatter);
     }
 
     public void setContent(String content) {

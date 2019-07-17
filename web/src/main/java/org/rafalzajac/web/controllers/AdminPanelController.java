@@ -32,6 +32,7 @@ public class AdminPanelController {
     private TeamStatsService teamStatsService;
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
+    private NewsService newsService;
     private static final String REDIRECT_CURRENT_TEAM = "redirect:/admin/teams-admin/currentteam-admin/";
     private static final String REDIRECT_ROUND = "redirect:/admin/round-admin/";
     private static final String FLASH_MESSAGE = "message";
@@ -39,7 +40,7 @@ public class AdminPanelController {
 
 
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
+    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService, NewsService newsService) {
         this.matchService = matchService;
         this.roundService = roundService;
         this.matchResultService = matchResultService;
@@ -47,11 +48,27 @@ public class AdminPanelController {
         this.teamStatsService = teamStatsService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
+        this.newsService = newsService;
     }
 
     @GetMapping("/")
-    public String adminPanel() {
+    public String adminpanelNewsPage() {
         return "administration/adminPanel";
+    }
+
+    @GetMapping ("/create-article")
+    public String createArticle (@ModelAttribute("newArticle") News news) {
+
+
+        return "administration/createElements/createArticle";
+    }
+
+    @PostMapping("/create-article")
+    public String saveArticle(@ModelAttribute("newArticle") News news) {
+
+        newsService.saveNewsToDatabase(news);
+
+        return "redirect:/admin/";
     }
 
 

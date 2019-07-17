@@ -41,27 +41,20 @@ public class MainController {
     @GetMapping("/")
     public String homePage(Model model) {
 
-        News news = new News();
-        news.setTitle("MKS Dabrowa jednak gra!");
-        news.setShortDescription("1 liga kobiet");
-        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
-
-        newsService.saveNewsToDatabase(news);
-
-        model.addAttribute("news", news);
+        model.addAttribute("newsList", newsService.findAllNews());
 
         return "home";
     }
 
-    @GetMapping("/news-page")
-    public String newsPage(Model model) {
+    @GetMapping("/news-page/{id}")
+    public String newsPage(Model model, @PathVariable Long id) {
 
-        News news = new News();
-        news.setTitle("MKS Dabrowa jednak gra!");
-        news.setShortDescription("1 liga kobiet");
-        news.setContent("Po wielu perturbacjach, pod nowa nazwa MKS Dabrowa jednak kontynuuje swoja dzialalnosc");
+        Optional<News> news = newsService.findNewsById(id);
+        if (news.isPresent()) {
+            News newsToView = news.get();
+            model.addAttribute("news", newsToView);
+        }
 
-        model.addAttribute("news", news);
 
         return "views/newsPage";
     }

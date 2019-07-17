@@ -10,7 +10,7 @@
 <div class="container">
     <div class="jumbotron" th:object="${news}" id="newsContentPage">
         <h3 class="display-4" th:text="${news.title}" style="font-weight: bold"/>
-        <p style="font-size: small" th:text="${'Dodano : ' + news.dateOfCreation}"></p>
+        <p style="font-size: small" th:text="${'Dodano : ' + news.createdAt}"></p>
         <hr class="my-4">
         <p th:text="${news.content}"/>
     </div>
