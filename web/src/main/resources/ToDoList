@@ -1,12 +1,12 @@
 
 // addingNews
 
-        //1. Utwórz obiekt DTO dla newsa
-        //2. Na stronie admina newsy jako lista z tytułami i edycja/usuwanie?
+        //1. Na stronie admina newsy jako lista z tytułami i edycja/usuwanie?
 
 
-        //2. Przejrzyj mapowania klas, byś może gdzieś uda się zastosować embaddable (statystyki?)
-        //3. Jeżeli koncepcja jest słuszna to zniknie kilka repozytoriów i zmiany w metodach
+// embeddingClassesToModel
+        //1. Przejrzyj mapowania klas, byś może gdzieś uda się zastosować embaddable (statystyki?)
+        //2. Jeżeli koncepcja jest słuszna to zniknie kilka repozytoriów i zmiany w metodach
 
 
 

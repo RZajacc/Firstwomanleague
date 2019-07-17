@@ -40,7 +40,7 @@ public class Round implements Comparable<Round>{
     }
 
     @Override
-    public int compareTo(Round o) {
-        return Integer.compare(this.getRoundNumber(), o.getRoundNumber());
+    public int compareTo(Round round) {
+        return Integer.compare(this.getRoundNumber(), round.getRoundNumber());
     }
 }

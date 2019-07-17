@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.rafalzajac.domain.*;
 import org.rafalzajac.dto_objects.GameDTO;
+import org.rafalzajac.dto_objects.NewsDTO;
 import org.rafalzajac.dto_objects.PlayerDTO;
 import org.rafalzajac.dto_objects.TeamDTO;
 import org.rafalzajac.service.*;
@@ -52,21 +53,24 @@ public class AdminPanelController {
     }
 
     @GetMapping("/")
-    public String adminpanelNewsPage() {
+    public String adminPanelNewsPage() {
         return "administration/adminPanel";
     }
 
     @GetMapping ("/create-article")
-    public String createArticle (@ModelAttribute("newArticle") News news) {
+    public String createArticle (@ModelAttribute("newArticle") NewsDTO news) {
 
 
         return "administration/createElements/createArticle";
     }
 
     @PostMapping("/create-article")
-    public String saveArticle(@ModelAttribute("newArticle") News news) {
+    public String saveArticle(@ModelAttribute("newArticle") NewsDTO news) {
 
-        newsService.saveNewsToDatabase(news);
+        ModelMapper modelMapper = new ModelMapper();
+        News newsToPersist = modelMapper.map(news, News.class);
+
+        newsService.saveNewsToDatabase(newsToPersist);
 
         return "redirect:/admin/";
     }

@@ -15,8 +15,8 @@ public class LeagueService {
         this.leagueRepository = leagueRepository;
     }
 
-    public League addLeague(League league) {
-        return leagueRepository.save(league);
+    public void addLeague(League league) {
+        leagueRepository.save(league);
     }
 
     public Optional<League> getLeagueById(Long id){
