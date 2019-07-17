@@ -15,8 +15,8 @@ public class RoundService {
         this.roundRepository = roundRepository;
     }
 
-    public Round addRound(Round round){
-        return roundRepository.save(round);
+    public void addRound(Round round){
+        roundRepository.save(round);
     }
 
     public List<Round> findAllRounds() {

@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,7 +51,16 @@ public class AdminFileUploadAndProcessController {
     public String league(Model model) {
 
         List<Round> rounds = roundService.findAllRounds();
-        model.addAttribute("rounds", rounds);
+
+        List<Round> sortedList = rounds.stream()
+                .map(round -> {
+                    if (round != null) {
+                        round.getMatchList().sort(Comparator.nullsLast(naturalOrder()));
+                    }
+                    return round;
+                }).sorted(nullsLast(naturalOrder()))
+                .collect(Collectors.toList());
+        model.addAttribute("rounds", sortedList);
 
         return "administration/views/roundAdmin";
     }

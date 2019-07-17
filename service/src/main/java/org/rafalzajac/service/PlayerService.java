@@ -18,8 +18,8 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public Player addPlayer (Player player) {
-        return playerRepository.save(player);
+    public void addPlayer (Player player) {
+        playerRepository.save(player);
     }
 
     public List<Player> findAllPlayers() {

@@ -58,7 +58,7 @@
                     <a th:href="@{'/round/' + ${game.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
 
-                <td th:text="${game.matchResult.homeTeamSetsWon} + ':' + ${game.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
+                <td th:text="${game.gameResult.homeTeamSetsWon} + ':' + ${game.gameResult.awayTeamSetsWon}" id="inRoundResult"/>
             </tr>
         </tbody>
     </table>

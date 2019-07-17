@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @Getter @Setter
-public class Game {
+public class Game implements Comparable<Game>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +30,7 @@ public class Game {
     private List<Team> teams;
 
     @OneToOne
-    private MatchResult matchResult;
+    private GameResult gameResult;
 
     public Game() {
         statsSaved = false;
@@ -51,13 +51,18 @@ public class Game {
         statsSaved = false;
     }
 
-    public Game(String homeTeam, String awayTeam, int matchNumber, Round round, MatchResult matchResult) {
+    public Game(String homeTeam, String awayTeam, int matchNumber, Round round, GameResult gameResult) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchNumber = matchNumber;
         this.round = round;
-        this.matchResult = matchResult;
+        this.gameResult = gameResult;
         teams = new LinkedList<>();
         statsSaved = false;
+    }
+
+    @Override
+    public int compareTo(Game o) {
+        return Integer.compare(this.getMatchNumber(), o.getMatchNumber());
     }
 }

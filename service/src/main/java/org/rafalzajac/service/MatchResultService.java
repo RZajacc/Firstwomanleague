@@ -1,6 +1,6 @@
 package org.rafalzajac.service;
 
-import org.rafalzajac.domain.MatchResult;
+import org.rafalzajac.domain.GameResult;
 import org.rafalzajac.repository.MatchResultRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class MatchResultService {
         this.matchResultRepository = matchResultRepository;
     }
 
-    public MatchResult saveMatchResult(MatchResult matchResult){
-        return matchResultRepository.save(matchResult);
+    public void saveMatchResult(GameResult gameResult){
+        matchResultRepository.save(gameResult);
     }
 }

@@ -16,8 +16,8 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Team addTeam (Team team) {
-        return teamRepository.save(team);
+    public void addTeam (Team team) {
+        teamRepository.save(team);
     }
 
     public List<Team> findAllTeams() {

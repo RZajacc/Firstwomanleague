@@ -13,7 +13,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Round {
+public class Round implements Comparable<Round>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,4 +39,8 @@ public class Round {
 
     }
 
+    @Override
+    public int compareTo(Round o) {
+        return Integer.compare(this.getRoundNumber(), o.getRoundNumber());
+    }
 }

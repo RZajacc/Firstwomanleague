@@ -29,9 +29,9 @@ public class CreateNewElement {
     public void addNewMatch(Game game) {
 
         //Setting game result
-        MatchResult newMatchResult = new MatchResult();
-        matchResultService.saveMatchResult(newMatchResult);
-        game.setMatchResult(newMatchResult);
+        GameResult newGameResult = new GameResult();
+        matchResultService.saveMatchResult(newGameResult);
+        game.setGameResult(newGameResult);
 
         //Setting round
         game.setRound(roundService.findRoundByRoundNumber(game.getRound().getRoundNumber()));

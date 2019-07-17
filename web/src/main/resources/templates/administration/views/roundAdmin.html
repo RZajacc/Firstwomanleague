@@ -49,7 +49,7 @@
                     <a th:href="@{'/admin/round-admin/' + ${game.id}} " class="btn btn-primary" id="showStats">Wyświetl</a>
                 </td>
 
-                <td th:text="${game.matchResult.homeTeamSetsWon} + ':' + ${game.matchResult.awayTeamSetsWon}" id="inRoundResult"/>
+                <td th:text="${game.gameResult.homeTeamSetsWon} + ':' + ${game.gameResult.awayTeamSetsWon}" id="inRoundResult"/>
 
                 <td>
                     <form method="POST" action="/admin/round-admin" enctype="multipart/form-data">

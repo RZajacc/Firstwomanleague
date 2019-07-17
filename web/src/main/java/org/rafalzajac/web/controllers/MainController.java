@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 
 
 @Controller
@@ -66,7 +70,16 @@ public class MainController {
     public String league(Model model) {
 
         List<Round> rounds = roundService.findAllRounds();
-        model.addAttribute(SELECTED_ROUNDS, rounds);
+        List<Round> sortedList = rounds.stream()
+                .map(round -> {
+                    if (round != null) {
+                        round.getMatchList().sort(Comparator.nullsLast(naturalOrder()));
+                    }
+                    return round;
+                }).sorted(nullsLast(naturalOrder()))
+                .collect(Collectors.toList());
+
+        model.addAttribute(SELECTED_ROUNDS, sortedList);
 
         return "views/round";
     }

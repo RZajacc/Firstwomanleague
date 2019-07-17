@@ -16,8 +16,8 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public Game addMatch(Game game) {
-        return matchRepository.save(game);
+    public void addMatch(Game game) {
+        matchRepository.save(game);
     }
 
     public Optional<Game> getMatchById (Long id) {

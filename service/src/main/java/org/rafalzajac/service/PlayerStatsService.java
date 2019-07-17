@@ -13,7 +13,7 @@ public class PlayerStatsService {
         this.playerStatsRepository = playerStatsRepository;
     }
 
-    public PlayerStats savePlayerStats(PlayerStats playerStats) {
-        return playerStatsRepository.save(playerStats);
+    public void savePlayerStats(PlayerStats playerStats) {
+        playerStatsRepository.save(playerStats);
     }
 }

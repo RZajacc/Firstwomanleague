@@ -7,7 +7,7 @@
 
 <nav th:replace="layouts/AdministrationLayout :: navbar"/>
 
-<div class="container col-md-2" id="matchResult">
+<div class="container col-md-2" id="gameResult">
 
     <table class="table table-hover">
         <thead class="thead-light">
@@ -28,39 +28,39 @@
                     <td th:text="${currentMatch.awayTeam}" class="matchInfo"/>
                 </tr>
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSetsWon}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSetsWon}" class="matchInfo"></td>
                     <th class="matchInfo">- Sety -</th>
-                    <td><input type="text" th:field="*{matchResult.awayTeamSetsWon}" class="matchInfo"></td>
+                    <td><input type="text" th:field="*{gameResult.awayTeamSetsWon}" class="matchInfo"></td>
                 </tr>
 
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSet1Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSet1Score}" class="matchInfo"></td>
                     <th class="matchInfo">- Set 1 -</th>
-                    <td ><input type="text" th:field="*{matchResult.awayTeamSet1Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.awayTeamSet1Score}" class="matchInfo"></td>
                 </tr>
 
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSet2Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSet2Score}" class="matchInfo"></td>
                     <th class="matchInfo">- Set 2 -</th>
-                    <td><input type="text" th:field="*{matchResult.awayTeamSet2Score}" class="matchInfo"></td>
+                    <td><input type="text" th:field="*{gameResult.awayTeamSet2Score}" class="matchInfo"></td>
                 </tr>
 
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSet3Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSet3Score}" class="matchInfo"></td>
                     <th class="matchInfo">- Set 3 -</th>
-                    <td><input type="text" th:field="*{matchResult.awayTeamSet3Score}" class="matchInfo"></td>
+                    <td><input type="text" th:field="*{gameResult.awayTeamSet3Score}" class="matchInfo"></td>
                 </tr>
 
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSet4Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSet4Score}" class="matchInfo"></td>
                     <th class="matchInfo">- Set 4 -</th>
-                    <td><input type="text" th:field="*{matchResult.awayTeamSet4Score}" class="matchInfo"></td>
+                    <td><input type="text" th:field="*{gameResult.awayTeamSet4Score}" class="matchInfo"></td>
                 </tr>
 
                 <tr>
-                    <td ><input type="text" th:field="*{matchResult.homeTeamSet5Score}" class="matchInfo"></td>
+                    <td ><input type="text" th:field="*{gameResult.homeTeamSet5Score}" class="matchInfo"></td>
                     <th class="matchInfo">- Set 5 -</th>
-                    <td><input type="text" th:field="*{matchResult.awayTeamSet5Score}" class="matchInfo"></td>
+                    <td><input type="text" th:field="*{gameResult.awayTeamSet5Score}" class="matchInfo"></td>
                 </tr>
 
                 <tr>

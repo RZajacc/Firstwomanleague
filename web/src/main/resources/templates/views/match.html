@@ -35,15 +35,15 @@
                                 <th th:text="${awayTeam.secondCoach!= 0} ? ${awayTeam.secondCoach}  : '-'" class="matchInfo"/>
                         </tr>
                         <tr>
-                                <th th:text="${currentMatch.matchResult.homeTeamSetsWon}" class="matchScore"/>
+                                <th th:text="${currentMatch.gameResult.homeTeamSetsWon}" class="matchScore"/>
                                 <td class="matchInfo" > -Wynik-
-                                        <p class="matchInfo" th:text=" (${currentMatch.matchResult.homeTeamSet1Score != 0} ? ${currentMatch.matchResult.homeTeamSet1Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet1Score != 0} ? ${currentMatch.matchResult.awayTeamSet1Score} + '; ' : '') +
-                                              (${currentMatch.matchResult.homeTeamSet2Score != 0} ? ${currentMatch.matchResult.homeTeamSet2Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet2Score != 0} ? ${currentMatch.matchResult.awayTeamSet2Score} + '; ' : '') +
-                                              (${currentMatch.matchResult.homeTeamSet3Score != 0} ? ${currentMatch.matchResult.homeTeamSet3Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet3Score != 0} ? ${currentMatch.matchResult.awayTeamSet3Score} + '; ' : '') +
-                                              (${currentMatch.matchResult.homeTeamSet4Score != 0} ? ${currentMatch.matchResult.homeTeamSet4Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet4Score != 0} ? ${currentMatch.matchResult.awayTeamSet4Score} + '; ' : '') +
-                                              (${currentMatch.matchResult.homeTeamSet5Score != 0} ? ${currentMatch.matchResult.homeTeamSet5Score} + '/' : '' )  + (${currentMatch.matchResult.awayTeamSet5Score != 0} ? ${currentMatch.matchResult.awayTeamSet5Score} + '; ' : '') "/>
+                                        <p class="matchInfo" th:text=" (${currentMatch.gameResult.homeTeamSet1Score != 0} ? ${currentMatch.gameResult.homeTeamSet1Score} + '/' : '' )  + (${currentMatch.gameResult.awayTeamSet1Score != 0} ? ${currentMatch.gameResult.awayTeamSet1Score} + '; ' : '') +
+                                              (${currentMatch.gameResult.homeTeamSet2Score != 0} ? ${currentMatch.gameResult.homeTeamSet2Score} + '/' : '' )  + (${currentMatch.gameResult.awayTeamSet2Score != 0} ? ${currentMatch.gameResult.awayTeamSet2Score} + '; ' : '') +
+                                              (${currentMatch.gameResult.homeTeamSet3Score != 0} ? ${currentMatch.gameResult.homeTeamSet3Score} + '/' : '' )  + (${currentMatch.gameResult.awayTeamSet3Score != 0} ? ${currentMatch.gameResult.awayTeamSet3Score} + '; ' : '') +
+                                              (${currentMatch.gameResult.homeTeamSet4Score != 0} ? ${currentMatch.gameResult.homeTeamSet4Score} + '/' : '' )  + (${currentMatch.gameResult.awayTeamSet4Score != 0} ? ${currentMatch.gameResult.awayTeamSet4Score} + '; ' : '') +
+                                              (${currentMatch.gameResult.homeTeamSet5Score != 0} ? ${currentMatch.gameResult.homeTeamSet5Score} + '/' : '' )  + (${currentMatch.gameResult.awayTeamSet5Score != 0} ? ${currentMatch.gameResult.awayTeamSet5Score} + '; ' : '') "/>
                                 </td>
-                                <th th:text="${currentMatch.matchResult.awayTeamSetsWon}" class="matchScore"/>
+                                <th th:text="${currentMatch.gameResult.awayTeamSetsWon}" class="matchScore"/>
                         </tr>
                 </tbody>
 
