@@ -25,26 +25,22 @@ import static java.util.Comparator.nullsLast;
 public class AdminFileUploadAndProcessController {
 
     private RoundService roundService;
-    private MatchService matchService;
+    private GameService gameService;
     private AmazonClient amazonClient;
     private TeamService teamService;
-//    private TeamStatsService teamStatsService;
     private PlayerService playerService;
-    private PlayerStatsService playerStatsService;
     private static final String FLASH_MESSAGE = "message";
     private static final String REDIRECT_ROUND = "redirect:/admin/round-admin/";
     private static final String CURRENT_MATCH = "currentMatch";
     private static final String HOME_TEAM = "homeTeam";
     private static final String AWAY_TEAM = "awayTeam";
 
-    public AdminFileUploadAndProcessController(RoundService roundService, MatchService matchService, AmazonClient amazonClient, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService) {
+    public AdminFileUploadAndProcessController(RoundService roundService, GameService gameService, AmazonClient amazonClient, TeamService teamService, PlayerService playerService) {
         this.roundService = roundService;
-        this.matchService = matchService;
+        this.gameService = gameService;
         this.amazonClient = amazonClient;
         this.teamService = teamService;
-//        this.teamStatsService = teamStatsService;
         this.playerService = playerService;
-        this.playerStatsService = playerStatsService;
     }
 
     @GetMapping("/round-admin")
@@ -74,7 +70,7 @@ public class AdminFileUploadAndProcessController {
         } else{
             try {
 
-                Optional<Game> match = matchService.getMatchById(id);
+                Optional<Game> match = gameService.getMatchById(id);
                 if (match.isPresent()) {
 
 
@@ -91,7 +87,7 @@ public class AdminFileUploadAndProcessController {
                             "-" + current.getAwayTeam() + ".dvw");
 
 
-                    matchService.addMatch(current);
+                    gameService.addMatch(current);
                 }
 
             } catch (Exception e) {
@@ -106,7 +102,7 @@ public class AdminFileUploadAndProcessController {
     @GetMapping("/round-admin/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) throws IOException {
 
-        Optional<Game> match = matchService.getMatchById(id);
+        Optional<Game> match = gameService.getMatchById(id);
 
         if(match.isPresent()) {
             Game currentMatch = match.get();
@@ -115,7 +111,7 @@ public class AdminFileUploadAndProcessController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 Team hTeam = teamService.getTeamByTeamName(currentMatch.getHomeTeam());
@@ -126,15 +122,6 @@ public class AdminFileUploadAndProcessController {
                     model.addAttribute(AWAY_TEAM, scoutFileProcess.getHomeTeam());
                     model.addAttribute(HOME_TEAM, scoutFileProcess.getAwayTeam());
                 }
-            } else {
-                Team hTeam = currentMatch.getTeams().get(0);
-//                hTeam.setTeamStats(new TeamStats());
-                hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
-                Team aTeam = currentMatch.getTeams().get(1);
-                aTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
-//                aTeam.setTeamStats(new TeamStats());
-                model.addAttribute(HOME_TEAM, hTeam);
-                model.addAttribute(AWAY_TEAM, aTeam);
             }
 
             return "administration/views/matchAdmin";
@@ -146,17 +133,17 @@ public class AdminFileUploadAndProcessController {
     @PostMapping("/round-admin/{id}")
     public  String matchSave(Model model, @RequestParam Long id, RedirectAttributes redirectAttributes) throws IOException {
 
-        Optional<Game> selectedMatch = matchService.getMatchById(id);
+        Optional<Game> selectedMatch = gameService.getMatchById(id);
         if (selectedMatch.isPresent()) {
             Game currentMatch = selectedMatch.get();
             model.addAttribute(CURRENT_MATCH, currentMatch);
             if (currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, amazonClient);
                 scoutFileProcess.processScoutFile();
                 if(!currentMatch.getStatsSaved()){
                     scoutFileProcess.saveStatsToDatabase();
                     currentMatch.setStatsSaved(true);
-                    matchService.addMatch(currentMatch);
+                    gameService.addMatch(currentMatch);
                     redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Dane zapisane prawidlowo!");
                 } else {
                     redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Statystyki sa juz zapisane!");

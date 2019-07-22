@@ -27,12 +27,10 @@ import java.util.Optional;
 public class AdminPanelController {
 
     private TeamService teamService;
-    private MatchService matchService;
+    private GameService gameService;
     private RoundService roundService;
-    private MatchResultService matchResultService;
-//    private TeamStatsService teamStatsService;
+    private GameResultService gameResultService;
     private PlayerService playerService;
-    private PlayerStatsService playerStatsService;
     private NewsService newsService;
     private static final String REDIRECT_CURRENT_TEAM = "redirect:/admin/teams-admin/currentteam-admin/";
     private static final String REDIRECT_ROUND = "redirect:/admin/round-admin/";
@@ -41,14 +39,12 @@ public class AdminPanelController {
 
 
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, NewsService newsService) {
-        this.matchService = matchService;
+    public AdminPanelController(GameService gameService, RoundService roundService, GameResultService gameResultService, TeamService teamService, PlayerService playerService, NewsService newsService) {
+        this.gameService = gameService;
         this.roundService = roundService;
-        this.matchResultService = matchResultService;
+        this.gameResultService = gameResultService;
         this.teamService = teamService;
-//        this.teamStatsService = teamStatsService;
         this.playerService = playerService;
-        this.playerStatsService = playerStatsService;
         this.newsService = newsService;
     }
 
@@ -134,7 +130,7 @@ public class AdminPanelController {
 
         ModelMapper modelMapper = new ModelMapper();
         Game gameToPersist = modelMapper.map(game, Game.class);
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
         createNewElement.addNewMatch(gameToPersist);
 
         return "redirect:/admin/round-admin";
@@ -142,7 +138,7 @@ public class AdminPanelController {
 
     @PostMapping("/round-admin/deletematch")
     public String deleteMatch(@RequestParam("gameId") Long gameId) {
-        matchService.deleteMatchById(gameId);
+        gameService.deleteMatchById(gameId);
         return REDIRECT_ROUND;
     }
 
@@ -150,7 +146,7 @@ public class AdminPanelController {
     @GetMapping("/round-admin/result/{id}")
     public String matchResultInfo(@PathVariable Long id, Model model) {
 
-        Optional<Game> match = matchService.getMatchById(id);
+        Optional<Game> match = gameService.getMatchById(id);
         if (match.isPresent()) {
             Game current = match.get();
             model.addAttribute(CURRENT_MATCH, current);
@@ -165,11 +161,11 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Game gameToUpdate = modelMapper.map(game, Game.class);
 
-        Optional<Game> game1 = matchService.getMatchById(game.getId());
+        Optional<Game> game1 = gameService.getMatchById(game.getId());
         if (game1.isPresent()) {
             Game verifyResult = game1.get();
             if (verifyResult.getGameResult().getHomeTeamSetsWon() == 0 && verifyResult.getGameResult().getAwayTeamSetsWon() == 0){
-                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, matchService, matchResultService);
+                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, gameService, gameResultService);
                 processMatchResult.addMatchResult(gameToUpdate);
             }else {
                 redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Nie można zmodyfikować wyniku!");
@@ -199,7 +195,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
         model.addAttribute("newTeam", new Team());
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
         createNewElement.addNewTeam(teamToPersist);
 
         return "redirect:/admin/teams-admin/";
@@ -261,7 +257,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Player playerToPersist = modelMapper.map(player, Player.class);
 
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
         Optional<Team> team = teamService.getTeamById(id);
 
         if (team.isPresent()) {

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.PlayerService;
-import org.rafalzajac.service.PlayerStatsService;
 import org.rafalzajac.service.TeamService;
 
 import java.io.BufferedReader;
@@ -33,8 +32,6 @@ public class ScoutFileProcess {
     private List<String> matchData = new LinkedList<>();
     private PlayerService playerService;
     private TeamService teamService;
-    private PlayerStatsService playerStatsService;
-//    private TeamStatsService teamStatsService;
     private AmazonClient amazonClient;
 
     // Data volley symbols describing events
@@ -46,12 +43,10 @@ public class ScoutFileProcess {
     private static final String LOSING_SYMBOL = "=";
 
 
-    public ScoutFileProcess(String scoutFilePath, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient) {
+    public ScoutFileProcess(String scoutFilePath, TeamService teamService, PlayerService playerService, AmazonClient amazonClient) {
         this.scoutFilePath = scoutFilePath;
         this.teamService = teamService;
         this.playerService = playerService;
-        this.playerStatsService = playerStatsService;
-//        this.teamStatsService = teamStatsService;
         this.amazonClient = amazonClient;
     }
 
@@ -120,8 +115,7 @@ public class ScoutFileProcess {
             String[] data = teamData.get(0).split(";");
             String[] data1 = teamData.get(1).split(";");
 
-            // Teams stats are needed later to populate with data from match.
-//            TeamStats hTeamStats = new TeamStats();
+
             // Length is different depending if team has one or two coaches
             if (data.length == 3) {
                 homeTeam = new Team(data[0], data[1], data[2]);
@@ -129,7 +123,7 @@ public class ScoutFileProcess {
                 homeTeam = new Team(data[0], data[1], data[2], data[3]);
             }
 
-//            TeamStats aTeamStats = new TeamStats();
+
             if (data1.length == 3) {
                 awayTeam = new Team(data1[0], data1[1], data1[2]);
             } else {
@@ -420,7 +414,6 @@ public class ScoutFileProcess {
 
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
 
-                        playerStatsService.savePlayerStats(stats);
                         playerToUpdate.setPlayerStats(stats);
                         playerService.addPlayer(playerToUpdate);
                     }
@@ -449,7 +442,6 @@ public class ScoutFileProcess {
 
                         stats.setBlockScore(stats.getBlockScore() + player1.getPlayerStats().getBlockScore());
 
-                        playerStatsService.savePlayerStats(stats);
                         playerToUpdate.setPlayerStats(stats);
                         playerService.addPlayer(playerToUpdate);
                     }

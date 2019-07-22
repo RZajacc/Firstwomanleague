@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.rafalzajac.domain.Game;
 import org.rafalzajac.domain.GameResult;
 import org.rafalzajac.domain.Team;
-import org.rafalzajac.service.MatchResultService;
-import org.rafalzajac.service.MatchService;
+import org.rafalzajac.service.GameResultService;
+import org.rafalzajac.service.GameService;
 import org.rafalzajac.service.TeamService;
 
 import java.util.Optional;
@@ -14,19 +14,19 @@ import java.util.Optional;
 public class ProcessMatchResult {
 
     private TeamService teamService;
-    private MatchService matchService;
-    private MatchResultService matchResultService;
+    private GameService gameService;
+    private GameResultService gameResultService;
 
 
-    public ProcessMatchResult(TeamService teamService, MatchService matchService, MatchResultService matchResultService) {
+    public ProcessMatchResult(TeamService teamService, GameService gameService, GameResultService gameResultService) {
         this.teamService = teamService;
-        this.matchService = matchService;
-        this.matchResultService = matchResultService;
+        this.gameService = gameService;
+        this.gameResultService = gameResultService;
     }
 
     public void addMatchResult (Game game) {
 
-        Optional<Game> selected = matchService.getMatchById(game.getId());
+        Optional<Game> selected = gameService.getMatchById(game.getId());
 
         if(selected.isPresent()) {
 
@@ -34,9 +34,9 @@ public class ProcessMatchResult {
             GameResult gameResult = game.getGameResult();
 
             if (matchToUpdate.getGameResult().getHomeTeamSetsWon() == 0 && matchToUpdate.getGameResult().getAwayTeamSetsWon() == 0) {
-                matchResultService.saveMatchResult(gameResult);
+                gameResultService.saveMatchResult(gameResult);
                 matchToUpdate.setGameResult(gameResult);
-                matchService.addMatch(matchToUpdate);
+                gameService.addMatch(matchToUpdate);
                 addTeamStats(matchToUpdate);
             }
         }

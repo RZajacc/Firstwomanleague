@@ -36,6 +36,8 @@ public class Team {
 
     public Team () {
         playerList = new LinkedList<>();
+        matchList = new LinkedList<>();
+        teamStats = new TeamStats();
     }
 
     public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {

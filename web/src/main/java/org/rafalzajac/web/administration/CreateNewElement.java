@@ -8,21 +8,17 @@ import org.rafalzajac.service.*;
 @NoArgsConstructor
 public class CreateNewElement {
 
-    private MatchResultService matchResultService;
-    private MatchService matchService;
+    private GameResultService gameResultService;
+    private GameService gameService;
     private RoundService roundService;
     private TeamService teamService;
-//    private TeamStatsService teamStatsService;
-    private PlayerStatsService playerStatsService;
     private PlayerService playerService;
 
-    public CreateNewElement(MatchResultService matchResultService, MatchService matchService, RoundService roundService, TeamService teamService, PlayerStatsService playerStatsService, PlayerService playerService) {
-        this.matchResultService = matchResultService;
-        this.matchService = matchService;
+    public CreateNewElement(GameResultService gameResultService, GameService gameService, RoundService roundService, TeamService teamService, PlayerService playerService) {
+        this.gameResultService = gameResultService;
+        this.gameService = gameService;
         this.roundService = roundService;
         this.teamService = teamService;
-//        this.teamStatsService = teamStatsService;
-        this.playerStatsService = playerStatsService;
         this.playerService = playerService;
     }
 
@@ -30,7 +26,7 @@ public class CreateNewElement {
 
         //Setting game result
         GameResult newGameResult = new GameResult();
-        matchResultService.saveMatchResult(newGameResult);
+        gameResultService.saveMatchResult(newGameResult);
         game.setGameResult(newGameResult);
 
         //Setting round
@@ -43,35 +39,24 @@ public class CreateNewElement {
         aTeam.getMatchList().add(game);
 
         //Saving game and updating teams
-        matchService.addMatch(game);
+        gameService.addMatch(game);
         teamService.addTeam(hTeam);
         teamService.addTeam(aTeam);
     }
 
     public void addNewTeam(Team team) {
-        //Adding new team stats
-//        TeamStats stats = new TeamStats();
-//        teamStatsService.saveTeamStats(stats);
 
-        //Setting team stats for team
-//        team.setTeamStats(stats);
-
-        //Saving team
         teamService.addTeam(team);
     }
 
     public void addNewPlayer(Player player, Team team) {
 
-        //Adding new player stats
-        PlayerStats playerStats = new PlayerStats();
-        playerStatsService.savePlayerStats(playerStats);
-
-        //Setting player stats and team of a player
-        player.setPlayerStats(playerStats);
+        //Assigning player to team
         player.setTeam(team);
 
         //Saving player
         playerService.addPlayer(player);
+
     }
 
 

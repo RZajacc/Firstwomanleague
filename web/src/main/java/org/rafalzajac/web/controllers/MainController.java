@@ -22,21 +22,17 @@ public class MainController {
 
         private NewsService newsService;
         private RoundService roundService;
-        private MatchService matchService;
+        private GameService gameService;
         private TeamService teamService;
         private PlayerService playerService;
-        private PlayerStatsService playerStatsService;
-//        private TeamStatsService teamStatsService;
         private AmazonClient amazonClient;
         private static final String SELECTED_ROUNDS = "rounds";
 
-        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient, NewsService newsService) {
+        public MainController(RoundService roundService, GameService gameService, TeamService teamService, PlayerService playerService, AmazonClient amazonClient, NewsService newsService) {
         this.roundService = roundService;
-        this.matchService = matchService;
+        this.gameService = gameService;
         this.teamService = teamService;
         this.playerService = playerService;
-        this.playerStatsService = playerStatsService;
-//        this.teamStatsService = teamStatsService;
         this.amazonClient = amazonClient;
         this.newsService = newsService;
         }
@@ -99,7 +95,7 @@ public class MainController {
     @GetMapping("/round/{id}")
     public  String matchInfo(@PathVariable Long id, Model model) throws IOException {
 
-        Optional<Game> match = matchService.getMatchById(id);
+        Optional<Game> match = gameService.getMatchById(id);
 
         if(match.isPresent()) {
             Game currentMatch = match.get();
@@ -108,7 +104,7 @@ public class MainController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());

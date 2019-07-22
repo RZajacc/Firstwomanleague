@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 
 @Entity
-@NoArgsConstructor
 @Getter @Setter
 public class Player {
 
@@ -26,8 +25,11 @@ public class Player {
     @ManyToOne
     private Team team;
 
-    @OneToOne
     private PlayerStats playerStats;
+
+    public Player() {
+        this.playerStats = new PlayerStats();
+    }
 
     public Player(int number, String playerTag, String firstName, String lastName) {
         this.number = number;

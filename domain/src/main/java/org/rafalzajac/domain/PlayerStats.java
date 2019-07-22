@@ -12,9 +12,6 @@ import javax.persistence.*;
 @Data
 public class PlayerStats {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     //Starting rotation
     private String startingRotS1;
