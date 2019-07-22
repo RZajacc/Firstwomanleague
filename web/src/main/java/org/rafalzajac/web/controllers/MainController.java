@@ -26,17 +26,17 @@ public class MainController {
         private TeamService teamService;
         private PlayerService playerService;
         private PlayerStatsService playerStatsService;
-        private TeamStatsService teamStatsService;
+//        private TeamStatsService teamStatsService;
         private AmazonClient amazonClient;
         private static final String SELECTED_ROUNDS = "rounds";
 
-        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, TeamStatsService teamStatsService, AmazonClient amazonClient, NewsService newsService) {
+        public MainController(RoundService roundService, MatchService matchService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, AmazonClient amazonClient, NewsService newsService) {
         this.roundService = roundService;
         this.matchService = matchService;
         this.teamService = teamService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
-        this.teamStatsService = teamStatsService;
+//        this.teamStatsService = teamStatsService;
         this.amazonClient = amazonClient;
         this.newsService = newsService;
         }
@@ -108,7 +108,7 @@ public class MainController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 model.addAttribute("homeTeam", scoutFileProcess.getHomeTeam());

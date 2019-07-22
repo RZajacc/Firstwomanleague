@@ -16,6 +16,7 @@ public class News {
 
     private String title;
     private String shortDescription;
+
     @Column(columnDefinition = "LONGTEXT")
     private String content;
     private String createdAt;

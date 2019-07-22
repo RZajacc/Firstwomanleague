@@ -74,6 +74,8 @@ public class ProcessMatchResult {
             }
 
             //Setting points scored by both teams
+
+            // Do poprawy!!! Jeżeli nie ma wyniku przynajmniej jednego seta dzieli 0/0 i wychodzi Nan!
                 homeTeam.getTeamStats().setPointsWon(homeTeam.getTeamStats().getPointsWon() + game.getGameResult().getHomeTeamSet1Score() + game.getGameResult().getHomeTeamSet2Score() + game.getGameResult().getHomeTeamSet3Score() + game.getGameResult().getHomeTeamSet4Score() + game.getGameResult().getHomeTeamSet5Score());
                 homeTeam.getTeamStats().setPointsLost(homeTeam.getTeamStats().getPointsLost() + game.getGameResult().getAwayTeamSet1Score() + game.getGameResult().getAwayTeamSet2Score() + game.getGameResult().getAwayTeamSet3Score() + game.getGameResult().getAwayTeamSet4Score() + game.getGameResult().getAwayTeamSet5Score());
                 homeTeam.getTeamStats().setTeamPointsRatio((float) homeTeam.getTeamStats().getPointsWon() / homeTeam.getTeamStats().getPointsLost());

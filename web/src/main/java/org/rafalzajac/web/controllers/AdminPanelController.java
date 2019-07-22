@@ -30,7 +30,7 @@ public class AdminPanelController {
     private MatchService matchService;
     private RoundService roundService;
     private MatchResultService matchResultService;
-    private TeamStatsService teamStatsService;
+//    private TeamStatsService teamStatsService;
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
     private NewsService newsService;
@@ -41,12 +41,12 @@ public class AdminPanelController {
 
 
 
-    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService, NewsService newsService) {
+    public AdminPanelController(MatchService matchService, RoundService roundService, MatchResultService matchResultService, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService, NewsService newsService) {
         this.matchService = matchService;
         this.roundService = roundService;
         this.matchResultService = matchResultService;
         this.teamService = teamService;
-        this.teamStatsService = teamStatsService;
+//        this.teamStatsService = teamStatsService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
         this.newsService = newsService;
@@ -134,7 +134,7 @@ public class AdminPanelController {
 
         ModelMapper modelMapper = new ModelMapper();
         Game gameToPersist = modelMapper.map(game, Game.class);
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
         createNewElement.addNewMatch(gameToPersist);
 
         return "redirect:/admin/round-admin";
@@ -199,7 +199,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
         model.addAttribute("newTeam", new Team());
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
         createNewElement.addNewTeam(teamToPersist);
 
         return "redirect:/admin/teams-admin/";
@@ -261,7 +261,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Player playerToPersist = modelMapper.map(player, Player.class);
 
-        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, teamStatsService, playerStatsService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(matchResultService, matchService, roundService, teamService, playerStatsService, playerService);
         Optional<Team> team = teamService.getTeamById(id);
 
         if (team.isPresent()) {

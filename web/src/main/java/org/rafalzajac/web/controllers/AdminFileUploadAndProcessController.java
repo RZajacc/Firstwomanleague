@@ -28,7 +28,7 @@ public class AdminFileUploadAndProcessController {
     private MatchService matchService;
     private AmazonClient amazonClient;
     private TeamService teamService;
-    private TeamStatsService teamStatsService;
+//    private TeamStatsService teamStatsService;
     private PlayerService playerService;
     private PlayerStatsService playerStatsService;
     private static final String FLASH_MESSAGE = "message";
@@ -37,12 +37,12 @@ public class AdminFileUploadAndProcessController {
     private static final String HOME_TEAM = "homeTeam";
     private static final String AWAY_TEAM = "awayTeam";
 
-    public AdminFileUploadAndProcessController(RoundService roundService, MatchService matchService, AmazonClient amazonClient, TeamService teamService, TeamStatsService teamStatsService, PlayerService playerService, PlayerStatsService playerStatsService) {
+    public AdminFileUploadAndProcessController(RoundService roundService, MatchService matchService, AmazonClient amazonClient, TeamService teamService, PlayerService playerService, PlayerStatsService playerStatsService) {
         this.roundService = roundService;
         this.matchService = matchService;
         this.amazonClient = amazonClient;
         this.teamService = teamService;
-        this.teamStatsService = teamStatsService;
+//        this.teamStatsService = teamStatsService;
         this.playerService = playerService;
         this.playerStatsService = playerStatsService;
     }
@@ -115,7 +115,7 @@ public class AdminFileUploadAndProcessController {
 
             //Now for file data
             if(currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
 
                 Team hTeam = teamService.getTeamByTeamName(currentMatch.getHomeTeam());
@@ -128,11 +128,11 @@ public class AdminFileUploadAndProcessController {
                 }
             } else {
                 Team hTeam = currentMatch.getTeams().get(0);
-                hTeam.setTeamStats(new TeamStats());
+//                hTeam.setTeamStats(new TeamStats());
                 hTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
                 Team aTeam = currentMatch.getTeams().get(1);
                 aTeam.getPlayerList().forEach(player -> player.setPlayerStats(new PlayerStats()));
-                aTeam.setTeamStats(new TeamStats());
+//                aTeam.setTeamStats(new TeamStats());
                 model.addAttribute(HOME_TEAM, hTeam);
                 model.addAttribute(AWAY_TEAM, aTeam);
             }
@@ -151,7 +151,7 @@ public class AdminFileUploadAndProcessController {
             Game currentMatch = selectedMatch.get();
             model.addAttribute(CURRENT_MATCH, currentMatch);
             if (currentMatch.getScoutPath() != null) {
-                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, teamStatsService, amazonClient);
+                ScoutFileProcess scoutFileProcess = new ScoutFileProcess(currentMatch.getScoutPath(), teamService, playerService, playerStatsService, amazonClient);
                 scoutFileProcess.processScoutFile();
                 if(!currentMatch.getStatsSaved()){
                     scoutFileProcess.saveStatsToDatabase();

@@ -7,14 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 @NoArgsConstructor
 @Data
 public class TeamStats {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     //Points
     private int pointsTotal = 0;
@@ -58,11 +55,4 @@ public class TeamStats {
     private int pointsLost = 0;
     private float teamPointsRatio = 0;
 
-
-    @OneToOne
-    private Team team;
-
-    public TeamStats(Team team) {
-        this.team = team;
-    }
 }

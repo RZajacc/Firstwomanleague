@@ -12,16 +12,16 @@ public class CreateNewElement {
     private MatchService matchService;
     private RoundService roundService;
     private TeamService teamService;
-    private TeamStatsService teamStatsService;
+//    private TeamStatsService teamStatsService;
     private PlayerStatsService playerStatsService;
     private PlayerService playerService;
 
-    public CreateNewElement(MatchResultService matchResultService, MatchService matchService, RoundService roundService, TeamService teamService, TeamStatsService teamStatsService, PlayerStatsService playerStatsService, PlayerService playerService) {
+    public CreateNewElement(MatchResultService matchResultService, MatchService matchService, RoundService roundService, TeamService teamService, PlayerStatsService playerStatsService, PlayerService playerService) {
         this.matchResultService = matchResultService;
         this.matchService = matchService;
         this.roundService = roundService;
         this.teamService = teamService;
-        this.teamStatsService = teamStatsService;
+//        this.teamStatsService = teamStatsService;
         this.playerStatsService = playerStatsService;
         this.playerService = playerService;
     }
@@ -50,11 +50,11 @@ public class CreateNewElement {
 
     public void addNewTeam(Team team) {
         //Adding new team stats
-        TeamStats stats = new TeamStats();
-        teamStatsService.saveTeamStats(stats);
+//        TeamStats stats = new TeamStats();
+//        teamStatsService.saveTeamStats(stats);
 
         //Setting team stats for team
-        team.setTeamStats(stats);
+//        team.setTeamStats(stats);
 
         //Saving team
         teamService.addTeam(team);
