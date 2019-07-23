@@ -12,14 +12,12 @@ public class DataBaseLoader implements CommandLineRunner {
     private LeagueService leagueService;
     private RoundService roundService;
     private TeamService teamService;
-//    private TeamStatsService teamStatsService;
     private static final int NUMBER_OF_TEAMS = 14;
 
     public DataBaseLoader(LeagueService leagueService, RoundService roundService, TeamService teamService) {
         this.leagueService = leagueService;
         this.roundService = roundService;
         this.teamService = teamService;
-//        this.teamStatsService = teamStatsService;
     }
 
 
@@ -41,22 +39,6 @@ public class DataBaseLoader implements CommandLineRunner {
             roundService.addRound(round);
         }
 
-        // Creating team stats instances. They are necessary to create team
-//        TeamStats team1Stats = new TeamStats();
-//        TeamStats team2Stats = new TeamStats();
-//        TeamStats team3Stats = new TeamStats();
-//        TeamStats team4Stats = new TeamStats();
-//        TeamStats team5Stats = new TeamStats();
-//        TeamStats team6Stats = new TeamStats();
-//        TeamStats team7Stats = new TeamStats();
-//        TeamStats team8Stats = new TeamStats();
-//        TeamStats team9Stats = new TeamStats();
-//        TeamStats team10Stats = new TeamStats();
-//        TeamStats team11Stats = new TeamStats();
-//        TeamStats team12Stats = new TeamStats();
-//        TeamStats team13Stats = new TeamStats();
-//        TeamStats team14Stats = new TeamStats();
-
 
         //Creating team instances
         Team team1 = new Team("JOK", "Joker Mekro Energoremont Świecie", "Marcin Wojtowicz", "Miłosz Szwaba");
@@ -74,22 +56,6 @@ public class DataBaseLoader implements CommandLineRunner {
         Team team13 = new Team("MAZ", "BlueSoft Mazovia Warszawa", "Robert Kupisz", "Kamil Trzciński");
         Team team14 = new Team("SMS", "SMS PZPS Szczyrk", "Waldemar Kawka", "Ireneusz Waleczek");
 
-
-        //Adding team stats to database
-//        teamStatsService.saveTeamStats(team1Stats);
-//        teamStatsService.saveTeamStats(team2Stats);
-//        teamStatsService.saveTeamStats(team3Stats);
-//        teamStatsService.saveTeamStats(team4Stats);
-//        teamStatsService.saveTeamStats(team5Stats);
-//        teamStatsService.saveTeamStats(team6Stats);
-//        teamStatsService.saveTeamStats(team7Stats);
-//        teamStatsService.saveTeamStats(team8Stats);
-//        teamStatsService.saveTeamStats(team9Stats);
-//        teamStatsService.saveTeamStats(team10Stats);
-//        teamStatsService.saveTeamStats(team11Stats);
-//        teamStatsService.saveTeamStats(team12Stats);
-//        teamStatsService.saveTeamStats(team13Stats);
-//        teamStatsService.saveTeamStats(team14Stats);
 
 
         //Adding teams to database

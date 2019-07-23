@@ -3,9 +3,9 @@ package org.rafalzajac.service;
 import org.rafalzajac.domain.Team;
 import org.rafalzajac.repository.TeamRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class TeamService {

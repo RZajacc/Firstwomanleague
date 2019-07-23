@@ -1,11 +1,9 @@
 package org.rafalzajac.dto_objects;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.GameResult;
 import org.rafalzajac.domain.Round;
 import org.rafalzajac.domain.Team;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +16,7 @@ public class GameDTO {
     private String awayTeam;
     private int matchNumber;
     private Round round;
+
     private GameResult gameResult;
     private List<Team> teams;
 

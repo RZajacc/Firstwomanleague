@@ -3,7 +3,6 @@ package org.rafalzajac.service;
 import org.rafalzajac.domain.Game;
 import org.rafalzajac.repository.GameRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

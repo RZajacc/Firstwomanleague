@@ -1,16 +1,12 @@
 package org.rafalzajac.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Round implements Comparable<Round>{

@@ -1,10 +1,9 @@
 package org.rafalzajac.dto_objects;
 
-
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 
 @Data
 public class NewsDTO {

@@ -5,7 +5,6 @@ import org.rafalzajac.domain.Game;
 import org.rafalzajac.domain.Team;
 import org.rafalzajac.service.GameService;
 import org.rafalzajac.service.TeamService;
-
 import java.util.Optional;
 
 @Slf4j

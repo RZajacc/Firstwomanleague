@@ -1,10 +1,7 @@
 package org.rafalzajac.domain;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Embeddable
@@ -14,45 +11,45 @@ public class TeamStats {
 
 
     //Points
-    private int pointsTotal = 0;
-    private int pointsRatio = 0;
+    private int pointsTotal;
+    private int pointsRatio;
 
     //Serve
-    private int serveAttempts = 0;
-    private int serveAce = 0;
-    private int servePositive = 0;
-    private int servePositivePercent = 0;
-    private int serveErrors = 0;
+    private int serveAttempts;
+    private int serveAce;
+    private int servePositive;
+    private int servePositivePercent;
+    private int serveErrors;
 
     //Reception
-    private int receptionAttempts = 0;
-    private int receptionErrors = 0;
-    private int receptionPositive = 0;
-    private int receptionPerfect = 0;
-    private int receptionPositivePercent = 0;
-    private int receptionPerfectPercent = 0;
+    private int receptionAttempts;
+    private int receptionErrors;
+    private int receptionPositive;
+    private int receptionPerfect;
+    private int receptionPositivePercent;
+    private int receptionPerfectPercent;
 
     //Attack
-    private int attackAttempts = 0;
-    private int attackErrors = 0;
-    private int attackBlocked = 0;
-    private int attackFinished = 0;
-    private int attackFinishedPercent = 0;
+    private int attackAttempts;
+    private int attackErrors ;
+    private int attackBlocked;
+    private int attackFinished;
+    private int attackFinishedPercent;
 
     //Block
-    private int blockScore = 0;
+    private int blockScore ;
 
 
     //Overall stats for team
-    private int matchPlayed = 0;
-    private int leaguePoints = 0;
-    private int matchWon = 0;
-    private int matchLost = 0;
-    private int setsWon = 0;
-    private int setsLost = 0;
-    private float setRatio = 0;
-    private int pointsWon = 0;
-    private int pointsLost = 0;
-    private float teamPointsRatio = 0;
+    private int matchPlayed;
+    private int leaguePoints;
+    private int matchWon;
+    private int matchLost;
+    private int setsWon;
+    private int setsLost;
+    private float setRatio;
+    private int pointsWon;
+    private int pointsLost;
+    private float teamPointsRatio;
 
 }

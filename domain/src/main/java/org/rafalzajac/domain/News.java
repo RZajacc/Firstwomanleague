@@ -1,10 +1,10 @@
 package org.rafalzajac.domain;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 
 @Entity
 @Data
@@ -19,6 +19,7 @@ public class News {
 
     @Column(columnDefinition = "LONGTEXT")
     private String content;
+
     private String createdAt;
     private LocalDateTime creationDate;
 

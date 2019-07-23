@@ -1,10 +1,8 @@
 package org.rafalzajac.service;
 
-
 import org.rafalzajac.domain.Player;
 import org.rafalzajac.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

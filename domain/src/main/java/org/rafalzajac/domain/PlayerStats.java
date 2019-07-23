@@ -1,11 +1,9 @@
 package org.rafalzajac.domain;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
+
 
 @Embeddable
 @NoArgsConstructor
@@ -21,33 +19,33 @@ public class PlayerStats {
     private String startingRotS5;
 
     //Points
-    private int pointsTotal = 0;
-    private int pointsRatio = 0;
+    private int pointsTotal;
+    private int pointsRatio;
 
     //Serve
-    private int serveAttempts = 0;
-    private int serveAce = 0;
-    private int servePositive = 0;
-    private int servePositivePercent = 0;
-    private int serveErrors = 0;
+    private int serveAttempts;
+    private int serveAce;
+    private int servePositive;
+    private int servePositivePercent;
+    private int serveErrors;
 
     //Reception
-    private int receptionAttempts = 0;
-    private int receptionErrors = 0;
-    private int receptionPositive = 0;
-    private int receptionPerfect = 0;
-    private int receptionPositivePercent = 0;
-    private int receptionPerfectPercent = 0;
+    private int receptionAttempts;
+    private int receptionErrors;
+    private int receptionPositive;
+    private int receptionPerfect;
+    private int receptionPositivePercent;
+    private int receptionPerfectPercent;
 
     //Attack
-    private int attackAttempts = 0;
-    private int attackErrors = 0;
-    private int attackBlocked = 0;
-    private int attackFinished = 0;
-    private int attackFinishedPercent = 0;
+    private int attackAttempts;
+    private int attackErrors;
+    private int attackBlocked;
+    private int attackFinished;
+    private int attackFinishedPercent;
 
     //Block
-    private int blockScore = 0;
+    private int blockScore;
 
     @OneToOne
     private Player player;

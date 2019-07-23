@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.*;
 import org.rafalzajac.service.PlayerService;
 import org.rafalzajac.service.TeamService;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -55,7 +55,7 @@ public class ScoutFileProcess {
 
         S3Object obj = amazonClient.getObjectFromServer(scoutFilePath);
         S3ObjectInputStream inputStream = obj.getObjectContent();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.ISO_8859_1));
         List<String> scoutFileData = new ArrayList<>();
         String inputLine;
 

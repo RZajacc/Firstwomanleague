@@ -3,7 +3,6 @@ package org.rafalzajac.web.file_processing;
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.Player;
 import org.rafalzajac.domain.Team;
-
 import java.util.Comparator;
 import java.util.List;
 

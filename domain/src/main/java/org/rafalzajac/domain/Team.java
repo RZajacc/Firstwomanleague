@@ -1,9 +1,7 @@
 package org.rafalzajac.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@Getter @Setter
+@Data
 public class Team {
 
     @Id

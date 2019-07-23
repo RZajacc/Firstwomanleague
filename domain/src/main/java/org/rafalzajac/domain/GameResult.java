@@ -2,7 +2,6 @@ package org.rafalzajac.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 

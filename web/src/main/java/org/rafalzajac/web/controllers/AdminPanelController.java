@@ -1,6 +1,5 @@
 package org.rafalzajac.web.controllers;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.rafalzajac.domain.*;
@@ -31,6 +30,8 @@ public class AdminPanelController {
     private RoundService roundService;
     private PlayerService playerService;
     private NewsService newsService;
+
+    private static final String REDIRECT_ADMIN_ROOT = "redirect:/admin/";
     private static final String REDIRECT_CURRENT_TEAM = "redirect:/admin/teams-admin/currentteam-admin/";
     private static final String REDIRECT_ROUND = "redirect:/admin/round-admin/";
     private static final String FLASH_MESSAGE = "message";
@@ -70,7 +71,7 @@ public class AdminPanelController {
 
         newsService.saveNewsToDatabase(newsToPersist);
 
-        return "redirect:/admin/";
+        return REDIRECT_ADMIN_ROOT;
     }
 
     @PostMapping("/delete-article")
@@ -78,7 +79,7 @@ public class AdminPanelController {
 
         newsService.deleteArticleById(newsId);
 
-        return "redirect:/admin/";
+        return REDIRECT_ADMIN_ROOT;
     }
 
     @GetMapping("/edit-article/{id}")
@@ -106,7 +107,7 @@ public class AdminPanelController {
             newsService.saveNewsToDatabase(newsToUpdate);
         }
 
-        return "redirect:/admin/";
+        return REDIRECT_ADMIN_ROOT;
     }
 
 
@@ -188,13 +189,11 @@ public class AdminPanelController {
     }
 
     @PostMapping("/teams-admin/createteam")
-    public String createTeam(@ModelAttribute("newTeam") TeamDTO team, Model model) {
+    public String createTeam(@ModelAttribute("newTeam") TeamDTO team) {
 
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
-        model.addAttribute("newTeam", new Team());
-        CreateNewElement createNewElement = new CreateNewElement(gameService, roundService, teamService, playerService);
-        createNewElement.addNewTeam(teamToPersist);
+        teamService.addTeam(teamToPersist);
 
         return "redirect:/admin/teams-admin/";
     }
@@ -212,7 +211,7 @@ public class AdminPanelController {
             return "administration/views/selectedTeamAdmin";
         }
 
-        return "redirect:/admin/";
+        return REDIRECT_ADMIN_ROOT;
     }
 
     @GetMapping("teams-admin/currentteam-admin/editteam/{id}")

@@ -3,7 +3,6 @@ package org.rafalzajac.service;
 import org.rafalzajac.domain.League;
 import org.rafalzajac.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

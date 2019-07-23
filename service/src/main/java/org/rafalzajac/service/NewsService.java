@@ -1,10 +1,8 @@
 package org.rafalzajac.service;
 
-
 import org.rafalzajac.domain.News;
 import org.rafalzajac.repository.NewsRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

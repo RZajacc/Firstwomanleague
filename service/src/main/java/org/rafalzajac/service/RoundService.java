@@ -3,7 +3,6 @@ package org.rafalzajac.service;
 import org.rafalzajac.domain.Round;
 import org.rafalzajac.repository.RoundRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

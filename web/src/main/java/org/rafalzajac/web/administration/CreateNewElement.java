@@ -38,10 +38,6 @@ public class CreateNewElement {
         teamService.addTeam(aTeam);
     }
 
-    public void addNewTeam(Team team) {
-
-        teamService.addTeam(team);
-    }
 
     public void addNewPlayer(Player player, Team team) {
 

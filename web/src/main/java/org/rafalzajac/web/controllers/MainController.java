@@ -8,7 +8,6 @@ import org.rafalzajac.web.file_processing.SortData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ public class MainController {
         private TeamService teamService;
         private PlayerService playerService;
         private AmazonClient amazonClient;
+
         private static final String SELECTED_ROUNDS = "rounds";
 
         public MainController(RoundService roundService, GameService gameService, TeamService teamService, PlayerService playerService, AmazonClient amazonClient, NewsService newsService) {
