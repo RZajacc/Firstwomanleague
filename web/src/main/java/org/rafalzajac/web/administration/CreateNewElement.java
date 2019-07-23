@@ -8,14 +8,12 @@ import org.rafalzajac.service.*;
 @NoArgsConstructor
 public class CreateNewElement {
 
-    private GameResultService gameResultService;
     private GameService gameService;
     private RoundService roundService;
     private TeamService teamService;
     private PlayerService playerService;
 
-    public CreateNewElement(GameResultService gameResultService, GameService gameService, RoundService roundService, TeamService teamService, PlayerService playerService) {
-        this.gameResultService = gameResultService;
+    public CreateNewElement(GameService gameService, RoundService roundService, TeamService teamService, PlayerService playerService) {
         this.gameService = gameService;
         this.roundService = roundService;
         this.teamService = teamService;
@@ -24,10 +22,6 @@ public class CreateNewElement {
 
     public void addNewMatch(Game game) {
 
-        //Setting game result
-        GameResult newGameResult = new GameResult();
-        gameResultService.saveMatchResult(newGameResult);
-        game.setGameResult(newGameResult);
 
         //Setting round
         game.setRound(roundService.findRoundByRoundNumber(game.getRound().getRoundNumber()));

@@ -2,9 +2,7 @@ package org.rafalzajac.web.file_processing;
 
 import lombok.extern.slf4j.Slf4j;
 import org.rafalzajac.domain.Game;
-import org.rafalzajac.domain.GameResult;
 import org.rafalzajac.domain.Team;
-import org.rafalzajac.service.GameResultService;
 import org.rafalzajac.service.GameService;
 import org.rafalzajac.service.TeamService;
 
@@ -15,13 +13,11 @@ public class ProcessMatchResult {
 
     private TeamService teamService;
     private GameService gameService;
-    private GameResultService gameResultService;
 
 
-    public ProcessMatchResult(TeamService teamService, GameService gameService, GameResultService gameResultService) {
+    public ProcessMatchResult(TeamService teamService, GameService gameService) {
         this.teamService = teamService;
         this.gameService = gameService;
-        this.gameResultService = gameResultService;
     }
 
     public void addMatchResult (Game game) {
@@ -31,14 +27,11 @@ public class ProcessMatchResult {
         if(selected.isPresent()) {
 
             Game matchToUpdate = selected.get();
-            GameResult gameResult = game.getGameResult();
 
-            if (matchToUpdate.getGameResult().getHomeTeamSetsWon() == 0 && matchToUpdate.getGameResult().getAwayTeamSetsWon() == 0) {
-                gameResultService.saveMatchResult(gameResult);
-                matchToUpdate.setGameResult(gameResult);
-                gameService.addMatch(matchToUpdate);
-                addTeamStats(matchToUpdate);
-            }
+            matchToUpdate.setGameResult(game.getGameResult());
+            gameService.addMatch(matchToUpdate);
+            addTeamStats(matchToUpdate);
+
         }
     }
 
@@ -73,15 +66,23 @@ public class ProcessMatchResult {
                 awayTeam.getTeamStats().setSetRatio( (float)awayTeam.getTeamStats().getSetsWon() / awayTeam.getTeamStats().getSetsLost());
             }
 
-            //Setting points scored by both teams
-
-            // Do poprawy!!! Jeżeli nie ma wyniku przynajmniej jednego seta dzieli 0/0 i wychodzi Nan!
+                //Setting points scored by both teams
                 homeTeam.getTeamStats().setPointsWon(homeTeam.getTeamStats().getPointsWon() + game.getGameResult().getHomeTeamSet1Score() + game.getGameResult().getHomeTeamSet2Score() + game.getGameResult().getHomeTeamSet3Score() + game.getGameResult().getHomeTeamSet4Score() + game.getGameResult().getHomeTeamSet5Score());
                 homeTeam.getTeamStats().setPointsLost(homeTeam.getTeamStats().getPointsLost() + game.getGameResult().getAwayTeamSet1Score() + game.getGameResult().getAwayTeamSet2Score() + game.getGameResult().getAwayTeamSet3Score() + game.getGameResult().getAwayTeamSet4Score() + game.getGameResult().getAwayTeamSet5Score());
-                homeTeam.getTeamStats().setTeamPointsRatio((float) homeTeam.getTeamStats().getPointsWon() / homeTeam.getTeamStats().getPointsLost());
+
+                // If team does not have any lost points for some reason application will crash during division
+                if (homeTeam.getTeamStats().getPointsLost() != 0) {
+                    homeTeam.getTeamStats().setTeamPointsRatio((float) homeTeam.getTeamStats().getPointsWon() / homeTeam.getTeamStats().getPointsLost());
+                }
+
                 awayTeam.getTeamStats().setPointsWon(awayTeam.getTeamStats().getPointsWon() + game.getGameResult().getAwayTeamSet1Score() + game.getGameResult().getAwayTeamSet2Score() + game.getGameResult().getAwayTeamSet3Score() + game.getGameResult().getAwayTeamSet4Score() + game.getGameResult().getAwayTeamSet5Score());
                 awayTeam.getTeamStats().setPointsLost(awayTeam.getTeamStats().getPointsLost() + game.getGameResult().getHomeTeamSet1Score() + game.getGameResult().getHomeTeamSet2Score() + game.getGameResult().getHomeTeamSet3Score() + game.getGameResult().getHomeTeamSet4Score() + game.getGameResult().getHomeTeamSet5Score());
-                awayTeam.getTeamStats().setTeamPointsRatio((float) awayTeam.getTeamStats().getPointsWon() / awayTeam.getTeamStats().getPointsLost());
+
+                // If team does not have any lost points for some reason application will crash during division
+                if (awayTeam.getTeamStats().getPointsLost() != 0) {
+                    awayTeam.getTeamStats().setTeamPointsRatio((float) awayTeam.getTeamStats().getPointsWon() / awayTeam.getTeamStats().getPointsLost());
+                }
+
 
             //Setting league points, matches won and matches lost
             if( game.getGameResult().getHomeTeamSetsWon() == 3 && (game.getGameResult().getAwayTeamSetsWon() == 0 || game.getGameResult().getAwayTeamSetsWon() == 1) ) {

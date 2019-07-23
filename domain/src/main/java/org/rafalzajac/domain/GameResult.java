@@ -6,14 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-@Entity
+@Embeddable
 @NoArgsConstructor
 @Data
 public class GameResult {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
 
     private int homeTeamSetsWon;

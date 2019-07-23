@@ -29,7 +29,6 @@ public class AdminPanelController {
     private TeamService teamService;
     private GameService gameService;
     private RoundService roundService;
-    private GameResultService gameResultService;
     private PlayerService playerService;
     private NewsService newsService;
     private static final String REDIRECT_CURRENT_TEAM = "redirect:/admin/teams-admin/currentteam-admin/";
@@ -39,10 +38,9 @@ public class AdminPanelController {
 
 
 
-    public AdminPanelController(GameService gameService, RoundService roundService, GameResultService gameResultService, TeamService teamService, PlayerService playerService, NewsService newsService) {
+    public AdminPanelController(GameService gameService, RoundService roundService, TeamService teamService, PlayerService playerService, NewsService newsService) {
         this.gameService = gameService;
         this.roundService = roundService;
-        this.gameResultService = gameResultService;
         this.teamService = teamService;
         this.playerService = playerService;
         this.newsService = newsService;
@@ -130,7 +128,7 @@ public class AdminPanelController {
 
         ModelMapper modelMapper = new ModelMapper();
         Game gameToPersist = modelMapper.map(game, Game.class);
-        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameService, roundService, teamService, playerService);
         createNewElement.addNewMatch(gameToPersist);
 
         return "redirect:/admin/round-admin";
@@ -165,7 +163,7 @@ public class AdminPanelController {
         if (game1.isPresent()) {
             Game verifyResult = game1.get();
             if (verifyResult.getGameResult().getHomeTeamSetsWon() == 0 && verifyResult.getGameResult().getAwayTeamSetsWon() == 0){
-                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, gameService, gameResultService);
+                ProcessMatchResult processMatchResult = new ProcessMatchResult(teamService, gameService);
                 processMatchResult.addMatchResult(gameToUpdate);
             }else {
                 redirectAttributes.addFlashAttribute(FLASH_MESSAGE, "Nie można zmodyfikować wyniku!");
@@ -195,7 +193,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Team teamToPersist = modelMapper.map(team, Team.class);
         model.addAttribute("newTeam", new Team());
-        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameService, roundService, teamService, playerService);
         createNewElement.addNewTeam(teamToPersist);
 
         return "redirect:/admin/teams-admin/";
@@ -257,7 +255,7 @@ public class AdminPanelController {
         ModelMapper modelMapper = new ModelMapper();
         Player playerToPersist = modelMapper.map(player, Player.class);
 
-        CreateNewElement createNewElement = new CreateNewElement(gameResultService, gameService, roundService, teamService, playerService);
+        CreateNewElement createNewElement = new CreateNewElement(gameService, roundService, teamService, playerService);
         Optional<Team> team = teamService.getTeamById(id);
 
         if (team.isPresent()) {

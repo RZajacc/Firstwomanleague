@@ -4,10 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.rafalzajac.domain.GameResult;
 import org.rafalzajac.domain.Round;
+import org.rafalzajac.domain.Team;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Data
-@NoArgsConstructor
 public class GameDTO {
 
     private Long id;
@@ -16,5 +19,10 @@ public class GameDTO {
     private int matchNumber;
     private Round round;
     private GameResult gameResult;
+    private List<Team> teams;
 
+    public GameDTO() {
+        this.gameResult = new GameResult();
+        this.teams = new LinkedList<>();
+    }
 }

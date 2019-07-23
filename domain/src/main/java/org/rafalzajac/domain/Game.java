@@ -1,15 +1,13 @@
 package org.rafalzajac.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.Data;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
-@Getter @Setter
+@Data
 public class Game implements Comparable<Game>{
 
     @Id
@@ -29,36 +27,41 @@ public class Game implements Comparable<Game>{
     @ManyToMany(mappedBy = "matchList")
     private List<Team> teams;
 
-    @OneToOne
+
     private GameResult gameResult;
 
+
     public Game() {
-        statsSaved = false;
+        this.statsSaved = false;
+        this.gameResult = new GameResult();
+        this.teams = new LinkedList<>();
     }
 
     public Game(String homeTeam, String awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        teams = new LinkedList<>();
-        statsSaved = false;
+        this.teams = new LinkedList<>();
+        this.statsSaved = false;
+        this.gameResult = new GameResult();
     }
 
     public Game(String homeTeam, String awayTeam, Round round) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.round = round;
-        teams = new LinkedList<>();
-        statsSaved = false;
+        this.teams = new LinkedList<>();
+        this.gameResult = new GameResult();
+        this.statsSaved = false;
     }
 
-    public Game(String homeTeam, String awayTeam, int matchNumber, Round round, GameResult gameResult) {
+    public Game(String homeTeam, String awayTeam, int matchNumber, Round round) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchNumber = matchNumber;
         this.round = round;
-        this.gameResult = gameResult;
-        teams = new LinkedList<>();
-        statsSaved = false;
+        this.gameResult = new GameResult();
+        this.teams = new LinkedList<>();
+        this.statsSaved = false;
     }
 
     @Override

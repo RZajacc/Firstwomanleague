@@ -1,7 +1,7 @@
 
 // embeddingClassesToModel
-        //1. Zmodyfikuj w podobny sposób Game i GameResult (usuń repozytorium i serwis dla GameResult, skoryguj metody)
-        //2. Player i PlayerStats (usuń repozytorium i serwis dla GameResult, skoryguj metody)
-
+        //1. Sprawdź co się zepsuło w widoku z wynikiem meczu
+        //2. Polskie znaki w scoucie i opisie meczu, reszta pasuje
+        //3. Konstruktory troszkę pozmieniaj
 
 

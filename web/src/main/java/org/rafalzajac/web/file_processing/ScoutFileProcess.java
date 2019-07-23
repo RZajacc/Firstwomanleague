@@ -139,21 +139,19 @@ public class ScoutFileProcess {
 
             String [] teamInfoData = str.split(";");
 
-            // Player stats are necessary for populating it later with data from scout file
-            PlayerStats playerStats = new PlayerStats();
 
             // In scout file "0" means home team player and "1" describes away team player
             if(teamInfoData[0].equals("0")){
-                createEachPlayer(homeTeam, teamInfoData, playerStats);
+                createEachPlayer(homeTeam, teamInfoData);
             }else {
-                createEachPlayer(awayTeam, teamInfoData, playerStats);
+                createEachPlayer(awayTeam, teamInfoData);
             }
         });
     }
 
 
-    public void createEachPlayer(Team team, String[] teamData, PlayerStats playerStats){
-        Player playerToCreate = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[10], teamData[9], team, playerStats);
+    public void createEachPlayer(Team team, String[] teamData){
+        Player playerToCreate = new Player(Integer.parseInt(teamData[1]), teamData[8], teamData[10], teamData[9], team);
         playerToCreate.getPlayerStats().setStartingRotS1(teamData[3]);
         playerToCreate.getPlayerStats().setStartingRotS2(teamData[4]);
         playerToCreate.getPlayerStats().setStartingRotS3(teamData[5]);

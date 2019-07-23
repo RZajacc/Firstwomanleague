@@ -40,15 +40,6 @@ public class Team {
         teamStats = new TeamStats();
     }
 
-    public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
-        this.teamTag = teamTag;
-        this.teamName = teamName;
-        this.firstCoach = firstCoach;
-        this.secondCoach = secondCoach;
-        playerList = new LinkedList<>();
-        matchList = new LinkedList<>();
-        teamStats = new TeamStats();
-    }
 
     public Team(String teamTag, String teamName, String firstCoach) {
         this.teamTag = teamTag;
@@ -59,23 +50,15 @@ public class Team {
         teamStats = new TeamStats();
     }
 
-    public Team(String teamTag, String teamName, String firstCoach, TeamStats teamStats) {
-        this.teamTag = teamTag;
-        this.teamName = teamName;
-        this.firstCoach = firstCoach;
-        this.teamStats = teamStats;
-        playerList = new LinkedList<>();
-        matchList = new LinkedList<>();
-    }
 
-    public Team(String teamTag, String teamName, String firstCoach, String secondCoach, TeamStats teamStats) {
+    public Team(String teamTag, String teamName, String firstCoach, String secondCoach) {
         this.teamTag = teamTag;
         this.teamName = teamName;
         this.firstCoach = firstCoach;
         this.secondCoach = secondCoach;
-        this.teamStats = teamStats;
         playerList = new LinkedList<>();
         matchList = new LinkedList<>();
+        teamStats = new TeamStats();
     }
 
 

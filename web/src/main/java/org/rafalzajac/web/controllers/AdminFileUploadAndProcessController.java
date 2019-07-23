@@ -122,6 +122,11 @@ public class AdminFileUploadAndProcessController {
                     model.addAttribute(AWAY_TEAM, scoutFileProcess.getHomeTeam());
                     model.addAttribute(HOME_TEAM, scoutFileProcess.getAwayTeam());
                 }
+            } else {
+                Team hTeam = currentMatch.getTeams().get(0);
+                Team aTeam = currentMatch.getTeams().get(1);
+                model.addAttribute(HOME_TEAM, hTeam);
+                model.addAttribute(AWAY_TEAM, aTeam);
             }
 
             return "administration/views/matchAdmin";

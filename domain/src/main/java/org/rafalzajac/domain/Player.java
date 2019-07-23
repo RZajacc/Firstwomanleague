@@ -44,14 +44,7 @@ public class Player {
         this.firstName = firstName;
         this.lastName = lastName;
         this.team = team;
+        this.playerStats = new PlayerStats();
     }
 
-    public Player(int number, String playerTag, String firstName, String lastName, Team team, PlayerStats playerStats) {
-        this.number = number;
-        this.playerTag = playerTag;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.team = team;
-        this.playerStats = playerStats;
-    }
 }
