@@ -14,7 +14,7 @@
 
     <groupId>org.rafalzajac</groupId>
     <artifactId>firstwomanleague</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.9-SNAPSHOT</version>
     <name>Firstwomanleague</name>
     <description>Demo project for Spring Boot</description>
 
@@ -50,11 +50,5 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
     </dependencies>
-
-
 </project>
