@@ -47,10 +47,4 @@ public class PlayerStats {
     //Block
     private int blockScore;
 
-    @OneToOne
-    private Player player;
-
-    public PlayerStats(Player player) {
-        this.player = player;
-    }
 }

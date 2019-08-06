@@ -1,118 +1,134 @@
 package org.rafalzajac.domain;
 
-import org.aspectj.apache.bcel.util.Play;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.validation.Validator;
-
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
+
     @Before
     public void before() {
-        player = new Player();
+        playerEmptyConstructor = new Player();
         team = new Team();
+        playerNotEmptyConstructor = new Player(42, "Raf-Zaj", "Rafał", "Zając", team);
         playerStats = new PlayerStats();
     }
 
     @Test
     public void createWithEmptyConstructor() {
 
-        assertNull(player.getId());
-        assertEquals(0, player.getNumber());
-        assertEquals(0, player.getAge());
-        assertEquals(0, player.getHeight());
-        assertNull(player.getPlayerTag());
-        assertNull(player.getFirstName());
-        assertNull(player.getLastName());
-        assertNull(player.getPosition());
-        assertNull(player.getTeam());
-        assertNotNull(player.getPlayerStats());
+        assertThat(playerEmptyConstructor.getId()).isNull();
+        assertThat(playerEmptyConstructor.getNumber()).isEqualTo(0);
+        assertThat(playerEmptyConstructor.getAge()).isEqualTo(0);
+        assertThat(playerEmptyConstructor.getHeight()).isEqualTo(0);
+        assertThat(playerEmptyConstructor.getPlayerTag()).isNull();
+        assertThat(playerEmptyConstructor.getFirstName()).isNull();
+        assertThat(playerEmptyConstructor.getLastName()).isNull();
+        assertThat(playerEmptyConstructor.getPosition()).isNull();
+        assertThat(playerEmptyConstructor.getTeam()).isNull();
+        assertThat(playerEmptyConstructor.getPlayerStats()).isNotNull();
+    }
+
+    @Test
+    public void createWithNotEmptyConstructor() {
+        assertThat(playerNotEmptyConstructor.getNumber()).isEqualTo(42);
+        assertThat(playerNotEmptyConstructor.getPlayerTag()).isEqualTo("Raf-Zaj");
+        assertThat(playerNotEmptyConstructor.getFirstName()).isEqualTo("Rafał");
+        assertThat(playerNotEmptyConstructor.getLastName()).isEqualTo("Zając");
+        assertThat(playerNotEmptyConstructor.getTeam()).isNotNull();
+        assertThat(playerNotEmptyConstructor.getTeam()).isEqualTo(team);
     }
 
     @Test
     public void setValidPlayerNumber(){
-        player.setNumber(16);
-        assertEquals(16, player.getNumber());
+        playerEmptyConstructor.setNumber(16);
+        assertThat(playerEmptyConstructor.getNumber()).isEqualTo(16);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setNegativePlayerNumber() {
-        player.setNumber(-5);
+        playerEmptyConstructor.setNumber(-5);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setZeroAsPlayerNumber() {
-        player.setNumber(0);
+        playerEmptyConstructor.setNumber(0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setTooHighPlayerNumber(){
-        player.setNumber(200);
+        playerEmptyConstructor.setNumber(200);
     }
 
     @Test
     public void setValidPlayerHeight() {
-        player.setHeight(186);
+        playerEmptyConstructor.setHeight(186);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setTooLowPlayerHeight() {
-        player.setHeight(99);
+        playerEmptyConstructor.setHeight(99);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setTooHighPlayerHeight() {
-        player.setHeight(251);
+        playerEmptyConstructor.setHeight(251);
     }
 
     @Test
     public void setValidPlayerFirstName() {
-        player.setFirstName("Stefan");
-        assertEquals("Stefan", player.getFirstName());
+        playerEmptyConstructor.setFirstName("Stefan");
+        assertThat(playerEmptyConstructor.getFirstName()).isEqualTo("Stefan");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setEmptyPlayerName() {
-        player.setFirstName("");
+        playerEmptyConstructor.setFirstName("");
     }
 
     @Test(expected = NullPointerException.class)
     public void setNullPlayerName() {
-        player.setFirstName(null);
+        playerEmptyConstructor.setFirstName(null);
     }
 
     @Test
     public void setValidTeam() {
-        player.setTeam(team);
-        assertSame(team, player.getTeam());
+        playerEmptyConstructor.setTeam(team);
+        assertThat(playerEmptyConstructor.getTeam()).isSameAs(team);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void SetNullAsTeam(){
-        player.setTeam(null);
+        playerEmptyConstructor.setTeam(null);
     }
 
     @Test
     public void setValidStatsDetails() {
-        player.getPlayerStats().setAttackAttempts(15);
-        assertEquals(15, player.getPlayerStats().getAttackAttempts());
+        playerEmptyConstructor.getPlayerStats().setAttackAttempts(15);
+        assertThat(playerEmptyConstructor.getPlayerStats().getAttackAttempts()).isEqualTo(15);
     }
 
     @Test
     public void setValidStats() {
-        player.setPlayerStats(playerStats);
+        playerEmptyConstructor.setPlayerStats(playerStats);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setNullPlayerStats() {
-        player.setPlayerStats(null);
+        playerEmptyConstructor.setPlayerStats(null);
+    }
+
+    @Test
+    public void equalsVerify() {
+        assertThat(playerEmptyConstructor).isNotEqualTo(new Player());
     }
 
 
-    private Player player;
+    private Player playerEmptyConstructor;
+    private Player playerNotEmptyConstructor;
     private Team team;
     private PlayerStats playerStats;
 }
