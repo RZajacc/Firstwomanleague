@@ -1,20 +1,25 @@
 package org.rafalzajac.domain;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 public class PlayerTest {
+
+    private Player playerEmptyConstructor;
+    private Player playerFromDvData;
+    private Team team;
+    private PlayerStats playerStats;
 
 
     @Before
     public void before() {
-        playerEmptyConstructor = new Player();
+        playerEmptyConstructor = Player.createEmpty();
         team = new Team();
-        playerNotEmptyConstructor = new Player(42, "Raf-Zaj", "Rafał", "Zając", team);
-        playerStats = new PlayerStats();
+        playerFromDvData = Player.createForDvDataFile(42, "Raf-Zaj", "Rafał", "Zając", team);
+        playerStats = PlayerStats.create();
     }
 
     @Test
@@ -34,12 +39,12 @@ public class PlayerTest {
 
     @Test
     public void createWithNotEmptyConstructor() {
-        assertThat(playerNotEmptyConstructor.getNumber()).isEqualTo(42);
-        assertThat(playerNotEmptyConstructor.getPlayerTag()).isEqualTo("Raf-Zaj");
-        assertThat(playerNotEmptyConstructor.getFirstName()).isEqualTo("Rafał");
-        assertThat(playerNotEmptyConstructor.getLastName()).isEqualTo("Zając");
-        assertThat(playerNotEmptyConstructor.getTeam()).isNotNull();
-        assertThat(playerNotEmptyConstructor.getTeam()).isEqualTo(team);
+        assertThat(playerFromDvData.getNumber()).isEqualTo(42);
+        assertThat(playerFromDvData.getPlayerTag()).isEqualTo("Raf-Zaj");
+        assertThat(playerFromDvData.getFirstName()).isEqualTo("Rafał");
+        assertThat(playerFromDvData.getLastName()).isEqualTo("Zając");
+        assertThat(playerFromDvData.getTeam()).isNotNull();
+        assertThat(playerFromDvData.getTeam()).isEqualTo(team);
     }
 
     @Test
@@ -60,7 +65,7 @@ public class PlayerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setTooHighPlayerNumber(){
-        playerEmptyConstructor.setNumber(200);
+        playerEmptyConstructor.setNumber(100);
     }
 
     @Test
@@ -89,7 +94,7 @@ public class PlayerTest {
         playerEmptyConstructor.setFirstName("");
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setNullPlayerName() {
         playerEmptyConstructor.setFirstName(null);
     }
@@ -123,12 +128,7 @@ public class PlayerTest {
 
     @Test
     public void equalsVerify() {
-        assertThat(playerEmptyConstructor).isNotEqualTo(new Player());
+        assertThat(playerEmptyConstructor).isNotEqualTo(Player.createEmpty());
     }
 
-
-    private Player playerEmptyConstructor;
-    private Player playerNotEmptyConstructor;
-    private Team team;
-    private PlayerStats playerStats;
 }
