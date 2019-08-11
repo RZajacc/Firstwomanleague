@@ -17,7 +17,7 @@ public class PlayerTest {
     @Before
     public void before() {
         playerEmptyConstructor = Player.createEmpty();
-        team = new Team();
+        team = Team.createNoArgs();
         playerFromDvData = Player.createForDvDataFile(42, "Raf-Zaj", "Rafał", "Zając", team);
         playerStats = PlayerStats.create();
     }

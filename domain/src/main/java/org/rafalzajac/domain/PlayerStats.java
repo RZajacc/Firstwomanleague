@@ -1,7 +1,6 @@
 package org.rafalzajac.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,9 +8,13 @@ import javax.persistence.*;
 
 @Embeddable
 @Getter @Setter
-@NoArgsConstructor
 public class PlayerStats {
 
+    /**
+     * No argument constructor for factory method
+     */
+    private PlayerStats() {
+    }
 
     /**
      * It is represented by one number or symbol in DataVolley file. It is either a number representing starting zone

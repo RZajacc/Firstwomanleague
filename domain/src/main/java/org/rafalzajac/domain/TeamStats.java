@@ -1,27 +1,39 @@
 package org.rafalzajac.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
 
 @Embeddable
-@NoArgsConstructor
-@Data
+@Getter @Setter
 public class TeamStats {
 
+    /**
+     * No argument constructor for factory method
+     */
+    private TeamStats () {
 
-    //Points
+    }
+
+    /**
+     * All points scored by the player and their ratio meaning Points total - points lost (errors in all elements)
+     */
     private int pointsTotal;
     private int pointsRatio;
 
-    //Serve
+    /**
+     * Serve data section
+     */
     private int serveAttempts;
     private int serveAce;
     private int servePositive;
     private int servePositivePercent;
     private int serveErrors;
 
-    //Reception
+    /**
+     * Recption data section
+     */
     private int receptionAttempts;
     private int receptionErrors;
     private int receptionPositive;
@@ -29,18 +41,23 @@ public class TeamStats {
     private int receptionPositivePercent;
     private int receptionPerfectPercent;
 
-    //Attack
+    /**
+     * Attack data section
+     */
     private int attackAttempts;
     private int attackErrors ;
     private int attackBlocked;
     private int attackFinished;
     private int attackFinishedPercent;
 
-    //Block
+    /**
+     * Block data section
+     */
     private int blockScore ;
 
-
-    //Overall stats for team
+    /**
+     * Summary data for team's result in the league section
+     */
     private int matchPlayed;
     private int leaguePoints;
     private int matchWon;
@@ -52,4 +69,11 @@ public class TeamStats {
     private int pointsLost;
     private float teamPointsRatio;
 
+    /**
+     * Factory method for no argument constructor of TeamStats class
+     * @return TeamStats object with default values
+     */
+    public static TeamStats create() {
+        return new TeamStats();
+    }
 }
