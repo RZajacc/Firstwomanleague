@@ -1,13 +1,11 @@
 
         Testy:
         --Domain--
-        1. Do skończenia TeamTest
-        2. Testy dla Round
-        3. Testy dla Game i GameResult
-        4. Testy dla League
-        5. Testy dla News
-        6. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
-        7. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
+        1. Testy dla Game i GameResult
+        2. Testy dla League
+        3. Testy dla News
+        4. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
+        5. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
 
         inne:
         1. W logo nie ma linku, daj przekierowanie do news
