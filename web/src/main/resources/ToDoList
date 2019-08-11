@@ -1,11 +1,14 @@
 
         Testy:
         --Domain--
-        1. Testy dla Game i GameResult
-        2. Testy dla League
-        3. Testy dla News
-        4. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
-        5. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
+        1. Testy dla League
+        2. Testy dla News
+        3. GameDTO test
+        4. NewsDTO test
+        5. PlayerDTO test
+        6. TeamDTO test
+        7. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
+        8. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
 
         inne:
         1. W logo nie ma linku, daj przekierowanie do news
