@@ -21,7 +21,7 @@ public class GameDTO {
     private List<Team> teams;
 
     public GameDTO() {
-        this.gameResult = new GameResult();
+        this.gameResult = GameResult.create();
         this.teams = new LinkedList<>();
     }
 }

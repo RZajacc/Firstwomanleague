@@ -31,7 +31,7 @@ public class Game implements Comparable<Game>{
 
     public Game() {
         statsSaved = false;
-        gameResult = new GameResult();
+        gameResult = GameResult.create();
         teams = new LinkedList<>();
     }
 
@@ -40,7 +40,7 @@ public class Game implements Comparable<Game>{
         this.awayTeam = awayTeam;
         teams = new LinkedList<>();
         statsSaved = false;
-        gameResult = new GameResult();
+        gameResult = GameResult.create();
     }
 
     public Game(String homeTeam, String awayTeam, Round round) {
@@ -48,7 +48,7 @@ public class Game implements Comparable<Game>{
         this.awayTeam = awayTeam;
         this.round = round;
         teams = new LinkedList<>();
-        gameResult = new GameResult();
+        gameResult = GameResult.create();
         statsSaved = false;
     }
 
@@ -57,7 +57,7 @@ public class Game implements Comparable<Game>{
         this.awayTeam = awayTeam;
         this.matchNumber = matchNumber;
         this.round = round;
-        gameResult = new GameResult();
+        gameResult = GameResult.create();
         teams = new LinkedList<>();
         statsSaved = false;
     }

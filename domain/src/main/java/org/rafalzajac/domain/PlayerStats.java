@@ -10,11 +10,6 @@ import javax.persistence.*;
 @Getter @Setter
 public class PlayerStats {
 
-    /**
-     * No argument constructor for factory method
-     */
-    private PlayerStats() {
-    }
 
     /**
      * It is represented by one number or symbol in DataVolley file. It is either a number representing starting zone
@@ -66,6 +61,11 @@ public class PlayerStats {
      */
     private int blockScore;
 
+    /**
+     * No argument constructor for factory method
+     */
+    private PlayerStats() {
+    }
 
     /**
      * Factory method for no argument constructor of PlayerStats class

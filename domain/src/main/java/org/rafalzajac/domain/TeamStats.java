@@ -1,6 +1,5 @@
 package org.rafalzajac.domain;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -9,12 +8,6 @@ import javax.persistence.*;
 @Getter @Setter
 public class TeamStats {
 
-    /**
-     * No argument constructor for factory method
-     */
-    private TeamStats () {
-
-    }
 
     /**
      * All points scored by the player and their ratio meaning Points total - points lost (errors in all elements)
@@ -69,6 +62,13 @@ public class TeamStats {
     private int pointsLost;
     private float teamPointsRatio;
 
+    /**
+     * No argument constructor for factory method
+     */
+    private TeamStats () {
+
+    }
+    
     /**
      * Factory method for no argument constructor of TeamStats class
      * @return TeamStats object with default values
