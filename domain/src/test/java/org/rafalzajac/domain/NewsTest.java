@@ -23,7 +23,7 @@ public class NewsTest {
         assertThat(news.getShortDescription()).isNull();
         assertThat(news.getContent()).isNull();
         assertThat(news.getCreatedAt()).isNotEmpty();
-        assertThat(news.getCreationDate()).isBefore(LocalDateTime.now());
+        assertThat(news.getCreationDate()).isEqualToIgnoringSeconds(LocalDateTime.now());
     }
 
     @Test
