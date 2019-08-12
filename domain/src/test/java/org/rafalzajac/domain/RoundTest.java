@@ -15,7 +15,7 @@ public class RoundTest {
 
     @Before
     public void before() {
-        League league =  new League("1 Liga Kobiet", "2019/2020");
+        League league =  League.createAllArgs("1 Liga Kobiet", "2019/2020");
         roundNoArgs = Round.createNoArgs();
         roundAllArgs = Round.createWithAllArguments(1, league);
     }
@@ -59,14 +59,14 @@ public class RoundTest {
 
     @Test
     public void setLeague() {
-        League league = new League();
+        League league = League.createNoArgs();
         roundAllArgs.setLeague(league);
         assertThat(roundAllArgs.getLeague()).isSameAs(league);
     }
 
     @Test
     public void checkLeagueReferences() {
-        League league = new League();
+        League league = League.createNoArgs();
         assertThat(roundAllArgs.getLeague()).isNotSameAs(league);
     }
 

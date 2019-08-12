@@ -1,12 +1,12 @@
 
         Testy:
         --Domain--
-        1. Testy dla League
-        2. Testy dla News
-        3. GameDTO test
-        4. NewsDTO test
-        5. PlayerDTO test
-        6. TeamDTO test
+        1. Testy dla News
+        2. GameDTO test
+        3. NewsDTO test
+        4. PlayerDTO test
+        5. TeamDTO test
+        6. Dodaj preconditions do parametryzowanych konstruktorów
         7. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
         8. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
 

@@ -2,9 +2,7 @@ package org.rafalzajac.domain;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import lombok.Data;
 import lombok.Getter;
-
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
