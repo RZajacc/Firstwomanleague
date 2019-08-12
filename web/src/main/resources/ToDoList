@@ -1,14 +1,13 @@
 
         Testy:
         --Domain--
-        1. Testy dla News
-        2. GameDTO test
-        3. NewsDTO test
-        4. PlayerDTO test
-        5. TeamDTO test
-        6. Dodaj preconditions do parametryzowanych konstruktorów
-        7. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
-        8. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
+        1. GameDTO test
+        2. NewsDTO test
+        3. PlayerDTO test
+        4. TeamDTO test
+        5. Dodaj preconditions do parametryzowanych konstruktorów
+        6. Napraw wszystkie błędy spowodowane utworzeniem metod Factory
+        7. Sprawdź czy działają testy dla całego modułu i dla porządku zostaw tylko te w konfiguracji
 
         inne:
         1. W logo nie ma linku, daj przekierowanie do news
